@@ -1,0 +1,3919 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
+
+  <title>わんこそば連打ゲーム</title>
+
+  <style>
+    /* =========================================================
+       全体
+    ========================================================= */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --paper: #fff4cf;
+      --paper-strong: #ffe29a;
+
+      --brown: #5a3518;
+      --brown-dark: #2b1709;
+
+      --accent: #ffb340;
+      --sky: #d8f2ff;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+
+      margin: 0;
+
+      color: var(--brown-dark);
+
+      background: #222;
+
+      font-family:
+        "Yu Gothic UI",
+        "Hiragino Kaku Gothic ProN",
+        "Meiryo",
+        sans-serif;
+    }
+
+    button {
+      border: 3px solid rgba(90, 53, 24, 0.48);
+      border-radius: 0;
+
+      padding: 10px 20px;
+
+      color: #090603;
+      background: var(--paper);
+
+      font: inherit;
+      font-size: 20px;
+      font-weight: 800;
+
+      cursor: pointer;
+
+      touch-action: manipulation;
+
+      box-shadow:
+        3px 3px 0 rgba(90, 53, 24, 0.42);
+    }
+
+    button:hover {
+      background: var(--paper-strong);
+    }
+
+    img[hidden],
+    .hidden {
+      display: none !important;
+    }
+
+    .app-shell {
+      position: relative;
+
+      width: min(100vw, 1000px);
+      height: min(100vh, 700px);
+
+      min-height: 620px;
+
+      margin: 0 auto;
+
+      overflow: hidden;
+
+      background: #ddd;
+    }
+
+    .screen {
+      position: absolute;
+
+      inset: 0;
+
+      display: none;
+
+      overflow: hidden;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .screen-bg {
+      position: absolute;
+
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+    }
+
+    .screen-shade {
+      position: absolute;
+
+      inset: 0;
+
+      background: rgba(20, 10, 0, 0.28);
+    }
+
+    .screen-shade.light {
+      background: rgba(20, 10, 0, 0.14);
+    }
+
+    .screen-shade.strong {
+      background: rgba(15, 5, 0, 0.46);
+    }
+
+
+    /* =========================================================
+       タイトル画面
+    ========================================================= */
+
+    .title-content {
+      position: relative;
+
+      z-index: 2;
+
+      display: grid;
+
+      justify-items: center;
+
+      padding-top: 60px;
+
+      text-align: center;
+    }
+
+    .title-content h1,
+    .screen-title {
+      margin: 0;
+
+      color: #fff1c8;
+
+      text-shadow:
+        3px 3px 0 var(--brown-dark),
+        -1px -1px 0 var(--brown-dark),
+        1px -1px 0 var(--brown-dark),
+        -1px 1px 0 var(--brown-dark);
+    }
+
+    .title-content h1 {
+      font-size: clamp(44px, 7vw, 74px);
+
+      line-height: 1.06;
+    }
+
+    .title-content p {
+      margin: 22px 0 18px;
+
+      color: #fff1c8;
+
+      font-size: clamp(16px, 2.2vw, 22px);
+      font-weight: 800;
+
+      text-shadow:
+        2px 2px 0 var(--brown-dark);
+    }
+
+    .menu-panel {
+      display: grid;
+
+      gap: 10px;
+
+      width: min(330px, 78vw);
+
+      padding: 12px;
+
+      background: rgba(255, 203, 99, 0.78);
+    }
+
+
+    /* =========================================================
+       練習説明画面
+    ========================================================= */
+
+    .screen-title {
+      position: relative;
+
+      z-index: 3;
+
+      margin-top: 36px;
+
+      text-align: center;
+
+      font-size: clamp(34px, 5vw, 48px);
+    }
+
+    .guide-image {
+      position: absolute;
+
+      z-index: 3;
+
+      top: 17%;
+      right: 4%;
+
+      width: min(34%, 340px);
+      height: min(68%, 470px);
+
+      object-fit: contain;
+      object-position: center bottom;
+    }
+
+    .practice-card {
+      position: absolute;
+
+      z-index: 4;
+
+      top: 45%;
+      left: 13%;
+
+      width: min(570px, 62%);
+
+      padding: 18px;
+
+      border: 3px solid var(--brown);
+
+      background: var(--paper);
+
+      font-size: clamp(16px, 2.2vw, 21px);
+      font-weight: 800;
+    }
+
+    .practice-card p {
+      margin: 0;
+    }
+
+    .bottom-buttons {
+      position: absolute;
+
+      z-index: 5;
+
+      bottom: 9%;
+      left: 50%;
+
+      display: grid;
+
+      gap: 14px;
+
+      width: min(240px, 52vw);
+
+      transform: translateX(-50%);
+    }
+
+
+    /* =========================================================
+       通常ゲーム画面：上部
+    ========================================================= */
+
+    .game-hud {
+      position: absolute;
+
+      z-index: 5;
+
+      top: 14px;
+      left: 50%;
+
+      width: min(570px, 58%);
+
+      padding: 9px 18px;
+
+      border: 3px solid var(--brown);
+
+      background: var(--paper);
+
+      transform: translateX(-50%);
+    }
+
+    .hud-top-row,
+    .time-row {
+      display: flex;
+
+      align-items: center;
+
+      gap: 16px;
+
+      font-weight: 800;
+    }
+
+    .hud-top-row {
+      justify-content: space-between;
+
+      margin-bottom: 5px;
+
+      font-size: 18px;
+    }
+
+    .time-row {
+      font-size: 16px;
+    }
+
+    .effect-label {
+      margin-top: 4px;
+
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .time-bar {
+      flex: 1;
+
+      height: 20px;
+
+      border: 2px solid var(--brown);
+
+      overflow: hidden;
+
+      background: #d8c99b;
+    }
+
+    .time-bar-fill {
+      width: 100%;
+      height: 100%;
+
+      background: var(--accent);
+
+      transition:
+        width 0.1s linear;
+    }
+
+
+    /* =========================================================
+       左側：食べ終わったお椀
+    ========================================================= */
+
+    .left-bowl-panel {
+      position: absolute;
+
+      z-index: 4;
+
+      top: 128px;
+      bottom: 22px;
+      left: 18px;
+
+      width: 178px;
+
+      border: 3px solid var(--brown);
+
+      overflow: hidden;
+
+      background: var(--paper);
+    }
+
+    .left-bowl-panel h3 {
+      margin: 12px 0 4px;
+
+      text-align: center;
+
+      font-size: 22px;
+    }
+
+    .left-bowl-stack {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      align-content: start;
+
+      gap: 2px;
+
+      padding: 10px;
+    }
+
+    .bowl-slot {
+      display: grid;
+
+      place-items: center;
+
+      width: 50px;
+      height: 36px;
+
+      overflow: hidden;
+
+      font-size: 24px;
+    }
+
+    .bowl-slot img {
+      width: 50px;
+      height: 34px;
+
+      object-fit: contain;
+    }
+
+
+    /* =========================================================
+       中央：食べ物と操作
+    ========================================================= */
+
+    .game-main-area {
+      position: absolute;
+
+      z-index: 4;
+
+      top: 124px;
+      right: 200px;
+      bottom: 10px;
+      left: 205px;
+
+      display: grid;
+
+      justify-items: center;
+      align-content: start;
+    }
+
+    .speech-card {
+      justify-self: end;
+
+      width: min(395px, 80%);
+      min-height: 86px;
+
+      padding: 13px 18px;
+
+      border: 3px solid var(--brown);
+
+      background: var(--paper);
+    }
+
+    .speech-card p {
+      margin: 0;
+
+      white-space: pre-line;
+
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .food-stage {
+      display: grid;
+
+      place-items: end center;
+
+      width: min(520px, 96%);
+      height: 320px;
+
+      overflow: hidden;
+    }
+
+    .current-item-image {
+      display: block;
+
+      width: min(510px, 100%);
+      height: 385px;
+
+      object-fit: contain;
+      object-position: center bottom;
+    }
+
+    .item-fallback {
+      display: grid;
+
+      place-items: center;
+
+      width: 280px;
+      height: 165px;
+
+      border: 3px solid var(--brown);
+
+      background: var(--paper);
+
+      font-size: 30px;
+      font-weight: 800;
+    }
+
+    .click-progress {
+      margin-top: -2px;
+
+      font-size: 30px;
+      font-weight: 900;
+
+      text-shadow:
+        1px 1px 0 #fff1c8;
+    }
+
+    .game-buttons {
+      display: grid;
+
+      gap: 11px;
+
+      width: min(220px, 58vw);
+
+      margin-top: 5px;
+    }
+
+
+    /* =========================================================
+       右側：先生・給仕係
+    ========================================================= */
+
+    .waiter-image {
+      position: absolute;
+
+      z-index: 3;
+
+      top: 17%;
+      right: 0;
+
+      width: min(35%, 355px);
+      height: min(74%, 510px);
+
+      object-fit: contain;
+      object-position: center bottom;
+    }
+
+
+    /* =========================================================
+       一時メッセージ
+    ========================================================= */
+
+    .floating-message {
+      position: absolute;
+
+      z-index: 10;
+
+      top: 142px;
+      left: 50%;
+
+      width: min(430px, 72%);
+
+      padding: 12px;
+
+      border: 3px solid var(--brown);
+
+      background: var(--paper);
+
+      text-align: center;
+
+      font-size: 17px;
+      font-weight: 800;
+
+      transform: translateX(-50%);
+    }
+
+
+    /* =========================================================
+       カウントダウン
+    ========================================================= */
+
+    .countdown-screen {
+      display: none;
+
+      place-items: center;
+
+      background: rgba(0, 0, 0, 0.84);
+    }
+
+    .countdown-screen.active {
+      display: grid;
+    }
+
+    .countdown-number {
+      color: #fff;
+
+      font-size: min(30vw, 170px);
+      font-weight: 900;
+    }
+
+
+    /* =========================================================
+       ミニゲーム
+    ========================================================= */
+
+    .minigame-screen {
+      background: var(--sky);
+    }
+
+    .minigame-screen.active {
+      display: block;
+    }
+
+    #minigame-canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    .drop-button {
+      position: absolute;
+
+      bottom: 25px;
+      left: 50%;
+
+      width: min(260px, 58vw);
+
+      transform: translateX(-50%);
+
+      font-size: 22px;
+    }
+
+
+    /* =========================================================
+       結果・ランキング
+    ========================================================= */
+
+    .result-card,
+    .ranking-card {
+      position: relative;
+
+      z-index: 3;
+
+      width: min(610px, 88%);
+
+      margin: 90px auto 0;
+
+      padding: 28px;
+
+      border: 4px solid var(--brown);
+
+      background: var(--paper);
+
+      text-align: center;
+    }
+
+    .result-card h2,
+    .ranking-card h2 {
+      margin: 0 0 20px;
+
+      font-size: 42px;
+    }
+
+    .result-card p {
+      white-space: pre-line;
+
+      font-size: 23px;
+      font-weight: 800;
+    }
+
+    .result-buttons {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      justify-content: center;
+
+      gap: 12px;
+
+      margin-top: 25px;
+    }
+
+    .ranking-note {
+      margin-top: -10px;
+
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .ranking-list {
+      min-height: 305px;
+
+      margin: 18px auto;
+
+      padding-left: 2.2em;
+
+      text-align: left;
+
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .ranking-list li {
+      padding: 4px 8px;
+    }
+
+
+    /* =========================================================
+       スマホ向け調整
+    ========================================================= */
+
+    @media (max-width: 720px) {
+      .app-shell {
+        min-height: 100vh;
+      }
+
+      .title-content {
+        padding-top: 70px;
+      }
+
+      .practice-card {
+        top: 45%;
+        left: 5%;
+
+        width: 72%;
+      }
+
+      .guide-image {
+        top: 18%;
+        right: 0;
+
+        width: 40%;
+      }
+
+      .game-hud {
+        left: 61%;
+
+        width: 74%;
+      }
+
+      .left-bowl-panel {
+        top: 134px;
+        left: 5px;
+
+        width: 112px;
+      }
+
+      .left-bowl-stack {
+        grid-template-columns:
+          repeat(2, 1fr);
+
+        padding: 6px;
+      }
+
+      .bowl-slot {
+        width: 47px;
+        height: 33px;
+      }
+
+      .bowl-slot img {
+        width: 47px;
+        height: 31px;
+      }
+
+      .game-main-area {
+        top: 150px;
+        right: 5px;
+        left: 116px;
+      }
+
+      .speech-card {
+        justify-self: center;
+
+        width: 92%;
+        min-height: 74px;
+      }
+
+      .speech-card p {
+        font-size: 15px;
+      }
+
+      .food-stage {
+        height: 290px;
+      }
+
+      .current-item-image {
+        height: 335px;
+      }
+
+      .waiter-image {
+        right: -6%;
+
+        width: 38%;
+
+        opacity: 0.92;
+      }
+
+      .result-card,
+      .ranking-card {
+        margin-top: 68px;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+  <main class="app-shell">
+
+    <!-- ======================================================
+         タイトル画面
+    ======================================================= -->
+    <section
+      id="title-screen"
+      class="screen active"
+    >
+      <img
+        class="screen-bg"
+        data-asset="background"
+        alt=""
+      >
+
+      <div class="screen-shade"></div>
+
+      <div class="title-content">
+        <h1>
+          わんこそば<br>
+          連打ゲーム
+        </h1>
+
+        <p>
+          食べる？ 食べない？ 皿が積もれば時間も積もる。
+        </p>
+
+        <div class="menu-panel">
+          <button id="practice-menu-button">
+            練習モード
+          </button>
+
+          <button id="real-menu-button">
+            本番モード
+          </button>
+
+          <button id="ranking-menu-button">
+            ランキング
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================================================
+         練習説明
+    ======================================================= -->
+    <section
+      id="practice-screen"
+      class="screen"
+    >
+      <img
+        class="screen-bg"
+        data-asset="background"
+        alt=""
+      >
+
+      <div class="screen-shade light"></div>
+
+      <h2 class="screen-title">
+        練習説明
+      </h2>
+
+      <img
+        class="guide-image"
+        data-asset="guide"
+        alt="案内役"
+      >
+
+      <div class="practice-card">
+        <p id="practice-message"></p>
+      </div>
+
+      <div class="bottom-buttons">
+        <button id="practice-next-button">
+          次へ
+        </button>
+
+        <button id="practice-back-button">
+          タイトルへ
+        </button>
+      </div>
+    </section>
+
+
+    <!-- ======================================================
+         通常ゲーム
+    ======================================================= -->
+    <section
+      id="game-screen"
+      class="screen"
+    >
+      <img
+        class="screen-bg"
+        data-asset="background"
+        alt=""
+      >
+
+      <div class="screen-shade light"></div>
+
+      <!-- 上部 -->
+      <div class="game-hud">
+        <div class="hud-top-row">
+          <span id="mode-label">
+            モード: 練習
+          </span>
+
+          <span id="bowl-count-label">
+            杯数: 0
+          </span>
+        </div>
+
+        <div class="time-row">
+          <span id="time-label">
+            残り 10 秒
+          </span>
+
+          <div class="time-bar">
+            <div
+              id="time-bar-fill"
+              class="time-bar-fill"
+            ></div>
+          </div>
+        </div>
+
+        <div
+          id="effect-label"
+          class="effect-label"
+        >
+          効果: なし
+        </div>
+      </div>
+
+
+      <!-- 左側のお椀 -->
+      <aside class="left-bowl-panel">
+        <h3>
+          お椀
+        </h3>
+
+        <div
+          id="left-bowl-stack"
+          class="left-bowl-stack"
+        ></div>
+      </aside>
+
+
+      <!-- 中央 -->
+      <div class="game-main-area">
+        <div class="speech-card">
+          <p id="speech-text">
+            次の食べ物を準備中...
+          </p>
+        </div>
+
+        <div class="food-stage">
+          <img
+            id="current-item-image"
+            class="current-item-image"
+            alt=""
+          >
+
+          <div
+            id="item-fallback"
+            class="item-fallback hidden"
+          ></div>
+        </div>
+
+        <div
+          id="click-progress"
+          class="click-progress"
+        >
+          0 / 1
+        </div>
+
+        <div class="game-buttons">
+          <button id="eat-button">
+            食べる
+          </button>
+
+          <button id="skip-button">
+            食べない
+          </button>
+        </div>
+      </div>
+
+
+      <!-- 右側の先生 -->
+      <img
+        class="waiter-image"
+        data-asset="waiter"
+        alt="給仕係"
+      >
+
+
+      <!-- 一時表示 -->
+      <div
+        id="floating-message"
+        class="floating-message hidden"
+      ></div>
+    </section>
+
+
+    <!-- ======================================================
+         カウントダウン
+    ======================================================= -->
+    <section
+      id="countdown-screen"
+      class="screen countdown-screen"
+    >
+      <div
+        id="countdown-number"
+        class="countdown-number"
+      >
+        3
+      </div>
+    </section>
+
+
+    <!-- ======================================================
+         ミニゲーム
+    ======================================================= -->
+    <section
+      id="minigame-screen"
+      class="screen minigame-screen"
+    >
+      <canvas
+        id="minigame-canvas"
+        width="1000"
+        height="700"
+      ></canvas>
+
+      <button
+        id="drop-button"
+        class="drop-button"
+      >
+        落とす
+      </button>
+    </section>
+
+
+    <!-- ======================================================
+         結果画面
+    ======================================================= -->
+    <section
+      id="result-screen"
+      class="screen"
+    >
+      <img
+        class="screen-bg"
+        data-asset="background"
+        alt=""
+      >
+
+      <div class="screen-shade strong"></div>
+
+      <div class="result-card">
+        <h2>
+          結果発表
+        </h2>
+
+        <p id="result-message"></p>
+
+        <div class="result-buttons">
+          <button id="retry-button">
+            もう一度
+          </button>
+
+          <button id="result-ranking-button">
+            ランキング
+          </button>
+
+          <button id="result-title-button">
+            タイトル
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ======================================================
+         ランキング
+    ======================================================= -->
+    <section
+      id="ranking-screen"
+      class="screen"
+    >
+      <img
+        class="screen-bg"
+        data-asset="background"
+        alt=""
+      >
+
+      <div class="screen-shade strong"></div>
+
+      <div class="ranking-card">
+        <h2>
+          ランキング
+        </h2>
+
+        <p class="ranking-note">
+          この端末で遊んだ本番モードの記録
+        </p>
+
+        <ol
+          id="ranking-list"
+          class="ranking-list"
+        ></ol>
+
+        <button id="ranking-back-button">
+          タイトルへ
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+
+  <script>
+    "use strict";
+
+
+    /* =========================================================
+       設定
+    ========================================================= */
+
+    const SETTINGS = {
+      // 練習・本番の時間
+      practiceSeconds: 10,
+      realSeconds: 30,
+
+      // 本番開始前
+      countdownSeconds: 3,
+
+      // 岩塩・苔・薬味の効果が続く杯数
+      effectTurns: 5,
+
+      // 何杯でミニゲームを始めるか
+      bowlsToTriggerMinigame: 10,
+
+      // ミニゲームで落とすお椀の数
+      minigameBowls: 10,
+
+      // 中心から左右何px以内なら成功か
+      // 小さいほど難しい
+      minigameGoodRange: 18,
+
+      // お椀ごとにランダムで選ぶ速度
+      minigameSpeedChoices: [
+        4.5,
+        5.5,
+        6.5,
+        7.5,
+        8.5,
+        10,
+        11.5,
+        13,
+      ],
+
+      // 下に落ちる速度
+      minigameDropSpeed: 14,
+
+      // 左右に動く範囲
+      minigameMoveLeft: 210,
+      minigameMoveRight: 790,
+
+      // ランキング保存用
+      rankingKey: "wankosoba-ranking-v1",
+    };
+
+
+    /* =========================================================
+       食べ物・危険物・効果アイテム
+    ========================================================= */
+
+    const ITEMS = [
+      // 食べられる麺
+      {
+        key: "soba",
+        name: "そば",
+        category: "noodle",
+        clicks: 1,
+        weight: 25,
+      },
+
+      {
+        key: "udon",
+        name: "うどん",
+        category: "noodle",
+        clicks: 3,
+        weight: 18,
+      },
+
+      {
+        key: "ramen",
+        name: "中華麺",
+        category: "noodle",
+        clicks: 5,
+        weight: 14,
+      },
+
+      {
+        key: "houtou",
+        name: "ほうとう",
+        category: "noodle",
+        clicks: 10,
+        weight: 8,
+      },
+
+      // 食べてはいけないもの
+      {
+        key: "dark_matter",
+        name: "ダークマター",
+        category: "bad",
+        penalty: "gameOver",
+        weight: 6,
+      },
+
+      {
+        key: "rock",
+        name: "岩",
+        category: "bad",
+        penalty: "minusBowls",
+        weight: 7,
+      },
+
+      // 効果アイテム
+      {
+        key: "rock_salt",
+        name: "岩塩",
+        category: "effect",
+        effectType: "multiply",
+        effectValue: 2,
+        weight: 7,
+      },
+
+      {
+        key: "moss",
+        name: "苔",
+        category: "effect",
+        effectType: "multiply",
+        effectValue: 3,
+        weight: 5,
+      },
+
+      {
+        key: "yakumi",
+        name: "薬味",
+        category: "effect",
+        effectType: "oneClick",
+        effectValue: 1,
+        weight: 10,
+      },
+    ];
+
+
+    /* =========================================================
+       画像読み込み
+    ========================================================= */
+
+    /*
+      透過PNGがあとから増えた場合は、
+      JPGよりも透過版を優先して使います。
+
+      例:
+      waiter_transparent.png
+      waiter.jpg
+
+      両方あれば waiter_transparent.png が優先。
+    */
+
+    const ASSET_CANDIDATES = {
+      background: [
+        "background",
+      ],
+
+      bowl: [
+        "bowl_transparent",
+        "bowl",
+      ],
+
+      waiter: [
+        "waiter_transparent",
+        "waiter",
+      ],
+
+      guide: [
+        "guide_transparent",
+        "guide",
+      ],
+
+      soba: [
+        "soba_transparent",
+        "soba",
+      ],
+
+      udon: [
+        "udon_transparent",
+        "udon",
+      ],
+
+      ramen: [
+        "ramen_transparent",
+        "ramen",
+      ],
+
+      houtou: [
+        "houtou_transparent",
+        "houtou",
+      ],
+
+      dark_matter: [
+        "dark_matter_transparent",
+        "dark_matter",
+      ],
+
+      rock: [
+        "rock_transparent",
+        "rock",
+      ],
+
+      rock_salt: [
+        "rock_salt_transparent",
+        "rock_salt",
+      ],
+
+      moss: [
+        "moss_transparent",
+        "moss",
+      ],
+
+      yakumi: [
+        "yakumi_transparent",
+        "yakumi",
+      ],
+    };
+
+
+    const ASSET_EXTENSIONS = [
+      ".png",
+      ".jpg",
+      ".jpeg",
+      ".webp",
+    ];
+
+
+    function makeAssetPaths(key) {
+      const names =
+        ASSET_CANDIDATES[key]
+        ?? [key];
+
+      const paths =
+        [];
+
+      for (const name of names) {
+        for (
+          const extension
+          of ASSET_EXTENSIONS
+        ) {
+          paths.push(
+            `assets/${name}${extension}`,
+          );
+        }
+      }
+
+      return paths;
+    }
+
+
+    function setImageAsset(
+      imageElement,
+      key,
+      options = {},
+    ) {
+      const {
+        hideWhenMissing = true,
+        onMissing = null,
+      } = options;
+
+      const paths =
+        makeAssetPaths(
+          key,
+        );
+
+      let index =
+        0;
+
+      imageElement.hidden =
+        false;
+
+      const tryNext =
+        () => {
+          if (
+            index
+            >= paths.length
+          ) {
+            imageElement
+              .removeAttribute(
+                "src",
+              );
+
+            if (
+              hideWhenMissing
+            ) {
+              imageElement.hidden =
+                true;
+            }
+
+            if (
+              typeof onMissing
+              === "function"
+            ) {
+              onMissing();
+            }
+
+            return;
+          }
+
+          imageElement.src =
+            paths[index];
+
+          index +=
+            1;
+        };
+
+      imageElement.onerror =
+        tryNext;
+
+      tryNext();
+    }
+
+
+    function loadImageAsset(
+      key,
+    ) {
+      return new Promise(
+        (resolve) => {
+          const image =
+            new Image();
+
+          const paths =
+            makeAssetPaths(
+              key,
+            );
+
+          let index =
+            0;
+
+          const tryNext =
+            () => {
+              if (
+                index
+                >= paths.length
+              ) {
+                resolve(
+                  null,
+                );
+
+                return;
+              }
+
+              image.src =
+                paths[index];
+
+              index +=
+                1;
+            };
+
+          image.onload =
+            () => {
+              resolve(
+                image,
+              );
+            };
+
+          image.onerror =
+            tryNext;
+
+          tryNext();
+        },
+      );
+    }
+
+
+    function initialiseStaticImages() {
+      const images =
+        document.querySelectorAll(
+          "img[data-asset]",
+        );
+
+      for (
+        const image
+        of images
+      ) {
+        setImageAsset(
+          image,
+          image.dataset.asset,
+        );
+      }
+    }
+
+
+    /* =========================================================
+       HTML要素
+    ========================================================= */
+
+    const screens = {
+      title:
+        document.querySelector(
+          "#title-screen",
+        ),
+
+      practice:
+        document.querySelector(
+          "#practice-screen",
+        ),
+
+      game:
+        document.querySelector(
+          "#game-screen",
+        ),
+
+      countdown:
+        document.querySelector(
+          "#countdown-screen",
+        ),
+
+      minigame:
+        document.querySelector(
+          "#minigame-screen",
+        ),
+
+      result:
+        document.querySelector(
+          "#result-screen",
+        ),
+
+      ranking:
+        document.querySelector(
+          "#ranking-screen",
+        ),
+    };
+
+
+    const elements = {
+      practiceMessage:
+        document.querySelector(
+          "#practice-message",
+        ),
+
+      practiceNextButton:
+        document.querySelector(
+          "#practice-next-button",
+        ),
+
+      modeLabel:
+        document.querySelector(
+          "#mode-label",
+        ),
+
+      bowlCountLabel:
+        document.querySelector(
+          "#bowl-count-label",
+        ),
+
+      timeLabel:
+        document.querySelector(
+          "#time-label",
+        ),
+
+      timeBarFill:
+        document.querySelector(
+          "#time-bar-fill",
+        ),
+
+      effectLabel:
+        document.querySelector(
+          "#effect-label",
+        ),
+
+      leftBowlStack:
+        document.querySelector(
+          "#left-bowl-stack",
+        ),
+
+      speechText:
+        document.querySelector(
+          "#speech-text",
+        ),
+
+      currentItemImage:
+        document.querySelector(
+          "#current-item-image",
+        ),
+
+      itemFallback:
+        document.querySelector(
+          "#item-fallback",
+        ),
+
+      clickProgress:
+        document.querySelector(
+          "#click-progress",
+        ),
+
+      floatingMessage:
+        document.querySelector(
+          "#floating-message",
+        ),
+
+      countdownNumber:
+        document.querySelector(
+          "#countdown-number",
+        ),
+
+      resultMessage:
+        document.querySelector(
+          "#result-message",
+        ),
+
+      rankingList:
+        document.querySelector(
+          "#ranking-list",
+        ),
+
+      minigameCanvas:
+        document.querySelector(
+          "#minigame-canvas",
+        ),
+
+      dropButton:
+        document.querySelector(
+          "#drop-button",
+        ),
+    };
+
+
+    /* =========================================================
+       練習説明
+    ========================================================= */
+
+    const PRACTICE_MESSAGES = [
+      (
+        "ここは練習モードです。"
+        + "まずは、わんこそばの流れを確認します。"
+      ),
+
+      (
+        "そば・うどん・中華麺・ほうとうは食べられます。"
+        + "必要なクリック回数がそれぞれ違います。"
+      ),
+
+      (
+        "ダークマターと岩は食べちゃダメです。"
+        + "出てきたら「食べない」を押して回避します。"
+      ),
+
+      (
+        "岩塩はクリック数2倍、苔は3倍、"
+        + "薬味は全部1回になります。"
+        + "効果は次の5皿に続きます。"
+      ),
+
+      (
+        "お椀が10個たまるとミニゲームです。"
+        + "左右に動くお椀が中央に来たら"
+        + "「落とす」を押します。"
+      ),
+
+      (
+        "説明はここまで。"
+        + "次は10秒の練習プレイです。"
+      ),
+    ];
+
+
+    let practiceMessageIndex =
+      0;
+
+
+    /* =========================================================
+       通常ゲームの状態
+    ========================================================= */
+
+    const gameState = {
+      mode:
+        "practice",
+
+      running:
+        false,
+
+      paused:
+        false,
+
+      gameOver:
+        false,
+
+      totalBowls:
+        0,
+
+      bowlsSinceMinigame:
+        0,
+
+      currentItem:
+        null,
+
+      currentClicks:
+        0,
+
+      requiredClicks:
+        0,
+
+      activeEffect:
+        null,
+
+      effectTurnsLeft:
+        0,
+
+      timeLeft:
+        0,
+
+      timeBarMax:
+        0,
+
+      endTimestamp:
+        0,
+    };
+
+
+    let timerAnimationId =
+      null;
+
+    let countdownTimerId =
+      null;
+
+    let floatingMessageTimerId =
+      null;
+
+
+    /* =========================================================
+       ミニゲームの状態
+    ========================================================= */
+
+    const minigameState = {
+      active:
+        false,
+
+      phase:
+        "idle",
+
+      currentIndex:
+        0,
+
+      stackedCount:
+        0,
+
+      bowlX:
+        500,
+
+      bowlY:
+        145,
+
+      moveSpeed:
+        8,
+
+      bowlImage:
+        null,
+
+      bonusSeconds:
+        0,
+    };
+
+
+    let minigameAnimationId =
+      null;
+
+    let minigameSpawnTimerId =
+      null;
+
+
+    /* =========================================================
+       画面切り替え
+    ========================================================= */
+
+    function showScreen(
+      screenName,
+    ) {
+      for (
+        const screen
+        of Object.values(
+          screens,
+        )
+      ) {
+        screen.classList.remove(
+          "active",
+        );
+      }
+
+      screens[
+        screenName
+      ]
+        .classList
+        .add(
+          "active",
+        );
+    }
+
+
+    function showTitle() {
+      stopGameplay();
+
+      stopMinigameAnimation();
+
+      showScreen(
+        "title",
+      );
+    }
+
+
+    /* =========================================================
+       練習説明
+    ========================================================= */
+
+    function startPracticeExplanation() {
+      stopGameplay();
+
+      stopMinigameAnimation();
+
+      practiceMessageIndex =
+        0;
+
+      updatePracticeMessage();
+
+      showScreen(
+        "practice",
+      );
+    }
+
+
+    function updatePracticeMessage() {
+      elements
+        .practiceMessage
+        .textContent =
+          PRACTICE_MESSAGES[
+            practiceMessageIndex
+          ];
+
+      const isLastMessage =
+        (
+          practiceMessageIndex
+          === PRACTICE_MESSAGES.length - 1
+        );
+
+      elements
+        .practiceNextButton
+        .textContent =
+          isLastMessage
+            ? "練習プレイへ"
+            : "次へ";
+    }
+
+
+    function nextPracticeMessage() {
+      const isLastMessage =
+        (
+          practiceMessageIndex
+          === PRACTICE_MESSAGES.length - 1
+        );
+
+      if (
+        isLastMessage
+      ) {
+        startGame(
+          "practice",
+        );
+
+        return;
+      }
+
+      practiceMessageIndex +=
+        1;
+
+      updatePracticeMessage();
+    }
+
+
+    /* =========================================================
+       通常ゲーム開始
+    ========================================================= */
+
+    function resetGameState(
+      mode,
+    ) {
+      stopGameplay();
+
+      stopMinigameAnimation();
+
+      gameState.mode =
+        mode;
+
+      gameState.running =
+        false;
+
+      gameState.paused =
+        false;
+
+      gameState.gameOver =
+        false;
+
+      gameState.totalBowls =
+        0;
+
+      gameState.bowlsSinceMinigame =
+        0;
+
+      gameState.currentItem =
+        null;
+
+      gameState.currentClicks =
+        0;
+
+      gameState.requiredClicks =
+        0;
+
+      gameState.activeEffect =
+        null;
+
+      gameState.effectTurnsLeft =
+        0;
+
+      gameState.timeLeft =
+        (
+          mode
+          === "practice"
+        )
+          ? SETTINGS.practiceSeconds
+          : SETTINGS.realSeconds;
+
+      gameState.timeBarMax =
+        gameState.timeLeft;
+
+      elements
+        .leftBowlStack
+        .replaceChildren();
+
+      updateHud();
+    }
+
+
+    function startGame(
+      mode,
+    ) {
+      resetGameState(
+        mode,
+      );
+
+      if (
+        mode
+        === "real"
+      ) {
+        startCountdown();
+
+        return;
+      }
+
+      beginGameplay();
+    }
+
+
+    function startCountdown() {
+      let count =
+        SETTINGS.countdownSeconds;
+
+      showScreen(
+        "countdown",
+      );
+
+      elements
+        .countdownNumber
+        .textContent =
+          String(
+            count,
+          );
+
+      countdownTimerId =
+        window.setInterval(
+          () => {
+            count -=
+              1;
+
+            if (
+              count
+              <= 0
+            ) {
+              window.clearInterval(
+                countdownTimerId,
+              );
+
+              countdownTimerId =
+                null;
+
+              beginGameplay();
+
+              return;
+            }
+
+            elements
+              .countdownNumber
+              .textContent =
+                String(
+                  count,
+                );
+          },
+          1000,
+        );
+    }
+
+
+    function beginGameplay() {
+      showScreen(
+        "game",
+      );
+
+      gameState.running =
+        true;
+
+      gameState.endTimestamp =
+        (
+          performance.now()
+          + gameState.timeLeft
+            * 1000
+        );
+
+      nextItem();
+
+      updateTimer();
+    }
+
+
+    function updateTimer() {
+      if (
+        !gameState.running
+        || gameState.paused
+        || gameState.gameOver
+      ) {
+        return;
+      }
+
+      gameState.timeLeft =
+        Math.max(
+          0,
+          (
+            gameState.endTimestamp
+            - performance.now()
+          )
+          / 1000,
+        );
+
+      updateHud();
+
+      if (
+        gameState.timeLeft
+        <= 0
+      ) {
+        finishGame();
+
+        return;
+      }
+
+      timerAnimationId =
+        requestAnimationFrame(
+          updateTimer,
+        );
+    }
+
+
+    function updateHud() {
+      const modeText =
+        (
+          gameState.mode
+          === "practice"
+        )
+          ? "練習"
+          : "本番";
+
+      elements
+        .modeLabel
+        .textContent =
+          `モード: ${modeText}`;
+
+      elements
+        .bowlCountLabel
+        .textContent =
+          (
+            `杯数: `
+            + `${gameState.totalBowls}`
+          );
+
+      elements
+        .timeLabel
+        .textContent =
+          (
+            `残り `
+            + `${Math.ceil(gameState.timeLeft)}`
+            + ` 秒`
+          );
+
+      const ratio =
+        (
+          gameState.timeBarMax
+          > 0
+        )
+          ? Math.min(
+              1,
+              Math.max(
+                0,
+                (
+                  gameState.timeLeft
+                  / gameState.timeBarMax
+                ),
+              ),
+            )
+          : 0;
+
+      elements
+        .timeBarFill
+        .style
+        .width =
+          `${ratio * 100}%`;
+
+      if (
+        !gameState.activeEffect
+      ) {
+        elements
+          .effectLabel
+          .textContent =
+            "効果: なし";
+
+        return;
+      }
+
+      elements
+        .effectLabel
+        .textContent =
+          (
+            `効果: `
+            + `${gameState.activeEffect.label}`
+            + ` / 残り`
+            + `${gameState.effectTurnsLeft}`
+            + `皿`
+          );
+    }
+
+
+    /* =========================================================
+       アイテム抽選・クリック数
+    ========================================================= */
+
+    function chooseWeightedItem() {
+      const totalWeight =
+        ITEMS.reduce(
+          (
+            sum,
+            item,
+          ) => {
+            return (
+              sum
+              + item.weight
+            );
+          },
+          0,
+        );
+
+      let randomValue =
+        Math.random()
+        * totalWeight;
+
+      for (
+        const item
+        of ITEMS
+      ) {
+        randomValue -=
+          item.weight;
+
+        if (
+          randomValue
+          <= 0
+        ) {
+          return item;
+        }
+      }
+
+      return ITEMS[
+        ITEMS.length - 1
+      ];
+    }
+
+
+    function calculateRequiredClicks(
+      item,
+    ) {
+      if (
+        item.category
+        !== "noodle"
+      ) {
+        return 0;
+      }
+
+      if (
+        !gameState.activeEffect
+      ) {
+        return item.clicks;
+      }
+
+      if (
+        gameState
+          .activeEffect
+          .type
+        === "multiply"
+      ) {
+        return (
+          item.clicks
+          * gameState
+            .activeEffect
+            .value
+        );
+      }
+
+      if (
+        gameState
+          .activeEffect
+          .type
+        === "oneClick"
+      ) {
+        return 1;
+      }
+
+      return item.clicks;
+    }
+
+
+    function nextItem() {
+      if (
+        !gameState.running
+        || gameState.gameOver
+      ) {
+        return;
+      }
+
+      gameState.currentItem =
+        chooseWeightedItem();
+
+      gameState.currentClicks =
+        0;
+
+      gameState.requiredClicks =
+        calculateRequiredClicks(
+          gameState.currentItem,
+        );
+
+      renderCurrentItem();
+    }
+
+
+    function renderCurrentItem() {
+      const item =
+        gameState.currentItem;
+
+      if (
+        !item
+      ) {
+        return;
+      }
+
+      let speech =
+        `次は ${item.name}！`;
+
+      if (
+        item.category
+        === "noodle"
+      ) {
+        speech +=
+          (
+            `\n`
+            + `${gameState.requiredClicks}`
+            + `回クリックで食べる！`
+          );
+      }
+
+      else if (
+        item.category
+        === "bad"
+      ) {
+        speech +=
+          "\nこれは食べちゃダメ！";
+      }
+
+      else {
+        speech +=
+          "\n食べると効果発動！";
+      }
+
+      elements
+        .speechText
+        .textContent =
+          speech;
+
+      elements
+        .itemFallback
+        .classList
+        .add(
+          "hidden",
+        );
+
+      elements
+        .currentItemImage
+        .hidden =
+          false;
+
+      setImageAsset(
+        elements
+          .currentItemImage,
+
+        item.key,
+
+        {
+          onMissing:
+            () => {
+              elements
+                .currentItemImage
+                .hidden =
+                  true;
+
+              elements
+                .itemFallback
+                .textContent =
+                  item.name;
+
+              elements
+                .itemFallback
+                .classList
+                .remove(
+                  "hidden",
+                );
+            },
+        },
+      );
+
+      if (
+        item.category
+        === "noodle"
+      ) {
+        elements
+          .clickProgress
+          .textContent =
+            (
+              `${gameState.currentClicks}`
+              + ` / `
+              + `${gameState.requiredClicks}`
+            );
+      }
+
+      else if (
+        item.category
+        === "bad"
+      ) {
+        elements
+          .clickProgress
+          .textContent =
+            "食べちゃダメ！";
+      }
+
+      else {
+        elements
+          .clickProgress
+          .textContent =
+            "効果アイテム";
+      }
+    }
+
+
+    /* =========================================================
+       食べる・食べない
+    ========================================================= */
+
+    function eatCurrentItem() {
+      if (
+        !gameState.running
+        || gameState.gameOver
+        || !gameState.currentItem
+      ) {
+        return;
+      }
+
+      const item =
+        gameState.currentItem;
+
+      if (
+        item.category
+        === "noodle"
+      ) {
+        gameState.currentClicks +=
+          1;
+
+        if (
+          gameState.currentClicks
+          >= gameState.requiredClicks
+        ) {
+          eatNoodleSuccessfully();
+
+          return;
+        }
+
+        renderCurrentItem();
+
+        return;
+      }
+
+      if (
+        item.category
+        === "bad"
+      ) {
+        handleBadItem(
+          item,
+        );
+
+        return;
+      }
+
+      applyEffect(
+        item,
+      );
+
+      nextItem();
+    }
+
+
+    function skipCurrentItem() {
+      if (
+        !gameState.running
+        || gameState.gameOver
+        || !gameState.currentItem
+      ) {
+        return;
+      }
+
+      if (
+        gameState
+          .currentItem
+          .category
+        === "bad"
+      ) {
+        showFloatingMessage(
+          "回避成功！",
+        );
+      }
+
+      else {
+        showFloatingMessage(
+          (
+            `${gameState.currentItem.name}`
+            + `を見送った`
+          ),
+        );
+      }
+
+      nextItem();
+    }
+
+
+    function eatNoodleSuccessfully() {
+      gameState.totalBowls +=
+        1;
+
+      gameState.bowlsSinceMinigame +=
+        1;
+
+      appendLeftBowl();
+
+      reduceEffectTurn();
+
+      updateHud();
+
+      if (
+        gameState.bowlsSinceMinigame
+        >= SETTINGS.bowlsToTriggerMinigame
+      ) {
+        gameState.bowlsSinceMinigame =
+          0;
+
+        startMinigame();
+
+        return;
+      }
+
+      nextItem();
+    }
+
+
+    function appendLeftBowl() {
+      const slot =
+        document.createElement(
+          "div",
+        );
+
+      slot.className =
+        "bowl-slot";
+
+      const image =
+        document.createElement(
+          "img",
+        );
+
+      image.alt =
+        "お椀";
+
+      slot.append(
+        image,
+      );
+
+      setImageAsset(
+        image,
+
+        "bowl",
+
+        {
+          onMissing:
+            () => {
+              image.remove();
+
+              slot.textContent =
+                "🥣";
+            },
+        },
+      );
+
+      elements
+        .leftBowlStack
+        .append(
+          slot,
+        );
+
+      while (
+        elements
+          .leftBowlStack
+          .children
+          .length
+        > 45
+      ) {
+        elements
+          .leftBowlStack
+          .firstElementChild
+          .remove();
+      }
+    }
+
+
+    function removeLeftBowls(
+      count,
+    ) {
+      for (
+        let index = 0;
+        index < count;
+        index += 1
+      ) {
+        elements
+          .leftBowlStack
+          .lastElementChild
+          ?.remove();
+      }
+    }
+
+
+    /* =========================================================
+       特殊効果・危険物
+    ========================================================= */
+
+    function reduceEffectTurn() {
+      if (
+        !gameState.activeEffect
+      ) {
+        return;
+      }
+
+      gameState.effectTurnsLeft -=
+        1;
+
+      if (
+        gameState.effectTurnsLeft
+        <= 0
+      ) {
+        gameState.activeEffect =
+          null;
+
+        gameState.effectTurnsLeft =
+          0;
+      }
+    }
+
+
+    function handleBadItem(
+      item,
+    ) {
+      if (
+        item.penalty
+        === "gameOver"
+      ) {
+        finishGame(
+          "ダークマターを食べてしまった……",
+        );
+
+        return;
+      }
+
+      if (
+        item.penalty
+        === "minusBowls"
+      ) {
+        const lostBowls =
+          Math.min(
+            3,
+            gameState.totalBowls,
+          );
+
+        gameState.totalBowls -=
+          lostBowls;
+
+        removeLeftBowls(
+          lostBowls,
+        );
+
+        showFloatingMessage(
+          (
+            `岩を食べた！ `
+            + `お椀が`
+            + `${lostBowls}`
+            + `個減った！`
+          ),
+        );
+
+        updateHud();
+
+        nextItem();
+      }
+    }
+
+
+    function applyEffect(
+      item,
+    ) {
+      if (
+        item.effectType
+        === "multiply"
+      ) {
+        gameState.activeEffect = {
+          type:
+            "multiply",
+
+          value:
+            item.effectValue,
+
+          label:
+            (
+              `${item.name}: `
+              + `クリック×`
+              + `${item.effectValue}`
+            ),
+        };
+
+        gameState.effectTurnsLeft =
+          SETTINGS.effectTurns;
+
+        showFloatingMessage(
+          (
+            `${item.name}発動！ `
+            + `次の`
+            + `${SETTINGS.effectTurns}`
+            + `皿はクリック×`
+            + `${item.effectValue}`
+          ),
+        );
+
+        updateHud();
+
+        return;
+      }
+
+      if (
+        item.effectType
+        === "oneClick"
+      ) {
+        gameState.activeEffect = {
+          type:
+            "oneClick",
+
+          value:
+            1,
+
+          label:
+            `${item.name}: 全部1回`,
+        };
+
+        gameState.effectTurnsLeft =
+          SETTINGS.effectTurns;
+
+        showFloatingMessage(
+          (
+            `${item.name}発動！ `
+            + `次の`
+            + `${SETTINGS.effectTurns}`
+            + `皿は全部1回`
+          ),
+        );
+
+        updateHud();
+      }
+    }
+
+
+    function showFloatingMessage(
+      message,
+    ) {
+      window.clearTimeout(
+        floatingMessageTimerId,
+      );
+
+      elements
+        .floatingMessage
+        .textContent =
+          message;
+
+      elements
+        .floatingMessage
+        .classList
+        .remove(
+          "hidden",
+        );
+
+      floatingMessageTimerId =
+        window.setTimeout(
+          () => {
+            elements
+              .floatingMessage
+              .classList
+              .add(
+                "hidden",
+              );
+          },
+          750,
+        );
+    }
+
+
+    /* =========================================================
+       ミニゲーム開始
+    ========================================================= */
+
+    async function startMinigame() {
+      gameState.paused =
+        true;
+
+      gameState.running =
+        false;
+
+      cancelAnimationFrame(
+        timerAnimationId,
+      );
+
+      gameState.timeLeft =
+        Math.max(
+          0,
+          (
+            gameState.endTimestamp
+            - performance.now()
+          )
+          / 1000,
+        );
+
+      stopMinigameAnimation();
+
+      minigameState.active =
+        true;
+
+      minigameState.phase =
+        "idle";
+
+      minigameState.currentIndex =
+        0;
+
+      minigameState.stackedCount =
+        0;
+
+      minigameState.bonusSeconds =
+        0;
+
+      minigameState.bowlImage =
+        await loadImageAsset(
+          "bowl",
+        );
+
+      elements
+        .dropButton
+        .textContent =
+          "落とす";
+
+      showScreen(
+        "minigame",
+      );
+
+      spawnMinigameBowl();
+    }
+
+
+    function spawnMinigameBowl() {
+      if (
+        !minigameState.active
+      ) {
+        return;
+      }
+
+      if (
+        minigameState.currentIndex
+        >= SETTINGS.minigameBowls
+      ) {
+        finishMinigame();
+
+        return;
+      }
+
+      minigameState.currentIndex +=
+        1;
+
+      minigameState.bowlY =
+        145;
+
+      const speedIndex =
+        Math.floor(
+          Math.random()
+          * SETTINGS
+            .minigameSpeedChoices
+            .length,
+        );
+
+      minigameState.moveSpeed =
+        SETTINGS
+          .minigameSpeedChoices[
+            speedIndex
+          ];
+
+      const startsFromLeft =
+        (
+          Math.random()
+          < 0.5
+        );
+
+      if (
+        startsFromLeft
+      ) {
+        minigameState.bowlX =
+          SETTINGS
+            .minigameMoveLeft;
+      }
+
+      else {
+        minigameState.bowlX =
+          SETTINGS
+            .minigameMoveRight;
+
+        minigameState.moveSpeed *=
+          -1;
+      }
+
+      minigameState.phase =
+        "moving";
+
+      animateMinigame();
+    }
+
+
+    function animateMinigame() {
+      if (
+        !minigameState.active
+      ) {
+        return;
+      }
+
+      if (
+        minigameState.phase
+        === "moving"
+      ) {
+        minigameState.bowlX +=
+          minigameState.moveSpeed;
+
+        if (
+          minigameState.bowlX
+          <= SETTINGS
+            .minigameMoveLeft
+        ) {
+          minigameState.bowlX =
+            SETTINGS
+              .minigameMoveLeft;
+
+          minigameState.moveSpeed =
+            Math.abs(
+              minigameState.moveSpeed,
+            );
+        }
+
+        if (
+          minigameState.bowlX
+          >= SETTINGS
+            .minigameMoveRight
+        ) {
+          minigameState.bowlX =
+            SETTINGS
+              .minigameMoveRight;
+
+          minigameState.moveSpeed =
+            -Math.abs(
+              minigameState.moveSpeed,
+            );
+        }
+      }
+
+      if (
+        minigameState.phase
+        === "dropping"
+      ) {
+        minigameState.bowlY +=
+          SETTINGS
+            .minigameDropSpeed;
+
+        const landingY =
+          (
+            595
+            - minigameState.stackedCount
+              * 34
+          );
+
+        if (
+          minigameState.bowlY
+          >= landingY
+        ) {
+          minigameState.bowlY =
+            landingY;
+
+          checkMinigameLanding();
+
+          return;
+        }
+      }
+
+      drawMinigame();
+
+      minigameAnimationId =
+        requestAnimationFrame(
+          animateMinigame,
+        );
+    }
+
+
+    function dropMinigameBowl() {
+      if (
+        !minigameState.active
+        || minigameState.phase
+          !== "moving"
+      ) {
+        return;
+      }
+
+      minigameState.phase =
+        "dropping";
+    }
+
+
+    function checkMinigameLanding() {
+      minigameState.phase =
+        "waiting";
+
+      const distanceFromCenter =
+        Math.abs(
+          minigameState.bowlX
+          - 500,
+        );
+
+      const succeeded =
+        (
+          distanceFromCenter
+          <= SETTINGS
+            .minigameGoodRange
+        );
+
+      if (
+        succeeded
+      ) {
+        minigameState.stackedCount +=
+          1;
+      }
+
+      drawMinigame(
+        succeeded
+          ? "成功！"
+          : "ずれた！",
+      );
+
+      minigameSpawnTimerId =
+        window.setTimeout(
+          spawnMinigameBowl,
+          480,
+        );
+    }
+
+
+    function drawMinigame(
+      message = "",
+    ) {
+      const canvas =
+        elements.minigameCanvas;
+
+      const context =
+        canvas.getContext(
+          "2d",
+        );
+
+      context.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+      );
+
+      // 背景
+      context.fillStyle =
+        "#d8f2ff";
+
+      context.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+      );
+
+      // タイトル
+      context.fillStyle =
+        "#203040";
+
+      context.textAlign =
+        "center";
+
+      context.font =
+        "bold 42px sans-serif";
+
+      context.fillText(
+        "ミニゲーム：お椀をまっすぐ落とせ！",
+        500,
+        62,
+      );
+
+      context.font =
+        "bold 22px sans-serif";
+
+      context.fillText(
+        "左右に動くお椀が中央に来た瞬間に「落とす」を押す",
+        500,
+        104,
+      );
+
+      // 成功数
+      context.textAlign =
+        "left";
+
+      context.font =
+        "bold 27px sans-serif";
+
+      context.fillText(
+        (
+          `${minigameState.currentIndex}`
+          + `/`
+          + `${SETTINGS.minigameBowls}`
+        ),
+        72,
+        155,
+      );
+
+      context.font =
+        "bold 22px sans-serif";
+
+      context.fillText(
+        (
+          `成功: `
+          + `${minigameState.stackedCount}`
+          + `個`
+        ),
+        72,
+        190,
+      );
+
+      // 狭い成功範囲
+      context.fillStyle =
+        "rgba(76, 124, 255, 0.13)";
+
+      context.fillRect(
+        (
+          500
+          - SETTINGS.minigameGoodRange
+        ),
+        130,
+        (
+          SETTINGS.minigameGoodRange
+          * 2
+        ),
+        485,
+      );
+
+      // 中央線
+      context.strokeStyle =
+        "#4b7cff";
+
+      context.setLineDash([
+        9,
+        7,
+      ]);
+
+      context.lineWidth =
+        3;
+
+      context.beginPath();
+
+      context.moveTo(
+        500,
+        130,
+      );
+
+      context.lineTo(
+        500,
+        615,
+      );
+
+      context.stroke();
+
+      context.setLineDash([]);
+
+      // 台
+      context.fillStyle =
+        "#7b4a24";
+
+      context.fillRect(
+        300,
+        615,
+        400,
+        22,
+      );
+
+      // 積み上げたお椀
+      for (
+        let index = 0;
+        index
+          < minigameState
+            .stackedCount;
+        index += 1
+      ) {
+        const y =
+          (
+            590
+            - index * 34
+          );
+
+        drawMinigameBowl(
+          context,
+          500,
+          y,
+        );
+      }
+
+      // 今動いているお椀
+      if (
+        minigameState.phase
+        !== "waiting"
+      ) {
+        drawMinigameBowl(
+          context,
+          minigameState.bowlX,
+          minigameState.bowlY,
+        );
+      }
+
+      // 成功・失敗
+      if (
+        message
+      ) {
+        context.fillStyle =
+          "#203040";
+
+        context.textAlign =
+          "center";
+
+        context.font =
+          "bold 34px sans-serif";
+
+        context.fillText(
+          message,
+          500,
+          240,
+        );
+      }
+    }
+
+
+    function drawMinigameBowl(
+      context,
+      x,
+      y,
+    ) {
+      const image =
+        minigameState.bowlImage;
+
+      if (
+        image
+      ) {
+        const width =
+          190;
+
+        const height =
+          110;
+
+        context.drawImage(
+          image,
+          x - width / 2,
+          y - height / 2,
+          width,
+          height,
+        );
+
+        return;
+      }
+
+      // bowl.jpg がなければ仮のお椀
+      context.fillStyle =
+        "#fff4cf";
+
+      context.strokeStyle =
+        "#4b2e16";
+
+      context.lineWidth =
+        3;
+
+      context.beginPath();
+
+      context.ellipse(
+        x,
+        y,
+        68,
+        20,
+        0,
+        0,
+        Math.PI * 2,
+      );
+
+      context.fill();
+
+      context.stroke();
+    }
+
+
+    function calculateMinigameBonus() {
+      // 10個成功
+      if (
+        minigameState.stackedCount
+        === 10
+      ) {
+        return 20;
+      }
+
+      // 5〜9個成功
+      if (
+        minigameState.stackedCount
+        >= 5
+      ) {
+        return (
+          minigameState.stackedCount
+          + 5
+        );
+      }
+
+      // 0〜4個成功
+      return (
+        minigameState.stackedCount
+      );
+    }
+
+
+    function finishMinigame() {
+      stopMinigameAnimation();
+
+      minigameState.active =
+        false;
+
+      minigameState.phase =
+        "finished";
+
+      minigameState.bonusSeconds =
+        calculateMinigameBonus();
+
+      const canvas =
+        elements.minigameCanvas;
+
+      const context =
+        canvas.getContext(
+          "2d",
+        );
+
+      context.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+      );
+
+      context.fillStyle =
+        "#d8f2ff";
+
+      context.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+      );
+
+      context.fillStyle =
+        "#fff4cf";
+
+      context.strokeStyle =
+        "#4b2e16";
+
+      context.lineWidth =
+        4;
+
+      context.fillRect(
+        235,
+        170,
+        530,
+        300,
+      );
+
+      context.strokeRect(
+        235,
+        170,
+        530,
+        300,
+      );
+
+      context.fillStyle =
+        "#203040";
+
+      context.textAlign =
+        "center";
+
+      context.font =
+        "bold 48px sans-serif";
+
+      context.fillText(
+        "ミニゲーム終了！",
+        500,
+        245,
+      );
+
+      context.font =
+        "bold 30px sans-serif";
+
+      context.fillText(
+        (
+          `積めたお椀: `
+          + `${minigameState.stackedCount}`
+          + `個`
+        ),
+        500,
+        325,
+      );
+
+      context.fillText(
+        (
+          `ボーナスタイム: +`
+          + `${minigameState.bonusSeconds}`
+          + `秒`
+        ),
+        500,
+        375,
+      );
+
+      elements
+        .dropButton
+        .textContent =
+          "ゲームに戻る";
+    }
+
+
+    function returnFromMinigame() {
+      const bonusSeconds =
+        minigameState
+          .bonusSeconds;
+
+      const stackedCount =
+        minigameState
+          .stackedCount;
+
+      elements
+        .dropButton
+        .textContent =
+          "落とす";
+
+      gameState.paused =
+        false;
+
+      gameState.running =
+        true;
+
+      gameState.timeLeft +=
+        bonusSeconds;
+
+      gameState.timeBarMax +=
+        bonusSeconds;
+
+      gameState.endTimestamp =
+        (
+          performance.now()
+          + gameState.timeLeft
+            * 1000
+        );
+
+      showScreen(
+        "game",
+      );
+
+      nextItem();
+
+      showFloatingMessage(
+        (
+          `ミニゲーム: `
+          + `${stackedCount}`
+          + `個成功！ +`
+          + `${bonusSeconds}`
+          + `秒`
+        ),
+      );
+
+      updateHud();
+
+      updateTimer();
+    }
+
+
+    function handleDropButton() {
+      if (
+        minigameState.phase
+        === "finished"
+      ) {
+        returnFromMinigame();
+
+        return;
+      }
+
+      dropMinigameBowl();
+    }
+
+
+    function stopMinigameAnimation() {
+      cancelAnimationFrame(
+        minigameAnimationId,
+      );
+
+      window.clearTimeout(
+        minigameSpawnTimerId,
+      );
+    }
+
+
+    /* =========================================================
+       結果画面
+    ========================================================= */
+
+    function finishGame(
+      forceMessage = "",
+    ) {
+      if (
+        gameState.gameOver
+      ) {
+        return;
+      }
+
+      gameState.running =
+        false;
+
+      gameState.gameOver =
+        true;
+
+      cancelAnimationFrame(
+        timerAnimationId,
+      );
+
+      let resultText =
+        "";
+
+      if (
+        forceMessage
+      ) {
+        resultText +=
+          `${forceMessage}\n`;
+      }
+
+      resultText +=
+        (
+          `あなたの記録: `
+          + `${gameState.totalBowls}`
+          + `杯`
+        );
+
+      if (
+        gameState.mode
+        === "real"
+      ) {
+        const {
+          rank,
+          total,
+        } =
+          addRankingScore(
+            gameState.totalBowls,
+          );
+
+        resultText +=
+          (
+            `\nあなたは `
+            + `${total}`
+            + `人中 `
+            + `${rank}`
+            + `位 です。`
+          );
+      }
+
+      else {
+        resultText +=
+          (
+            "\n練習モードなので"
+            + "ランキングには登録されません。"
+          );
+      }
+
+      elements
+        .resultMessage
+        .textContent =
+          resultText;
+
+      showScreen(
+        "result",
+      );
+    }
+
+
+    function stopGameplay() {
+      cancelAnimationFrame(
+        timerAnimationId,
+      );
+
+      window.clearInterval(
+        countdownTimerId,
+      );
+
+      gameState.running =
+        false;
+    }
+
+
+    /* =========================================================
+       ランキング
+    ========================================================= */
+
+    function loadRanking() {
+      try {
+        const ranking =
+          JSON.parse(
+            localStorage.getItem(
+              SETTINGS.rankingKey,
+            )
+            ?? "[]",
+          );
+
+        return Array.isArray(
+          ranking,
+        )
+          ? ranking
+          : [];
+      }
+
+      catch {
+        return [];
+      }
+    }
+
+
+    function saveRanking(
+      ranking,
+    ) {
+      localStorage.setItem(
+        SETTINGS.rankingKey,
+
+        JSON.stringify(
+          ranking,
+        ),
+      );
+    }
+
+
+    function addRankingScore(
+      score,
+    ) {
+      const ranking =
+        loadRanking();
+
+      const record = {
+        id:
+          (
+            crypto.randomUUID?.()
+            ?? (
+              `${Date.now()}`
+              + `-`
+              + `${Math.random()}`
+            )
+          ),
+
+        score,
+
+        createdAt:
+          new Date()
+            .toLocaleString(
+              "ja-JP",
+            ),
+      };
+
+      ranking.push(
+        record,
+      );
+
+      ranking.sort(
+        (
+          a,
+          b,
+        ) => {
+          return (
+            b.score
+            - a.score
+          );
+        },
+      );
+
+      saveRanking(
+        ranking,
+      );
+
+      const rank =
+        (
+          ranking.findIndex(
+            (
+              row,
+            ) => {
+              return (
+                row.id
+                === record.id
+              );
+            },
+          )
+          + 1
+        );
+
+      return {
+        rank,
+
+        total:
+          ranking.length,
+      };
+    }
+
+
+    function showRanking() {
+      const ranking =
+        loadRanking()
+          .sort(
+            (
+              a,
+              b,
+            ) => {
+              return (
+                b.score
+                - a.score
+              );
+            },
+          )
+          .slice(
+            0,
+            10,
+          );
+
+      elements
+        .rankingList
+        .replaceChildren();
+
+      if (
+        ranking.length
+        === 0
+      ) {
+        const item =
+          document.createElement(
+            "li",
+          );
+
+        item.textContent =
+          "まだ記録がありません。";
+
+        elements
+          .rankingList
+          .append(
+            item,
+          );
+      }
+
+      else {
+        for (
+          const record
+          of ranking
+        ) {
+          const item =
+            document.createElement(
+              "li",
+            );
+
+          item.textContent =
+            (
+              `${record.score}`
+              + `杯　`
+              + `${record.createdAt}`
+            );
+
+          elements
+            .rankingList
+            .append(
+              item,
+            );
+        }
+      }
+
+      showScreen(
+        "ranking",
+      );
+    }
+
+
+    /* =========================================================
+       ボタン登録
+    ========================================================= */
+
+    document
+      .querySelector(
+        "#practice-menu-button",
+      )
+      .addEventListener(
+        "click",
+        startPracticeExplanation,
+      );
+
+
+    document
+      .querySelector(
+        "#real-menu-button",
+      )
+      .addEventListener(
+        "click",
+        () => {
+          startGame(
+            "real",
+          );
+        },
+      );
+
+
+    document
+      .querySelector(
+        "#ranking-menu-button",
+      )
+      .addEventListener(
+        "click",
+        showRanking,
+      );
+
+
+    document
+      .querySelector(
+        "#practice-next-button",
+      )
+      .addEventListener(
+        "click",
+        nextPracticeMessage,
+      );
+
+
+    document
+      .querySelector(
+        "#practice-back-button",
+      )
+      .addEventListener(
+        "click",
+        showTitle,
+      );
+
+
+    document
+      .querySelector(
+        "#eat-button",
+      )
+      .addEventListener(
+        "click",
+        eatCurrentItem,
+      );
+
+
+    document
+      .querySelector(
+        "#skip-button",
+      )
+      .addEventListener(
+        "click",
+        skipCurrentItem,
+      );
+
+
+    elements
+      .dropButton
+      .addEventListener(
+        "click",
+        handleDropButton,
+      );
+
+
+    document
+      .querySelector(
+        "#retry-button",
+      )
+      .addEventListener(
+        "click",
+        () => {
+          startGame(
+            gameState.mode,
+          );
+        },
+      );
+
+
+    document
+      .querySelector(
+        "#result-ranking-button",
+      )
+      .addEventListener(
+        "click",
+        showRanking,
+      );
+
+
+    document
+      .querySelector(
+        "#result-title-button",
+      )
+      .addEventListener(
+        "click",
+        showTitle,
+      );
+
+
+    document
+      .querySelector(
+        "#ranking-back-button",
+      )
+      .addEventListener(
+        "click",
+        showTitle,
+      );
+
+
+    /*
+      PCでスペースキーを押しても、
+      ミニゲームのお椀を落とせる。
+    */
+
+    window.addEventListener(
+      "keydown",
+      (
+        event,
+      ) => {
+        if (
+          event.code
+          !== "Space"
+        ) {
+          return;
+        }
+
+        if (
+          !screens
+            .minigame
+            .classList
+            .contains(
+              "active",
+            )
+        ) {
+          return;
+        }
+
+        event.preventDefault();
+
+        handleDropButton();
+      },
+    );
+
+
+    /* =========================================================
+       起動
+    ========================================================= */
+
+    initialiseStaticImages();
+
+    showTitle();
+  </script>
+</body>
+</html>
