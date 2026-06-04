@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -11,223 +12,6 @@
   <title>わんこそば連打ゲーム</title>
 
   <style>
-
-    /* =========================================================
-   追加調整：ゲーム画面の配置修正
-   ここから下は、既存CSSを上書きするための追加分
-========================================================= */
-
-/* 上の情報欄を少し小さめに */
-.game-hud {
-  top: 10px;
-  left: 50%;
-
-  width: min(520px, 54%);
-
-  padding: 8px 16px;
-}
-
-
-/* 左のお椀欄 */
-.left-bowl-panel {
-  top: 24px;
-  bottom: 26px;
-  left: 16px;
-
-  width: 220px;
-}
-
-
-/* 中央ゲームエリア全体 */
-.game-main-area {
-  top: 100px;
-  left: 255px;
-  right: 310px;
-  bottom: 0;
-
-  display: block;
-}
-
-
-/* 「次は〇〇！」の説明枠 */
-.speech-card {
-  position: absolute;
-
-  top: 0;
-  left: 50%;
-
-  width: 360px;
-  min-height: 92px;
-
-  transform: translateX(-50%);
-}
-
-
-/* 食べ物写真の置き場 */
-.food-stage {
-  position: absolute;
-
-  top: 160px;
-  left: 50%;
-
-  width: 430px;
-  height: 250px;
-
-  overflow: visible;
-
-  transform: translateX(-50%);
-}
-
-
-/* 食べ物写真本体 */
-.current-item-image {
-  width: 430px;
-  height: 260px;
-
-  object-fit: contain;
-  object-position: center bottom;
-
-  /*
-    白背景を透過っぽく見せる。
-    完全な透明化ではないけど、白い四角はかなり消える。
-  */
-  mix-blend-mode: multiply;
-}
-
-
-/* 写真がないときの文字表示 */
-.item-fallback {
-  position: absolute;
-
-  top: 30px;
-  left: 50%;
-
-  transform: translateX(-50%);
-}
-
-
-/* 0 / 3 みたいなクリック数 */
-.click-progress {
-  position: absolute;
-
-  top: 410px;
-  left: 50%;
-
-  transform: translateX(-50%);
-
-  font-size: 34px;
-}
-
-
-/* 食べる・食べないボタン */
-.game-buttons {
-  position: absolute;
-
-  top: 465px;
-  left: 50%;
-
-  width: 290px;
-
-  transform: translateX(-50%);
-}
-
-.game-buttons button {
-  width: 100%;
-}
-
-
-/* 先生を右側に寄せて、少し小さく */
-.waiter-image {
-  top: 150px;
-  right: 12px;
-
-  width: 285px;
-  height: 440px;
-
-  object-fit: contain;
-  object-position: center bottom;
-
-  /*
-    先生画像の白背景を透過っぽく消す
-  */
-  mix-blend-mode: multiply;
-}
-
-
-/* 練習説明の先生も白背景を消す */
-.guide-image {
-  mix-blend-mode: multiply;
-}
-
-
-/* 左側のお椀画像も白背景がある場合は消す */
-.bowl-slot img {
-  mix-blend-mode: multiply;
-}
-
-
-/* =========================================================
-   スマホ・小さい画面用
-========================================================= */
-
-@media (max-width: 720px) {
-  .game-hud {
-    top: 8px;
-    left: 58%;
-
-    width: 76%;
-  }
-
-  .left-bowl-panel {
-    top: 92px;
-    left: 6px;
-
-    width: 112px;
-  }
-
-  .game-main-area {
-    top: 130px;
-    left: 122px;
-    right: 6px;
-  }
-
-  .speech-card {
-    width: 92%;
-    min-height: 78px;
-  }
-
-  .food-stage {
-    top: 145px;
-
-    width: 95%;
-    height: 250px;
-  }
-
-  .current-item-image {
-    width: 100%;
-    height: 270px;
-  }
-
-  .click-progress {
-    top: 390px;
-  }
-
-  .game-buttons {
-    top: 440px;
-
-    width: 230px;
-  }
-
-  .waiter-image {
-    right: -16px;
-    top: 175px;
-
-    width: 155px;
-    height: 310px;
-
-    opacity: 0.95;
-  }
-}
     /* =========================================================
        全体
     ========================================================= */
@@ -489,14 +273,14 @@
     .game-hud {
       position: absolute;
 
-      z-index: 5;
+      z-index: 6;
 
-      top: 14px;
+      top: 10px;
       left: 50%;
 
-      width: min(570px, 58%);
+      width: min(520px, 54%);
 
-      padding: 9px 18px;
+      padding: 8px 16px;
 
       border: 3px solid var(--brown);
 
@@ -567,11 +351,11 @@
 
       z-index: 4;
 
-      top: 128px;
-      bottom: 22px;
-      left: 18px;
+      top: 24px;
+      bottom: 26px;
+      left: 16px;
 
-      width: 178px;
+      width: 220px;
 
       border: 3px solid var(--brown);
 
@@ -596,7 +380,7 @@
 
       align-content: start;
 
-      gap: 2px;
+      gap: 4px;
 
       padding: 10px;
     }
@@ -606,8 +390,8 @@
 
       place-items: center;
 
-      width: 50px;
-      height: 36px;
+      width: 60px;
+      height: 42px;
 
       overflow: hidden;
 
@@ -615,15 +399,15 @@
     }
 
     .bowl-slot img {
-      width: 50px;
-      height: 34px;
+      width: 60px;
+      height: 40px;
 
       object-fit: contain;
     }
 
 
     /* =========================================================
-       中央：食べ物と操作
+       中央：食べ物とボタン
     ========================================================= */
 
     .game-main-area {
@@ -631,28 +415,28 @@
 
       z-index: 4;
 
-      top: 124px;
-      right: 200px;
-      bottom: 10px;
-      left: 205px;
-
-      display: grid;
-
-      justify-items: center;
-      align-content: start;
+      top: 100px;
+      right: 310px;
+      bottom: 0;
+      left: 255px;
     }
 
     .speech-card {
-      justify-self: end;
+      position: absolute;
 
-      width: min(395px, 80%);
-      min-height: 86px;
+      top: 0;
+      left: 50%;
+
+      width: 360px;
+      min-height: 92px;
 
       padding: 13px 18px;
 
       border: 3px solid var(--brown);
 
       background: var(--paper);
+
+      transform: translateX(-50%);
     }
 
     .speech-card p {
@@ -665,21 +449,28 @@
     }
 
     .food-stage {
+      position: absolute;
+
+      top: 160px;
+      left: 50%;
+
       display: grid;
 
-      place-items: end center;
+      place-items: center;
 
-      width: min(520px, 96%);
-      height: 320px;
+      width: 430px;
+      height: 250px;
 
-      overflow: hidden;
+      overflow: visible;
+
+      transform: translateX(-50%);
     }
 
     .current-item-image {
       display: block;
 
-      width: min(510px, 100%);
-      height: 385px;
+      width: 430px;
+      height: 260px;
 
       object-fit: contain;
       object-position: center bottom;
@@ -702,9 +493,14 @@
     }
 
     .click-progress {
-      margin-top: -2px;
+      position: absolute;
 
-      font-size: 30px;
+      top: 410px;
+      left: 50%;
+
+      transform: translateX(-50%);
+
+      font-size: 34px;
       font-weight: 900;
 
       text-shadow:
@@ -712,13 +508,22 @@
     }
 
     .game-buttons {
+      position: absolute;
+
+      top: 465px;
+      left: 50%;
+
       display: grid;
 
       gap: 11px;
 
-      width: min(220px, 58vw);
+      width: 290px;
 
-      margin-top: 5px;
+      transform: translateX(-50%);
+    }
+
+    .game-buttons button {
+      width: 100%;
     }
 
 
@@ -731,11 +536,11 @@
 
       z-index: 3;
 
-      top: 17%;
-      right: 0;
+      top: 150px;
+      right: 12px;
 
-      width: min(35%, 355px);
-      height: min(74%, 510px);
+      width: 285px;
+      height: 440px;
 
       object-fit: contain;
       object-position: center bottom;
@@ -780,7 +585,8 @@
 
       place-items: center;
 
-      background: rgba(0, 0, 0, 0.84);
+      background:
+        rgba(0, 0, 0, 0.84);
     }
 
     .countdown-screen.active {
@@ -790,7 +596,9 @@
     .countdown-number {
       color: #fff;
 
-      font-size: min(30vw, 170px);
+      font-size:
+        min(30vw, 170px);
+
       font-weight: 900;
     }
 
@@ -818,9 +626,10 @@
       bottom: 25px;
       left: 50%;
 
-      width: min(260px, 58vw);
+      width: min(320px, 68vw);
 
-      transform: translateX(-50%);
+      transform:
+        translateX(-50%);
 
       font-size: 22px;
     }
@@ -928,14 +737,15 @@
       }
 
       .game-hud {
-        left: 61%;
+        top: 8px;
+        left: 58%;
 
-        width: 74%;
+        width: 76%;
       }
 
       .left-bowl-panel {
-        top: 134px;
-        left: 5px;
+        top: 92px;
+        left: 6px;
 
         width: 112px;
       }
@@ -958,16 +768,14 @@
       }
 
       .game-main-area {
-        top: 150px;
-        right: 5px;
-        left: 116px;
+        top: 130px;
+        right: 6px;
+        left: 122px;
       }
 
       .speech-card {
-        justify-self: center;
-
         width: 92%;
-        min-height: 74px;
+        min-height: 78px;
       }
 
       .speech-card p {
@@ -975,19 +783,35 @@
       }
 
       .food-stage {
-        height: 290px;
+        top: 145px;
+
+        width: 95%;
+        height: 250px;
       }
 
       .current-item-image {
-        height: 335px;
+        width: 100%;
+        height: 270px;
+      }
+
+      .click-progress {
+        top: 390px;
+      }
+
+      .game-buttons {
+        top: 440px;
+
+        width: 230px;
       }
 
       .waiter-image {
-        right: -6%;
+        top: 175px;
+        right: -16px;
 
-        width: 38%;
+        width: 155px;
+        height: 310px;
 
-        opacity: 0.92;
+        opacity: 0.95;
       }
 
       .result-card,
@@ -1005,6 +829,7 @@
     <!-- ======================================================
          タイトル画面
     ======================================================= -->
+
     <section
       id="title-screen"
       class="screen active"
@@ -1045,8 +870,9 @@
 
 
     <!-- ======================================================
-         練習説明
+         練習説明画面
     ======================================================= -->
+
     <section
       id="practice-screen"
       class="screen"
@@ -1086,8 +912,9 @@
 
 
     <!-- ======================================================
-         通常ゲーム
+         通常ゲーム画面
     ======================================================= -->
+
     <section
       id="game-screen"
       class="screen"
@@ -1100,7 +927,7 @@
 
       <div class="screen-shade light"></div>
 
-      <!-- 上部 -->
+      <!-- 上部：モード・杯数・残り時間 -->
       <div class="game-hud">
         <div class="hud-top-row">
           <span id="mode-label">
@@ -1134,7 +961,7 @@
       </div>
 
 
-      <!-- 左側のお椀 -->
+      <!-- 左側：食べ終わったお椀 -->
       <aside class="left-bowl-panel">
         <h3>
           お椀
@@ -1147,7 +974,7 @@
       </aside>
 
 
-      <!-- 中央 -->
+      <!-- 中央：食べ物と操作ボタン -->
       <div class="game-main-area">
         <div class="speech-card">
           <p id="speech-text">
@@ -1187,7 +1014,7 @@
       </div>
 
 
-      <!-- 右側の先生 -->
+      <!-- 右側：先生・給仕係 -->
       <img
         class="waiter-image"
         data-asset="waiter"
@@ -1195,7 +1022,7 @@
       >
 
 
-      <!-- 一時表示 -->
+      <!-- 一時表示メッセージ -->
       <div
         id="floating-message"
         class="floating-message hidden"
@@ -1204,8 +1031,9 @@
 
 
     <!-- ======================================================
-         カウントダウン
+         本番開始前カウントダウン
     ======================================================= -->
+
     <section
       id="countdown-screen"
       class="screen countdown-screen"
@@ -1220,8 +1048,9 @@
 
 
     <!-- ======================================================
-         ミニゲーム
+         お椀積みミニゲーム
     ======================================================= -->
+
     <section
       id="minigame-screen"
       class="screen minigame-screen"
@@ -1244,6 +1073,7 @@
     <!-- ======================================================
          結果画面
     ======================================================= -->
+
     <section
       id="result-screen"
       class="screen"
@@ -1281,8 +1111,9 @@
 
 
     <!-- ======================================================
-         ランキング
+         ランキング画面
     ======================================================= -->
+
     <section
       id="ranking-screen"
       class="screen"
@@ -1327,35 +1158,51 @@
     ========================================================= */
 
     const SETTINGS = {
+      // 練習モードの制限時間
       practiceSeconds: 10,
+
+      // 本番モードの制限時間
       realSeconds: 30,
 
+      // 本番開始前のカウントダウン
       countdownSeconds: 3,
 
+      // 岩塩・苔・薬味の効果が続く皿数
       effectTurns: 5,
 
+      // 何杯食べたらミニゲームを始めるか
       bowlsToTriggerMinigame: 10,
 
+      // ミニゲームで落とすお椀の数
       minigameBowls: 10,
 
-      minigameGoodRange: 18,
+      // 成功範囲
+      // 以前の18から54へ変更
+      // 中央線から左右54px以内なら成功
+      minigameGoodRange: 54,
 
+      // 横移動速度
+      // お椀が出るたびに毎回ランダムで選ばれる
+      // 以前より遅く調整済み
       minigameSpeedChoices: [
+        2.5,
+        3,
+        3.5,
+        4,
         4.5,
+        5,
         5.5,
-        6.5,
-        7.5,
-        8.5,
-        10,
-        11.5,
-        13,
+        6,
       ],
 
+      // 「落とす」を押した後に下へ落ちる速度
       minigameDropSpeed: 14,
 
+      // 左右に動く範囲
       minigameMoveLeft: 210,
       minigameMoveRight: 790,
 
+      // ランキング保存用
       rankingKey: "wankosoba-ranking-v1",
     };
 
@@ -1365,10 +1212,12 @@
     ========================================================= */
 
     const ITEMS = [
+      // 食べられる麺
       {
         key: "soba",
         name: "そば",
         category: "noodle",
+
         clicks: 1,
         weight: 25,
       },
@@ -1377,6 +1226,7 @@
         key: "udon",
         name: "うどん",
         category: "noodle",
+
         clicks: 3,
         weight: 18,
       },
@@ -1385,6 +1235,7 @@
         key: "ramen",
         name: "中華麺",
         category: "noodle",
+
         clicks: 5,
         weight: 14,
       },
@@ -1393,15 +1244,20 @@
         key: "houtou",
         name: "ほうとう",
         category: "noodle",
+
         clicks: 10,
         weight: 8,
       },
 
+
+      // 食べてはいけないもの
       {
         key: "dark_matter",
         name: "ダークマター",
         category: "bad",
+
         penalty: "gameOver",
+
         weight: 6,
       },
 
@@ -1409,16 +1265,22 @@
         key: "rock",
         name: "岩",
         category: "bad",
+
         penalty: "minusBowls",
+
         weight: 7,
       },
 
+
+      // 効果アイテム
       {
         key: "rock_salt",
         name: "岩塩",
         category: "effect",
+
         effectType: "multiply",
         effectValue: 2,
+
         weight: 7,
       },
 
@@ -1426,8 +1288,10 @@
         key: "moss",
         name: "苔",
         category: "effect",
+
         effectType: "multiply",
         effectValue: 3,
+
         weight: 5,
       },
 
@@ -1435,8 +1299,10 @@
         key: "yakumi",
         name: "薬味",
         category: "effect",
+
         effectType: "oneClick",
         effectValue: 1,
+
         weight: 10,
       },
     ];
@@ -1444,23 +1310,8 @@
 
     /* =========================================================
        画像読み込み
+       画像は index.html と同じ場所に置く
     ========================================================= */
-
-    /*
-      画像は index.html と同じ場所から探します。
-
-      例:
-      background.jpg
-      bowl.jpg
-      waiter.jpg
-
-      透過PNGがあとから増えた場合は、
-      JPGより透過版を優先します。
-
-      例:
-      waiter_transparent.png
-      waiter.jpg
-    */
 
     const ASSET_CANDIDATES = {
       background: [
@@ -1537,6 +1388,14 @@
     ];
 
 
+    const rawImageCache =
+      new Map();
+
+
+    const processedImageCache =
+      new Map();
+
+
     function makeAssetPaths(
       key,
     ) {
@@ -1556,9 +1415,11 @@
           of ASSET_EXTENSIONS
         ) {
           /*
-            画像は index.html と同じ場所にあるため、
-            assets/ は付けません。
+            画像は index.html と
+            同じ場所に置くため、
+            assets/ は付けない。
           */
+
           paths.push(
             `${name}${extension}`,
           );
@@ -1569,137 +1430,502 @@
     }
 
 
-    function setImageAsset(
-      imageElement,
+    function loadRawImage(
       key,
-      options = {},
     ) {
-      const {
-        hideWhenMissing = true,
-        onMissing = null,
-      } = options;
-
-      const paths =
-        makeAssetPaths(
+      if (
+        rawImageCache.has(
+          key,
+        )
+      ) {
+        return rawImageCache.get(
           key,
         );
+      }
 
-      let index =
-        0;
-
-      imageElement.hidden =
-        false;
-
-      const tryNext =
-        () => {
-          if (
-            index
-            >= paths.length
-          ) {
-            imageElement
-              .removeAttribute(
-                "src",
+      const promise =
+        new Promise(
+          (
+            resolve,
+          ) => {
+            const paths =
+              makeAssetPaths(
+                key,
               );
 
-            if (
-              hideWhenMissing
-            ) {
-              imageElement.hidden =
-                true;
-            }
+            let index =
+              0;
 
-            if (
-              typeof onMissing
-              === "function"
-            ) {
-              onMissing();
-            }
+            const tryNext =
+              () => {
+                if (
+                  index
+                  >= paths.length
+                ) {
+                  resolve(
+                    null,
+                  );
 
-            return;
-          }
+                  return;
+                }
 
-          imageElement.src =
-            paths[index];
+                const image =
+                  new Image();
 
-          index +=
-            1;
-        };
+                image.onload =
+                  () => {
+                    resolve(
+                      image,
+                    );
+                  };
 
-      imageElement.onerror =
-        tryNext;
+                image.onerror =
+                  tryNext;
 
-      tryNext();
+                image.src =
+                  paths[index];
+
+                index +=
+                  1;
+              };
+
+            tryNext();
+          },
+        );
+
+      rawImageCache.set(
+        key,
+        promise,
+      );
+
+      return promise;
     }
 
 
-    function loadImageAsset(
-      key,
-    ) {
-      return new Promise(
-        (
-          resolve,
-        ) => {
-          const image =
-            new Image();
+    /* =========================================================
+       白背景の透過処理
 
-          const paths =
-            makeAssetPaths(
-              key,
+       画像の端からつながっている白い部分だけを消す。
+
+       先生の白いシャツなど、
+       画像内部にある白い部分はなるべく残す。
+    ========================================================= */
+
+    function removeConnectedWhiteBackground(
+      image,
+    ) {
+      const maxSide =
+        1400;
+
+      const scale =
+        Math.min(
+          1,
+
+          maxSide
+          / Math.max(
+            image.naturalWidth,
+            image.naturalHeight,
+          ),
+        );
+
+      const width =
+        Math.max(
+          1,
+
+          Math.round(
+            image.naturalWidth
+            * scale,
+          ),
+        );
+
+      const height =
+        Math.max(
+          1,
+
+          Math.round(
+            image.naturalHeight
+            * scale,
+          ),
+        );
+
+      const canvas =
+        document.createElement(
+          "canvas",
+        );
+
+      canvas.width =
+        width;
+
+      canvas.height =
+        height;
+
+      const context =
+        canvas.getContext(
+          "2d",
+
+          {
+            willReadFrequently:
+              true,
+          },
+        );
+
+      context.drawImage(
+        image,
+
+        0,
+        0,
+        width,
+        height,
+      );
+
+      const imageData =
+        context.getImageData(
+          0,
+          0,
+          width,
+          height,
+        );
+
+      const pixels =
+        imageData.data;
+
+      const visited =
+        new Uint8Array(
+          width
+          * height,
+        );
+
+      const queue =
+        new Int32Array(
+          width
+          * height,
+        );
+
+      let head =
+        0;
+
+      let tail =
+        0;
+
+
+      const isNearWhite =
+        (
+          pixelIndex,
+        ) => {
+          const offset =
+            pixelIndex
+            * 4;
+
+          const red =
+            pixels[
+              offset
+            ];
+
+          const green =
+            pixels[
+              offset + 1
+            ];
+
+          const blue =
+            pixels[
+              offset + 2
+            ];
+
+          const alpha =
+            pixels[
+              offset + 3
+            ];
+
+          const brightest =
+            Math.max(
+              red,
+              green,
+              blue,
             );
 
-          let index =
-            0;
+          const darkest =
+            Math.min(
+              red,
+              green,
+              blue,
+            );
 
-          const tryNext =
-            () => {
-              if (
-                index
-                >= paths.length
-              ) {
-                resolve(
-                  null,
-                );
+          return (
+            alpha > 0
+            && red >= 232
+            && green >= 232
+            && blue >= 232
+            && brightest - darkest <= 42
+          );
+        };
 
-                return;
-              }
 
-              image.src =
-                paths[index];
+      const enqueue =
+        (
+          pixelIndex,
+        ) => {
+          if (
+            pixelIndex < 0
+            || pixelIndex
+              >= width * height
+            || visited[
+              pixelIndex
+            ]
+            || !isNearWhite(
+              pixelIndex,
+            )
+          ) {
+            return;
+          }
 
-              index +=
-                1;
-            };
+          visited[
+            pixelIndex
+          ] =
+            1;
 
-          image.onload =
-            () => {
-              resolve(
-                image,
-              );
-            };
+          queue[
+            tail
+          ] =
+            pixelIndex;
 
-          image.onerror =
-            tryNext;
+          tail +=
+            1;
+        };
 
-          tryNext();
-        },
+
+      for (
+        let x = 0;
+        x < width;
+        x += 1
+      ) {
+        enqueue(
+          x,
+        );
+
+        enqueue(
+          (
+            height - 1
+          )
+          * width
+          + x,
+        );
+      }
+
+
+      for (
+        let y = 0;
+        y < height;
+        y += 1
+      ) {
+        enqueue(
+          y
+          * width,
+        );
+
+        enqueue(
+          y
+          * width
+          + width
+          - 1,
+        );
+      }
+
+
+      while (
+        head
+        < tail
+      ) {
+        const pixelIndex =
+          queue[
+            head
+          ];
+
+        head +=
+          1;
+
+        const offset =
+          pixelIndex
+          * 4;
+
+        pixels[
+          offset + 3
+        ] =
+          0;
+
+        const x =
+          pixelIndex
+          % width;
+
+        const y =
+          Math.floor(
+            pixelIndex
+            / width,
+          );
+
+        if (
+          x > 0
+        ) {
+          enqueue(
+            pixelIndex
+            - 1,
+          );
+        }
+
+        if (
+          x
+          < width - 1
+        ) {
+          enqueue(
+            pixelIndex
+            + 1,
+          );
+        }
+
+        if (
+          y > 0
+        ) {
+          enqueue(
+            pixelIndex
+            - width,
+          );
+        }
+
+        if (
+          y
+          < height - 1
+        ) {
+          enqueue(
+            pixelIndex
+            + width,
+          );
+        }
+      }
+
+
+      context.putImageData(
+        imageData,
+
+        0,
+        0,
+      );
+
+      return canvas.toDataURL(
+        "image/png",
       );
     }
 
 
-    function initialiseStaticImages() {
+    async function loadProcessedImage(
+      key,
+    ) {
+      if (
+        processedImageCache.has(
+          key,
+        )
+      ) {
+        return processedImageCache.get(
+          key,
+        );
+      }
+
+      const promise =
+        (
+          async () => {
+            const rawImage =
+              await loadRawImage(
+                key,
+              );
+
+            if (
+              !rawImage
+            ) {
+              return null;
+            }
+
+            try {
+              const processedImage =
+                new Image();
+
+              processedImage.src =
+                removeConnectedWhiteBackground(
+                  rawImage,
+                );
+
+              if (
+                processedImage.decode
+              ) {
+                try {
+                  await processedImage.decode();
+                }
+
+                catch {
+                  /*
+                    decodeに失敗しても、
+                    srcは使えるため続行する。
+                  */
+                }
+              }
+
+              return processedImage;
+            }
+
+            catch {
+              /*
+                ローカル環境で画像加工が
+                制限された場合は、
+                元画像を表示する。
+              */
+
+              return rawImage;
+            }
+          }
+        )();
+
+      processedImageCache.set(
+        key,
+        promise,
+      );
+
+      return promise;
+    }
+
+
+    async function initialiseStaticImages() {
       const images =
         document.querySelectorAll(
           "img[data-asset]",
         );
 
       for (
-        const image
+        const imageElement
         of images
       ) {
-        setImageAsset(
-          image,
-          image.dataset.asset,
-        );
+        const key =
+          imageElement.dataset.asset;
+
+        const image =
+          key === "background"
+            ? await loadRawImage(
+                key,
+              )
+            : await loadProcessedImage(
+                key,
+              );
+
+        if (
+          image
+        ) {
+          imageElement.src =
+            image.src;
+
+          imageElement.hidden =
+            false;
+        }
+
+        else {
+          imageElement.hidden =
+            true;
+        }
       }
     }
 
@@ -1931,16 +2157,6 @@
     };
 
 
-    let timerAnimationId =
-      null;
-
-    let countdownTimerId =
-      null;
-
-    let floatingMessageTimerId =
-      null;
-
-
     /* =========================================================
        ミニゲームの状態
     ========================================================= */
@@ -1975,11 +2191,23 @@
     };
 
 
+    let timerAnimationId =
+      null;
+
+    let countdownTimerId =
+      null;
+
+    let floatingMessageTimerId =
+      null;
+
     let minigameAnimationId =
       null;
 
     let minigameSpawnTimerId =
       null;
+
+    let itemRenderVersion =
+      0;
 
 
     /* =========================================================
@@ -2089,7 +2317,7 @@
 
 
     /* =========================================================
-       通常ゲーム開始
+       ゲーム開始
     ========================================================= */
 
     function resetGameState(
@@ -2134,8 +2362,7 @@
 
       gameState.timeLeft =
         (
-          mode
-          === "practice"
+          mode === "practice"
         )
           ? SETTINGS.practiceSeconds
           : SETTINGS.realSeconds;
@@ -2159,8 +2386,7 @@
       );
 
       if (
-        mode
-        === "real"
+        mode === "real"
       ) {
         startCountdown();
 
@@ -2193,8 +2419,7 @@
               1;
 
             if (
-              count
-              <= 0
+              count <= 0
             ) {
               window.clearInterval(
                 countdownTimerId,
@@ -2253,6 +2478,7 @@
       gameState.timeLeft =
         Math.max(
           0,
+
           (
             gameState.endTimestamp
             - performance.now()
@@ -2316,12 +2542,12 @@
         )
           ? Math.min(
               1,
+
               Math.max(
                 0,
-                (
-                  gameState.timeLeft
-                  / gameState.timeBarMax
-                ),
+
+                gameState.timeLeft
+                / gameState.timeBarMax,
               ),
             )
           : 0;
@@ -2466,7 +2692,7 @@
     }
 
 
-    function renderCurrentItem() {
+    async function renderCurrentItem() {
       const item =
         gameState.currentItem;
 
@@ -2475,6 +2701,13 @@
       ) {
         return;
       }
+
+      const renderVersion =
+        itemRenderVersion
+        + 1;
+
+      itemRenderVersion =
+        renderVersion;
 
       let speech =
         `次は ${item.name}！`;
@@ -2509,47 +2742,6 @@
         .textContent =
           speech;
 
-      elements
-        .itemFallback
-        .classList
-        .add(
-          "hidden",
-        );
-
-      elements
-        .currentItemImage
-        .hidden =
-          false;
-
-      setImageAsset(
-        elements
-          .currentItemImage,
-
-        item.key,
-
-        {
-          onMissing:
-            () => {
-              elements
-                .currentItemImage
-                .hidden =
-                  true;
-
-              elements
-                .itemFallback
-                .textContent =
-                  item.name;
-
-              elements
-                .itemFallback
-                .classList
-                .remove(
-                  "hidden",
-                );
-            },
-        },
-      );
-
       if (
         item.category
         === "noodle"
@@ -2579,6 +2771,60 @@
           .clickProgress
           .textContent =
             "効果アイテム";
+      }
+
+      elements
+        .currentItemImage
+        .hidden =
+          true;
+
+      elements
+        .itemFallback
+        .classList
+        .add(
+          "hidden",
+        );
+
+      const image =
+        await loadProcessedImage(
+          item.key,
+        );
+
+      if (
+        renderVersion
+          !== itemRenderVersion
+        || item
+          !== gameState.currentItem
+      ) {
+        return;
+      }
+
+      if (
+        image
+      ) {
+        elements
+          .currentItemImage
+          .src =
+            image.src;
+
+        elements
+          .currentItemImage
+          .hidden =
+            false;
+      }
+
+      else {
+        elements
+          .itemFallback
+          .textContent =
+            item.name;
+
+        elements
+          .itemFallback
+          .classList
+          .remove(
+            "hidden",
+          );
       }
     }
 
@@ -2701,7 +2947,7 @@
     }
 
 
-    function appendLeftBowl() {
+    async function appendLeftBowl() {
       const slot =
         document.createElement(
           "div",
@@ -2710,39 +2956,40 @@
       slot.className =
         "bowl-slot";
 
-      const image =
-        document.createElement(
-          "img",
-        );
-
-      image.alt =
-        "お椀";
-
-      slot.append(
-        image,
-      );
-
-      setImageAsset(
-        image,
-
-        "bowl",
-
-        {
-          onMissing:
-            () => {
-              image.remove();
-
-              slot.textContent =
-                "🥣";
-            },
-        },
-      );
-
       elements
         .leftBowlStack
         .append(
           slot,
         );
+
+      const image =
+        await loadProcessedImage(
+          "bowl",
+        );
+
+      if (
+        image
+      ) {
+        const imageElement =
+          document.createElement(
+            "img",
+          );
+
+        imageElement.src =
+          image.src;
+
+        imageElement.alt =
+          "お椀";
+
+        slot.append(
+          imageElement,
+        );
+      }
+
+      else {
+        slot.textContent =
+          "🥣";
+      }
 
       while (
         elements
@@ -2973,6 +3220,7 @@
       gameState.timeLeft =
         Math.max(
           0,
+
           (
             gameState.endTimestamp
             - performance.now()
@@ -2998,7 +3246,7 @@
         0;
 
       minigameState.bowlImage =
-        await loadImageAsset(
+        await loadProcessedImage(
           "bowl",
         );
 
@@ -3036,6 +3284,11 @@
 
       minigameState.bowlY =
         145;
+
+      /*
+        お椀を1個出すたびに、
+        毎回速度をランダム抽選する。
+      */
 
       const speedIndex =
         Math.floor(
@@ -3190,8 +3443,7 @@
       const succeeded =
         (
           distanceFromCenter
-          <= SETTINGS
-            .minigameGoodRange
+          <= SETTINGS.minigameGoodRange
         );
 
       if (
@@ -3296,6 +3548,14 @@
         190,
       );
 
+
+      /*
+        成功範囲。
+
+        以前は中央線から左右18px。
+        現在は左右54px。
+      */
+
       context.fillStyle =
         "rgba(76, 124, 255, 0.13)";
 
@@ -3311,6 +3571,9 @@
         ),
         485,
       );
+
+
+      /* 中央線 */
 
       context.strokeStyle =
         "#4b7cff";
@@ -3339,6 +3602,9 @@
 
       context.setLineDash([]);
 
+
+      /* 積み上げる台 */
+
       context.fillStyle =
         "#7b4a24";
 
@@ -3348,6 +3614,9 @@
         400,
         22,
       );
+
+
+      /* 積み上がったお椀 */
 
       for (
         let index = 0;
@@ -3359,7 +3628,8 @@
         const y =
           (
             590
-            - index * 34
+            - index
+              * 34
           );
 
         drawMinigameBowl(
@@ -3368,6 +3638,9 @@
           y,
         );
       }
+
+
+      /* 現在動いているお椀 */
 
       if (
         minigameState.phase
@@ -3379,6 +3652,9 @@
           minigameState.bowlY,
         );
       }
+
+
+      /* 成功・失敗表示 */
 
       if (
         message
@@ -3413,21 +3689,32 @@
         image
       ) {
         const width =
-          190;
+          170;
 
         const height =
-          110;
+          100;
 
         context.drawImage(
           image,
-          x - width / 2,
-          y - height / 2,
+
+          x
+          - width / 2,
+
+          y
+          - height / 2,
+
           width,
           height,
         );
 
         return;
       }
+
+
+      /*
+        bowl.jpg がなければ、
+        仮のお椀を描画する。
+      */
 
       context.fillStyle =
         "#fff4cf";
@@ -3443,11 +3730,15 @@
       context.ellipse(
         x,
         y,
+
         68,
         20,
+
         0,
         0,
-        Math.PI * 2,
+
+        Math.PI
+        * 2,
       );
 
       context.fill();
@@ -3457,12 +3748,24 @@
 
 
     function calculateMinigameBonus() {
+      /*
+        10個すべて成功
+        → 10秒 + 追加10秒
+        → 合計20秒
+      */
+
       if (
         minigameState.stackedCount
         === 10
       ) {
         return 20;
       }
+
+
+      /*
+        5〜9個成功
+        → 成功数 + 追加5秒
+      */
 
       if (
         minigameState.stackedCount
@@ -3473,6 +3776,12 @@
           + 5
         );
       }
+
+
+      /*
+        0〜4個成功
+        → 成功数ぶん追加
+      */
 
       return (
         minigameState.stackedCount
@@ -3587,12 +3896,10 @@
 
     function returnFromMinigame() {
       const bonusSeconds =
-        minigameState
-          .bonusSeconds;
+        minigameState.bonusSeconds;
 
       const stackedCount =
-        minigameState
-          .stackedCount;
+        minigameState.stackedCount;
 
       elements
         .dropButton
@@ -3762,6 +4069,7 @@
 
     /* =========================================================
        ランキング
+       同じ端末・同じブラウザ内に保存
     ========================================================= */
 
     function loadRanking() {
@@ -4072,6 +4380,11 @@
         showTitle,
       );
 
+
+    /*
+      PCではスペースキーでも
+      お椀を落とせる。
+    */
 
     window.addEventListener(
       "keydown",
