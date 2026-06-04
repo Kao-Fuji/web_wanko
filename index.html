@@ -7,9 +7,7 @@
   <title>わんこそば連打ゲーム</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     :root {
       --paper: #fff4cf;
@@ -18,8 +16,6 @@
       --brown-dark: #2b1709;
       --accent: #ffb340;
       --sky: #d8f2ff;
-      --success-blue: rgba(76, 124, 255, 0.16);
-      --success-line: #4b7cff;
     }
 
     html,
@@ -46,9 +42,7 @@
       box-shadow: 3px 3px 0 rgba(90, 53, 24, 0.42);
     }
 
-    button:hover {
-      background: var(--paper-strong);
-    }
+    button:hover { background: var(--paper-strong); }
 
     img[hidden],
     .hidden {
@@ -72,9 +66,7 @@
       overflow: hidden;
     }
 
-    .screen.active {
-      display: block;
-    }
+    .screen.active { display: block; }
 
     .screen-bg {
       position: absolute;
@@ -90,13 +82,12 @@
       background: rgba(20, 10, 0, 0.28);
     }
 
-    .screen-shade.light {
-      background: rgba(20, 10, 0, 0.14);
-    }
+    .screen-shade.light { background: rgba(20, 10, 0, 0.14); }
+    .screen-shade.strong { background: rgba(15, 5, 0, 0.46); }
 
-    .screen-shade.strong {
-      background: rgba(15, 5, 0, 0.46);
-    }
+    /* =========================================================
+       タイトル
+    ========================================================= */
 
     .title-content {
       position: relative;
@@ -184,6 +175,10 @@
       text-shadow: 1px 1px 0 var(--brown-dark) !important;
     }
 
+    /* =========================================================
+       練習説明
+    ========================================================= */
+
     .screen-title {
       position: relative;
       z-index: 3;
@@ -216,9 +211,7 @@
       font-weight: 800;
     }
 
-    .practice-card p {
-      margin: 0;
-    }
+    .practice-card p { margin: 0; }
 
     .bottom-buttons {
       position: absolute;
@@ -230,6 +223,10 @@
       width: min(240px, 52vw);
       transform: translateX(-50%);
     }
+
+    /* =========================================================
+       通常ゲーム上部
+    ========================================================= */
 
     .game-hud {
       position: absolute;
@@ -257,9 +254,7 @@
       font-size: 18px;
     }
 
-    .time-row {
-      font-size: 16px;
-    }
+    .time-row { font-size: 16px; }
 
     .effect-label {
       margin-top: 4px;
@@ -281,6 +276,10 @@
       background: var(--accent);
       transition: width 0.1s linear;
     }
+
+    /* =========================================================
+       左側のお椀
+    ========================================================= */
 
     .left-bowl-panel {
       position: absolute;
@@ -322,6 +321,10 @@
       height: 50px;
       object-fit: contain;
     }
+
+    /* =========================================================
+       中央
+    ========================================================= */
 
     .game-main-area {
       position: absolute;
@@ -402,10 +405,9 @@
       transform: translateX(-50%);
     }
 
-    .game-buttons button {
-      width: 100%;
-    }
+    .game-buttons button { width: 100%; }
 
+    /* 学部長：時計回りに90度 */
     .waiter-image {
       position: absolute;
       z-index: 4;
@@ -434,15 +436,17 @@
       transform: translateX(-50%);
     }
 
+    /* =========================================================
+       カウントダウン
+    ========================================================= */
+
     .countdown-screen {
       display: none;
       place-items: center;
       background: rgba(0, 0, 0, 0.84);
     }
 
-    .countdown-screen.active {
-      display: grid;
-    }
+    .countdown-screen.active { display: grid; }
 
     .countdown-number {
       color: #fff;
@@ -450,13 +454,12 @@
       font-weight: 900;
     }
 
-    .minigame-screen {
-      background: var(--sky);
-    }
+    /* =========================================================
+       ミニゲーム
+    ========================================================= */
 
-    .minigame-screen.active {
-      display: block;
-    }
+    .minigame-screen { background: var(--sky); }
+    .minigame-screen.active { display: block; }
 
     #minigame-canvas {
       width: 100%;
@@ -472,14 +475,20 @@
       font-size: 22px;
     }
 
+    /* =========================================================
+       結果・ランキング
+    ========================================================= */
+
     .result-card,
     .ranking-card {
       position: relative;
       z-index: 3;
       width: min(680px, 91%);
-      margin: 50px auto 0;
+      max-height: 90%;
+      margin: 35px auto 0;
       padding: 23px;
       border: 4px solid var(--brown);
+      overflow-y: auto;
       background: var(--paper);
       text-align: center;
     }
@@ -519,22 +528,16 @@
       font-weight: 800;
     }
 
-    .ranking-list li {
-      padding: 4px 8px;
-    }
+    .ranking-list li { padding: 4px 8px; }
+
+    /* =========================================================
+       スマホ
+    ========================================================= */
 
     @media (max-width: 720px) {
-      .app-shell {
-        min-height: 760px;
-      }
-
-      .title-content {
-        padding-top: 40px;
-      }
-
-      .title-content h1 {
-        font-size: 52px;
-      }
+      .app-shell { min-height: 760px; }
+      .title-content { padding-top: 40px; }
+      .title-content h1 { font-size: 52px; }
 
       .practice-card {
         top: 45%;
@@ -555,9 +558,7 @@
         padding: 7px 11px;
       }
 
-      .hud-top-row {
-        font-size: 15px;
-      }
+      .hud-top-row { font-size: 15px; }
 
       .left-bowl-panel {
         top: 100px;
@@ -565,9 +566,7 @@
         width: 136px;
       }
 
-      .left-bowl-panel h3 {
-        font-size: 20px;
-      }
+      .left-bowl-panel h3 { font-size: 20px; }
 
       .left-bowl-stack {
         grid-template-columns: repeat(2, 1fr);
@@ -596,9 +595,7 @@
         min-height: 78px;
       }
 
-      .speech-card p {
-        font-size: 15px;
-      }
+      .speech-card p { font-size: 15px; }
 
       .food-stage {
         top: 142px;
@@ -631,32 +628,26 @@
 
       .result-card,
       .ranking-card {
-        margin-top: 37px;
+        margin-top: 25px;
         padding: 16px;
       }
 
       .result-card h2,
-      .ranking-card h2 {
-        font-size: 34px;
-      }
+      .ranking-card h2 { font-size: 34px; }
 
-      .result-card p {
-        font-size: 16px;
-      }
+      .result-card p { font-size: 16px; }
     }
   </style>
 </head>
 
 <body>
   <main class="app-shell">
-
     <section id="title-screen" class="screen active">
       <img class="screen-bg" data-asset="background" alt="">
       <div class="screen-shade"></div>
 
       <div class="title-content">
         <h1>わんこそば<br>連打ゲーム</h1>
-
         <p>食べる？ 食べない？ お椀が積もれば時間も積もる。</p>
 
         <div class="age-panel">
@@ -675,9 +666,7 @@
           <button id="clear-ai-data-button">AI記録を削除</button>
         </div>
 
-        <p class="ai-note">
-          本番モードでは、AIが反応時間・正解率・ミス回数を分析します。
-        </p>
+        <p class="ai-note">本番モードでは、AIが反応時間・正解率・ミス回数を分析します。</p>
       </div>
     </section>
 
@@ -686,7 +675,6 @@
       <div class="screen-shade light"></div>
 
       <h2 class="screen-title">練習説明</h2>
-
       <img class="guide-image" data-asset="guide" alt="案内役">
 
       <div class="practice-card">
@@ -711,6 +699,7 @@
 
         <div class="time-row">
           <span id="time-label">残り 10 秒</span>
+
           <div class="time-bar">
             <div id="time-bar-fill" class="time-bar-fill"></div>
           </div>
@@ -743,7 +732,6 @@
       </div>
 
       <img class="waiter-image" data-asset="waiter" alt="学部長">
-
       <div id="floating-message" class="floating-message hidden"></div>
     </section>
 
@@ -783,7 +771,6 @@
         <button id="ranking-back-button">タイトルへ</button>
       </div>
     </section>
-
   </main>
 
   <script>
@@ -798,14 +785,14 @@
       minigameBowls: 10,
 
       /*
-        ミニゲーム成功範囲。
+        青い成功範囲：
         中心線から左右54px。
-        青い範囲内にお椀の中心が入れば成功。
+        以前の18pxから約3倍。
       */
-      minigameGoodRange: 54,
+      minigameHalfRange: 54,
 
       /*
-        お椀1個ごとにランダム選択される横移動速度。
+        お椀を1個出すたびに、毎回ここから速度を選び直す。
       */
       minigameSpeedChoices: [
         2.5,
@@ -824,72 +811,15 @@
     };
 
     const ITEMS = [
-      {
-        key: "soba",
-        name: "そば",
-        category: "noodle",
-        clicks: 1,
-        weight: 25,
-      },
-      {
-        key: "udon",
-        name: "うどん",
-        category: "noodle",
-        clicks: 3,
-        weight: 18,
-      },
-      {
-        key: "ramen",
-        name: "中華麺",
-        category: "noodle",
-        clicks: 5,
-        weight: 14,
-      },
-      {
-        key: "houtou",
-        name: "ほうとう",
-        category: "noodle",
-        clicks: 10,
-        weight: 8,
-      },
-      {
-        key: "dark_matter",
-        name: "ダークマター",
-        category: "bad",
-        penalty: "gameOver",
-        weight: 6,
-      },
-      {
-        key: "rock",
-        name: "岩",
-        category: "bad",
-        penalty: "minusBowls",
-        weight: 7,
-      },
-      {
-        key: "rock_salt",
-        name: "岩塩",
-        category: "effect",
-        effectType: "multiply",
-        effectValue: 2,
-        weight: 7,
-      },
-      {
-        key: "moss",
-        name: "苔",
-        category: "effect",
-        effectType: "multiply",
-        effectValue: 3,
-        weight: 5,
-      },
-      {
-        key: "yakumi",
-        name: "薬味",
-        category: "effect",
-        effectType: "oneClick",
-        effectValue: 1,
-        weight: 10,
-      },
+      { key: "soba", name: "そば", category: "noodle", clicks: 1, weight: 25 },
+      { key: "udon", name: "うどん", category: "noodle", clicks: 3, weight: 18 },
+      { key: "ramen", name: "中華麺", category: "noodle", clicks: 5, weight: 14 },
+      { key: "houtou", name: "ほうとう", category: "noodle", clicks: 10, weight: 8 },
+      { key: "dark_matter", name: "ダークマター", category: "bad", penalty: "gameOver", weight: 6 },
+      { key: "rock", name: "岩", category: "bad", penalty: "minusBowls", weight: 7 },
+      { key: "rock_salt", name: "岩塩", category: "effect", effectType: "multiply", effectValue: 2, weight: 7 },
+      { key: "moss", name: "苔", category: "effect", effectType: "multiply", effectValue: 3, weight: 5 },
+      { key: "yakumi", name: "薬味", category: "effect", effectType: "oneClick", effectValue: 1, weight: 10 },
     ];
 
     const ASSET_CANDIDATES = {
@@ -908,13 +838,7 @@
       yakumi: ["yakumi_transparent", "yakumi"],
     };
 
-    const ASSET_EXTENSIONS = [
-      ".png",
-      ".jpg",
-      ".jpeg",
-      ".webp",
-    ];
-
+    const ASSET_EXTENSIONS = [".png", ".jpg", ".jpeg", ".webp"];
     const rawImageCache = new Map();
     const processedImageCache = new Map();
 
@@ -948,12 +872,10 @@
 
           const image = new Image();
 
-          image.onload = () => {
-            resolve(image);
-          };
-
+          image.onload = () => resolve(image);
           image.onerror = tryNext;
           image.src = paths[index];
+
           index += 1;
         };
 
@@ -1002,6 +924,7 @@
 
       const isNearWhite = (pixelIndex) => {
         const offset = pixelIndex * 4;
+
         const red = pixels[offset];
         const green = pixels[offset + 1];
         const blue = pixels[offset + 2];
@@ -1053,21 +976,10 @@
         const x = pixelIndex % width;
         const y = Math.floor(pixelIndex / width);
 
-        if (x > 0) {
-          enqueue(pixelIndex - 1);
-        }
-
-        if (x < width - 1) {
-          enqueue(pixelIndex + 1);
-        }
-
-        if (y > 0) {
-          enqueue(pixelIndex - width);
-        }
-
-        if (y < height - 1) {
-          enqueue(pixelIndex + width);
-        }
+        if (x > 0) enqueue(pixelIndex - 1);
+        if (x < width - 1) enqueue(pixelIndex + 1);
+        if (y > 0) enqueue(pixelIndex - width);
+        if (y < height - 1) enqueue(pixelIndex + width);
       }
 
       context.putImageData(imageData, 0, 0);
@@ -1089,7 +1001,9 @@
 
         try {
           const processedImage = new Image();
-          processedImage.src = removeConnectedWhiteBackground(rawImage);
+
+          processedImage.src =
+            removeConnectedWhiteBackground(rawImage);
 
           if (processedImage.decode) {
             try {
@@ -1108,14 +1022,17 @@
       })();
 
       processedImageCache.set(key, promise);
+
       return promise;
     }
 
     async function initialiseStaticImages() {
-      const images = document.querySelectorAll("img[data-asset]");
+      const images =
+        document.querySelectorAll("img[data-asset]");
 
       for (const imageElement of images) {
-        const key = imageElement.dataset.asset;
+        const key =
+          imageElement.dataset.asset;
 
         const image =
           key === "background"
@@ -1207,16 +1124,29 @@
       phase: "idle",
       currentIndex: 0,
       stackedCount: 0,
-      bowlX: 500,
-      bowlY: 145,
-      moveSpeed: 8,
-      bowlImage: null,
-      bonusSeconds: 0,
-      successCenterX: 500,
+
+      /*
+        青帯と中心線と判定で共有する、本当の中心座標。
+      */
+      centerX: 500,
+
       successLeftX: 446,
       successRightX: 554,
+
       moveLeftX: 210,
       moveRightX: 790,
+
+      bowlX: 500,
+      bowlY: 145,
+
+      /*
+        落とすボタンを押した瞬間の位置。
+      */
+      lockedDropX: 500,
+
+      moveSpeed: 4,
+      bowlImage: null,
+      bonusSeconds: 0,
     };
 
     let timerAnimationId = null;
@@ -1241,8 +1171,11 @@
     }
 
     function getActualAge() {
-      const input = document.querySelector("#actual-age-input");
-      const age = Number.parseInt(input.value, 10);
+      const input =
+        document.querySelector("#actual-age-input");
+
+      const age =
+        Number.parseInt(input.value, 10);
 
       if (!Number.isFinite(age) || age < 5 || age > 99) {
         return null;
@@ -1252,14 +1185,18 @@
     }
 
     function requireAge() {
-      const age = getActualAge();
+      const age =
+        getActualAge();
 
       if (age !== null) {
         return true;
       }
 
       alert("ゲームを始める前に、実年齢を5〜99歳で入力してください。");
-      document.querySelector("#actual-age-input").focus();
+
+      document
+        .querySelector("#actual-age-input")
+        .focus();
 
       return false;
     }
@@ -1289,11 +1226,19 @@
     }
 
     function recordAiAction(action, item) {
-      if (aiState.finished || !item || aiState.currentItemRecorded) {
+      if (
+        aiState.finished
+        || !item
+        || aiState.currentItemRecorded
+      ) {
         return;
       }
 
-      const reactionMs = Math.max(0, performance.now() - aiState.itemShownAt);
+      const reactionMs =
+        Math.max(
+          0,
+          performance.now() - aiState.itemShownAt,
+        );
 
       aiState.reactionTimes.push(reactionMs);
       aiState.responses += 1;
@@ -1311,14 +1256,20 @@
         return 0;
       }
 
-      const sorted = [...values].sort((a, b) => a - b);
-      const middle = Math.floor(sorted.length / 2);
+      const sorted =
+        [...values].sort((a, b) => a - b);
+
+      const middle =
+        Math.floor(sorted.length / 2);
 
       if (sorted.length % 2 === 1) {
         return sorted[middle];
       }
 
-      return (sorted[middle - 1] + sorted[middle]) / 2;
+      return (
+        sorted[middle - 1]
+        + sorted[middle]
+      ) / 2;
     }
 
     function clamp(value, min, max) {
@@ -1326,20 +1277,33 @@
     }
 
     /*
-      仮AIモデル。
-      実データを集めたあとで、係数を差し替える想定。
+      動作確認用の仮AIモデル。
+      CSVを集めた後、学習済みモデルへ差し替え可能。
     */
     function predictReflexAge(metrics) {
       let predictedAge = 28;
 
-      predictedAge += (metrics.avgReactionMs - 600) * 0.015;
-      predictedAge += (metrics.medianReactionMs - 560) * 0.008;
-      predictedAge += (metrics.accuracy - 0.85) * -16;
-      predictedAge += (metrics.mistakes - 1) * 1.25;
-      predictedAge += (metrics.bowls - 12) * -0.18;
-      predictedAge += (metrics.responses - 18) * -0.05;
+      predictedAge +=
+        (metrics.avgReactionMs - 600) * 0.015;
 
-      return Number(clamp(predictedAge, 5, 90).toFixed(1));
+      predictedAge +=
+        (metrics.medianReactionMs - 560) * 0.008;
+
+      predictedAge +=
+        (metrics.accuracy - 0.85) * -16;
+
+      predictedAge +=
+        (metrics.mistakes - 1) * 1.25;
+
+      predictedAge +=
+        (metrics.bowls - 12) * -0.18;
+
+      predictedAge +=
+        (metrics.responses - 18) * -0.05;
+
+      return Number(
+        clamp(predictedAge, 5, 90).toFixed(1),
+      );
     }
 
     function finishAiAnalysis() {
@@ -1349,11 +1313,15 @@
 
       aiState.finished = true;
 
-      const reactionTimes = aiState.reactionTimes;
+      const reactionTimes =
+        aiState.reactionTimes;
 
       const avgReactionMs =
         reactionTimes.length > 0
-          ? reactionTimes.reduce((sum, value) => sum + value, 0) / reactionTimes.length
+          ? reactionTimes.reduce(
+              (sum, value) => sum + value,
+              0,
+            ) / reactionTimes.length
           : 1500;
 
       const medianReactionMs =
@@ -1375,8 +1343,13 @@
         responses: aiState.responses,
       };
 
-      const predictedAge = predictReflexAge(metrics);
-      const difference = Number((predictedAge - aiState.actualAge).toFixed(1));
+      const predictedAge =
+        predictReflexAge(metrics);
+
+      const difference =
+        Number(
+          (predictedAge - aiState.actualAge).toFixed(1),
+        );
 
       return {
         recordedAt: new Date().toISOString(),
@@ -1392,14 +1365,17 @@
         return "";
       }
 
-      let differenceText = "実年齢と同じくらい";
+      let differenceText =
+        "実年齢と同じくらい";
 
       if (record.difference < 0) {
-        differenceText = `実年齢より ${Math.abs(record.difference)}歳 若い`;
+        differenceText =
+          `実年齢より ${Math.abs(record.difference)}歳 若い`;
       }
 
       if (record.difference > 0) {
-        differenceText = `実年齢より ${record.difference}歳 高い`;
+        differenceText =
+          `実年齢より ${record.difference}歳 高い`;
       }
 
       return [
@@ -1419,21 +1395,36 @@
 
     function loadAiRecords() {
       try {
-        const records = JSON.parse(localStorage.getItem(SETTINGS.aiStorageKey) ?? "[]");
-        return Array.isArray(records) ? records : [];
+        const records =
+          JSON.parse(
+            localStorage.getItem(
+              SETTINGS.aiStorageKey,
+            ) ?? "[]",
+          );
+
+        return Array.isArray(records)
+          ? records
+          : [];
       } catch {
         return [];
       }
     }
 
     function saveAiRecord(record) {
-      const records = loadAiRecords();
+      const records =
+        loadAiRecords();
+
       records.push(record);
-      localStorage.setItem(SETTINGS.aiStorageKey, JSON.stringify(records));
+
+      localStorage.setItem(
+        SETTINGS.aiStorageKey,
+        JSON.stringify(records),
+      );
     }
 
     function downloadAiRecords() {
-      const records = loadAiRecords();
+      const records =
+        loadAiRecords();
 
       if (records.length === 0) {
         alert("まだ保存できる本番モードの記録がありません。");
@@ -1456,36 +1447,44 @@
       ];
 
       for (const row of records) {
-        lines.push([
-          row.actualAge,
-          row.avgReactionMs,
-          row.medianReactionMs,
-          row.accuracy,
-          row.mistakes,
-          row.bowls,
-          row.responses,
-          row.predictedAge,
-          row.difference,
-          row.recordedAt,
-        ].join(","));
+        lines.push(
+          [
+            row.actualAge,
+            row.avgReactionMs,
+            row.medianReactionMs,
+            row.accuracy,
+            row.mistakes,
+            row.bowls,
+            row.responses,
+            row.predictedAge,
+            row.difference,
+            row.recordedAt,
+          ].join(","),
+        );
       }
 
-      const blob = new Blob(
-        [
-          "\uFEFF" + lines.join("\n"),
-        ],
-        {
-          type: "text/csv;charset=utf-8",
-        },
-      );
+      const blob =
+        new Blob(
+          [
+            "\uFEFF" + lines.join("\n"),
+          ],
+          {
+            type: "text/csv;charset=utf-8",
+          },
+        );
 
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
+      const url =
+        URL.createObjectURL(blob);
+
+      const link =
+        document.createElement("a");
 
       link.href = url;
-      link.download = "wankosoba_ai_records.csv";
+      link.download =
+        "wankosoba_ai_records.csv";
 
       document.body.append(link);
+
       link.click();
       link.remove();
 
@@ -1493,13 +1492,19 @@
     }
 
     function clearAiRecords() {
-      const accepted = confirm("この端末に保存されたAI学習用データを削除しますか？");
+      const accepted =
+        confirm(
+          "この端末に保存されたAI学習用データを削除しますか？",
+        );
 
       if (!accepted) {
         return;
       }
 
-      localStorage.removeItem(SETTINGS.aiStorageKey);
+      localStorage.removeItem(
+        SETTINGS.aiStorageKey,
+      );
+
       alert("AI学習用データを削除しました。");
     }
 
@@ -1512,14 +1517,18 @@
       stopMinigameAnimation();
 
       practiceMessageIndex = 0;
+
       updatePracticeMessage();
       showScreen("practice");
     }
 
     function updatePracticeMessage() {
-      elements.practiceMessage.textContent = PRACTICE_MESSAGES[practiceMessageIndex];
+      elements.practiceMessage.textContent =
+        PRACTICE_MESSAGES[practiceMessageIndex];
 
-      const isLastMessage = practiceMessageIndex === PRACTICE_MESSAGES.length - 1;
+      const isLastMessage =
+        practiceMessageIndex
+        === PRACTICE_MESSAGES.length - 1;
 
       elements.practiceNextButton.textContent =
         isLastMessage
@@ -1528,7 +1537,9 @@
     }
 
     function nextPracticeMessage() {
-      const isLastMessage = practiceMessageIndex === PRACTICE_MESSAGES.length - 1;
+      const isLastMessage =
+        practiceMessageIndex
+        === PRACTICE_MESSAGES.length - 1;
 
       if (isLastMessage) {
         startGame("practice");
@@ -1536,6 +1547,7 @@
       }
 
       practiceMessageIndex += 1;
+
       updatePracticeMessage();
     }
 
@@ -1560,7 +1572,8 @@
           ? SETTINGS.practiceSeconds
           : SETTINGS.realSeconds;
 
-      gameState.timeBarMax = gameState.timeLeft;
+      gameState.timeBarMax =
+        gameState.timeLeft;
 
       elements.leftBowlStack.replaceChildren();
 
@@ -1584,46 +1597,67 @@
     }
 
     function startCountdown() {
-      let count = SETTINGS.countdownSeconds;
+      let count =
+        SETTINGS.countdownSeconds;
 
       showScreen("countdown");
 
-      elements.countdownNumber.textContent = String(count);
+      elements.countdownNumber.textContent =
+        String(count);
 
-      countdownTimerId = window.setInterval(() => {
-        count -= 1;
+      countdownTimerId =
+        window.setInterval(
+          () => {
+            count -= 1;
 
-        if (count <= 0) {
-          window.clearInterval(countdownTimerId);
-          countdownTimerId = null;
+            if (count <= 0) {
+              window.clearInterval(
+                countdownTimerId,
+              );
 
-          beginGameplay();
-          return;
-        }
+              countdownTimerId = null;
 
-        elements.countdownNumber.textContent = String(count);
-      }, 1000);
+              beginGameplay();
+              return;
+            }
+
+            elements.countdownNumber.textContent =
+              String(count);
+          },
+          1000,
+        );
     }
 
     function beginGameplay() {
       showScreen("game");
 
       gameState.running = true;
-      gameState.endTimestamp = performance.now() + gameState.timeLeft * 1000;
+
+      gameState.endTimestamp =
+        performance.now()
+        + gameState.timeLeft * 1000;
 
       nextItem();
       updateTimer();
     }
 
     function updateTimer() {
-      if (!gameState.running || gameState.paused || gameState.gameOver) {
+      if (
+        !gameState.running
+        || gameState.paused
+        || gameState.gameOver
+      ) {
         return;
       }
 
-      gameState.timeLeft = Math.max(
-        0,
-        (gameState.endTimestamp - performance.now()) / 1000,
-      );
+      gameState.timeLeft =
+        Math.max(
+          0,
+          (
+            gameState.endTimestamp
+            - performance.now()
+          ) / 1000,
+        );
 
       updateHud();
 
@@ -1632,7 +1666,8 @@
         return;
       }
 
-      timerAnimationId = requestAnimationFrame(updateTimer);
+      timerAnimationId =
+        requestAnimationFrame(updateTimer);
     }
 
     function updateHud() {
@@ -1641,19 +1676,34 @@
           ? "練習"
           : "本番";
 
-      elements.modeLabel.textContent = `モード: ${modeText}`;
-      elements.bowlCountLabel.textContent = `杯数: ${gameState.totalBowls}`;
-      elements.timeLabel.textContent = `残り ${Math.ceil(gameState.timeLeft)} 秒`;
+      elements.modeLabel.textContent =
+        `モード: ${modeText}`;
+
+      elements.bowlCountLabel.textContent =
+        `杯数: ${gameState.totalBowls}`;
+
+      elements.timeLabel.textContent =
+        `残り ${Math.ceil(gameState.timeLeft)} 秒`;
 
       const ratio =
         gameState.timeBarMax > 0
-          ? Math.min(1, Math.max(0, gameState.timeLeft / gameState.timeBarMax))
+          ? Math.min(
+              1,
+              Math.max(
+                0,
+                gameState.timeLeft
+                / gameState.timeBarMax,
+              ),
+            )
           : 0;
 
-      elements.timeBarFill.style.width = `${ratio * 100}%`;
+      elements.timeBarFill.style.width =
+        `${ratio * 100}%`;
 
       if (!gameState.activeEffect) {
-        elements.effectLabel.textContent = "効果: なし";
+        elements.effectLabel.textContent =
+          "効果: なし";
+
         return;
       }
 
@@ -1662,8 +1712,14 @@
     }
 
     function chooseWeightedItem() {
-      const totalWeight = ITEMS.reduce((sum, item) => sum + item.weight, 0);
-      let randomValue = Math.random() * totalWeight;
+      const totalWeight =
+        ITEMS.reduce(
+          (sum, item) => sum + item.weight,
+          0,
+        );
+
+      let randomValue =
+        Math.random() * totalWeight;
 
       for (const item of ITEMS) {
         randomValue -= item.weight;
@@ -1686,7 +1742,10 @@
       }
 
       if (gameState.activeEffect.type === "multiply") {
-        return item.clicks * gameState.activeEffect.value;
+        return (
+          item.clicks
+          * gameState.activeEffect.value
+        );
       }
 
       if (gameState.activeEffect.type === "oneClick") {
@@ -1697,80 +1756,124 @@
     }
 
     function nextItem() {
-      if (!gameState.running || gameState.gameOver) {
+      if (
+        !gameState.running
+        || gameState.gameOver
+      ) {
         return;
       }
 
-      gameState.currentItem = chooseWeightedItem();
+      gameState.currentItem =
+        chooseWeightedItem();
+
       gameState.currentClicks = 0;
-      gameState.requiredClicks = calculateRequiredClicks(gameState.currentItem);
+
+      gameState.requiredClicks =
+        calculateRequiredClicks(
+          gameState.currentItem,
+        );
 
       recordItemShown();
       renderCurrentItem();
     }
 
     async function renderCurrentItem() {
-      const item = gameState.currentItem;
+      const item =
+        gameState.currentItem;
 
       if (!item) {
         return;
       }
 
-      const renderVersion = itemRenderVersion + 1;
-      itemRenderVersion = renderVersion;
+      const renderVersion =
+        itemRenderVersion + 1;
 
-      let speech = `次は ${item.name}！`;
+      itemRenderVersion =
+        renderVersion;
+
+      let speech =
+        `次は ${item.name}！`;
 
       if (item.category === "noodle") {
-        speech += `\n${gameState.requiredClicks}回クリックで食べる！`;
+        speech +=
+          `\n${gameState.requiredClicks}回クリックで食べる！`;
       } else if (item.category === "bad") {
         speech += "\nこれは食べちゃダメ！";
       } else {
         speech += "\n食べると効果発動！";
       }
 
-      elements.speechText.textContent = speech;
+      elements.speechText.textContent =
+        speech;
 
       if (item.category === "noodle") {
         elements.clickProgress.textContent =
           `${gameState.currentClicks} / ${gameState.requiredClicks}`;
       } else if (item.category === "bad") {
-        elements.clickProgress.textContent = "食べちゃダメ！";
+        elements.clickProgress.textContent =
+          "食べちゃダメ！";
       } else {
-        elements.clickProgress.textContent = "効果アイテム";
+        elements.clickProgress.textContent =
+          "効果アイテム";
       }
 
-      elements.currentItemImage.hidden = true;
-      elements.itemFallback.classList.add("hidden");
+      elements.currentItemImage.hidden =
+        true;
 
-      const image = await loadProcessedImage(item.key);
+      elements.itemFallback.classList.add(
+        "hidden",
+      );
 
-      if (renderVersion !== itemRenderVersion || item !== gameState.currentItem) {
+      const image =
+        await loadProcessedImage(item.key);
+
+      if (
+        renderVersion !== itemRenderVersion
+        || item !== gameState.currentItem
+      ) {
         return;
       }
 
       if (image) {
-        elements.currentItemImage.src = image.src;
-        elements.currentItemImage.hidden = false;
+        elements.currentItemImage.src =
+          image.src;
+
+        elements.currentItemImage.hidden =
+          false;
       } else {
-        elements.itemFallback.textContent = item.name;
-        elements.itemFallback.classList.remove("hidden");
+        elements.itemFallback.textContent =
+          item.name;
+
+        elements.itemFallback.classList.remove(
+          "hidden",
+        );
       }
     }
 
     function eatCurrentItem() {
-      if (!gameState.running || gameState.gameOver || !gameState.currentItem) {
+      if (
+        !gameState.running
+        || gameState.gameOver
+        || !gameState.currentItem
+      ) {
         return;
       }
 
-      const item = gameState.currentItem;
+      const item =
+        gameState.currentItem;
 
-      recordAiAction("eat", item);
+      recordAiAction(
+        "eat",
+        item,
+      );
 
       if (item.category === "noodle") {
         gameState.currentClicks += 1;
 
-        if (gameState.currentClicks >= gameState.requiredClicks) {
+        if (
+          gameState.currentClicks
+          >= gameState.requiredClicks
+        ) {
           eatNoodleSuccessfully();
           return;
         }
@@ -1789,16 +1892,28 @@
     }
 
     function skipCurrentItem() {
-      if (!gameState.running || gameState.gameOver || !gameState.currentItem) {
+      if (
+        !gameState.running
+        || gameState.gameOver
+        || !gameState.currentItem
+      ) {
         return;
       }
 
-      recordAiAction("skip", gameState.currentItem);
+      recordAiAction(
+        "skip",
+        gameState.currentItem,
+      );
 
-      if (gameState.currentItem.category === "bad") {
+      if (
+        gameState.currentItem.category
+        === "bad"
+      ) {
         showFloatingMessage("回避成功！");
       } else {
-        showFloatingMessage(`${gameState.currentItem.name}を見送った`);
+        showFloatingMessage(
+          `${gameState.currentItem.name}を見送った`,
+        );
       }
 
       nextItem();
@@ -1812,8 +1927,12 @@
       reduceEffectTurn();
       updateHud();
 
-      if (gameState.bowlsSinceMinigame >= SETTINGS.bowlsToTriggerMinigame) {
+      if (
+        gameState.bowlsSinceMinigame
+        >= SETTINGS.bowlsToTriggerMinigame
+      ) {
         gameState.bowlsSinceMinigame = 0;
+
         startMinigame();
         return;
       }
@@ -1822,29 +1941,52 @@
     }
 
     async function appendLeftBowl() {
-      const slot = document.createElement("div");
-      slot.className = "bowl-slot";
+      const slot =
+        document.createElement("div");
+
+      slot.className =
+        "bowl-slot";
+
       elements.leftBowlStack.append(slot);
 
-      const image = await loadProcessedImage("bowl");
+      const image =
+        await loadProcessedImage("bowl");
 
       if (image) {
-        const imageElement = document.createElement("img");
-        imageElement.src = image.src;
-        imageElement.alt = "お椀";
+        const imageElement =
+          document.createElement("img");
+
+        imageElement.src =
+          image.src;
+
+        imageElement.alt =
+          "お椀";
+
         slot.append(imageElement);
       } else {
-        slot.textContent = "🥣";
+        slot.textContent =
+          "🥣";
       }
 
-      while (elements.leftBowlStack.children.length > 45) {
-        elements.leftBowlStack.firstElementChild.remove();
+      while (
+        elements.leftBowlStack.children.length
+        > 45
+      ) {
+        elements.leftBowlStack
+          .firstElementChild
+          .remove();
       }
     }
 
     function removeLeftBowls(count) {
-      for (let index = 0; index < count; index += 1) {
-        elements.leftBowlStack.lastElementChild?.remove();
+      for (
+        let index = 0;
+        index < count;
+        index += 1
+      ) {
+        elements.leftBowlStack
+          .lastElementChild
+          ?.remove();
       }
     }
 
@@ -1863,17 +2005,28 @@
 
     function handleBadItem(item) {
       if (item.penalty === "gameOver") {
-        finishGame("ダークマターを食べてしまった……");
+        finishGame(
+          "ダークマターを食べてしまった……",
+        );
+
         return;
       }
 
       if (item.penalty === "minusBowls") {
-        const lostBowls = Math.min(3, gameState.totalBowls);
-        gameState.totalBowls -= lostBowls;
+        const lostBowls =
+          Math.min(
+            3,
+            gameState.totalBowls,
+          );
+
+        gameState.totalBowls -=
+          lostBowls;
 
         removeLeftBowls(lostBowls);
 
-        showFloatingMessage(`岩を食べた！ お椀が${lostBowls}個減った！`);
+        showFloatingMessage(
+          `岩を食べた！ お椀が${lostBowls}個減った！`,
+        );
 
         updateHud();
         nextItem();
@@ -1888,13 +2041,15 @@
           label: `${item.name}: クリック×${item.effectValue}`,
         };
 
-        gameState.effectTurnsLeft = SETTINGS.effectTurns;
+        gameState.effectTurnsLeft =
+          SETTINGS.effectTurns;
 
         showFloatingMessage(
           `${item.name}発動！ 次の${SETTINGS.effectTurns}皿はクリック×${item.effectValue}`,
         );
 
         updateHud();
+
         return;
       }
 
@@ -1905,7 +2060,8 @@
           label: `${item.name}: 全部1回`,
         };
 
-        gameState.effectTurnsLeft = SETTINGS.effectTurns;
+        gameState.effectTurnsLeft =
+          SETTINGS.effectTurns;
 
         showFloatingMessage(
           `${item.name}発動！ 次の${SETTINGS.effectTurns}皿は全部1回`,
@@ -1916,26 +2072,49 @@
     }
 
     function showFloatingMessage(message) {
-      window.clearTimeout(floatingMessageTimerId);
+      window.clearTimeout(
+        floatingMessageTimerId,
+      );
 
-      elements.floatingMessage.textContent = message;
-      elements.floatingMessage.classList.remove("hidden");
+      elements.floatingMessage.textContent =
+        message;
 
-      floatingMessageTimerId = window.setTimeout(() => {
-        elements.floatingMessage.classList.add("hidden");
-      }, 750);
+      elements.floatingMessage.classList.remove(
+        "hidden",
+      );
+
+      floatingMessageTimerId =
+        window.setTimeout(
+          () => {
+            elements.floatingMessage.classList.add(
+              "hidden",
+            );
+          },
+          750,
+        );
     }
+
+    /* =========================================================
+       ミニゲーム
+       青帯・中心線・成功判定は、同じ座標を共有する。
+    ========================================================= */
 
     async function startMinigame() {
       gameState.paused = true;
       gameState.running = false;
 
-      cancelAnimationFrame(timerAnimationId);
-
-      gameState.timeLeft = Math.max(
-        0,
-        (gameState.endTimestamp - performance.now()) / 1000,
+      cancelAnimationFrame(
+        timerAnimationId,
       );
+
+      gameState.timeLeft =
+        Math.max(
+          0,
+          (
+            gameState.endTimestamp
+            - performance.now()
+          ) / 1000,
+        );
 
       stopMinigameAnimation();
 
@@ -1944,22 +2123,38 @@
       minigameState.currentIndex = 0;
       minigameState.stackedCount = 0;
       minigameState.bonusSeconds = 0;
-      minigameState.bowlImage = await loadProcessedImage("bowl");
+
+      minigameState.bowlImage =
+        await loadProcessedImage("bowl");
 
       /*
-        ミニゲームの成功範囲をここで確定。
-        青い範囲の中央と、中心線のX座標を完全に一致させる。
+        canvasの正確な中央を取得する。
       */
-      minigameState.successCenterX = elements.minigameCanvas.width / 2;
+      minigameState.centerX =
+        elements.minigameCanvas.width / 2;
+
+      /*
+        青帯の左右端。
+        中心から左右54px。
+      */
       minigameState.successLeftX =
-        minigameState.successCenterX - SETTINGS.minigameGoodRange;
+        minigameState.centerX
+        - SETTINGS.minigameHalfRange;
+
       minigameState.successRightX =
-        minigameState.successCenterX + SETTINGS.minigameGoodRange;
+        minigameState.centerX
+        + SETTINGS.minigameHalfRange;
 
+      /*
+        お椀が左右に動く範囲。
+      */
       minigameState.moveLeftX = 210;
-      minigameState.moveRightX = 790;
 
-      elements.dropButton.textContent = "落とす";
+      minigameState.moveRightX =
+        elements.minigameCanvas.width - 210;
+
+      elements.dropButton.textContent =
+        "落とす";
 
       showScreen("minigame");
 
@@ -1971,7 +2166,10 @@
         return;
       }
 
-      if (minigameState.currentIndex >= SETTINGS.minigameBowls) {
+      if (
+        minigameState.currentIndex
+        >= SETTINGS.minigameBowls
+      ) {
         finishMinigame();
         return;
       }
@@ -1979,21 +2177,49 @@
       minigameState.currentIndex += 1;
       minigameState.bowlY = 145;
 
-      const speedIndex =
-        Math.floor(Math.random() * SETTINGS.minigameSpeedChoices.length);
+      /*
+        1個ごとに速度をランダム抽選。
+      */
+      const randomSpeedIndex =
+        Math.floor(
+          Math.random()
+          * SETTINGS.minigameSpeedChoices.length,
+        );
 
-      minigameState.moveSpeed = SETTINGS.minigameSpeedChoices[speedIndex];
+      const randomSpeed =
+        SETTINGS.minigameSpeedChoices[
+          randomSpeedIndex
+        ];
 
-      const startsFromLeft = Math.random() < 0.5;
+      /*
+        左右どちらから来るかもランダム。
+      */
+      const startsFromLeft =
+        Math.random() < 0.5;
 
       if (startsFromLeft) {
-        minigameState.bowlX = minigameState.moveLeftX;
+        minigameState.bowlX =
+          minigameState.moveLeftX;
+
+        minigameState.moveSpeed =
+          randomSpeed;
       } else {
-        minigameState.bowlX = minigameState.moveRightX;
-        minigameState.moveSpeed *= -1;
+        minigameState.bowlX =
+          minigameState.moveRightX;
+
+        minigameState.moveSpeed =
+          -randomSpeed;
       }
 
-      minigameState.phase = "moving";
+      minigameState.lockedDropX =
+        minigameState.bowlX;
+
+      minigameState.phase =
+        "moving";
+
+      cancelAnimationFrame(
+        minigameAnimationId,
+      );
 
       animateMinigame();
     }
@@ -2003,55 +2229,104 @@
         return;
       }
 
+      /*
+        左右移動中。
+      */
       if (minigameState.phase === "moving") {
-        minigameState.bowlX += minigameState.moveSpeed;
+        minigameState.bowlX +=
+          minigameState.moveSpeed;
 
-        if (minigameState.bowlX <= minigameState.moveLeftX) {
-          minigameState.bowlX = minigameState.moveLeftX;
-          minigameState.moveSpeed = Math.abs(minigameState.moveSpeed);
+        if (
+          minigameState.bowlX
+          <= minigameState.moveLeftX
+        ) {
+          minigameState.bowlX =
+            minigameState.moveLeftX;
+
+          minigameState.moveSpeed =
+            Math.abs(
+              minigameState.moveSpeed,
+            );
         }
 
-        if (minigameState.bowlX >= minigameState.moveRightX) {
-          minigameState.bowlX = minigameState.moveRightX;
-          minigameState.moveSpeed = -Math.abs(minigameState.moveSpeed);
+        if (
+          minigameState.bowlX
+          >= minigameState.moveRightX
+        ) {
+          minigameState.bowlX =
+            minigameState.moveRightX;
+
+          minigameState.moveSpeed =
+            -Math.abs(
+              minigameState.moveSpeed,
+            );
         }
       }
 
+      /*
+        落下中。
+        ボタンを押した瞬間のX位置へ固定。
+      */
       if (minigameState.phase === "dropping") {
-        minigameState.bowlY += SETTINGS.minigameDropSpeed;
+        minigameState.bowlX =
+          minigameState.lockedDropX;
 
-        const landingY = 595 - minigameState.stackedCount * 34;
+        minigameState.bowlY +=
+          SETTINGS.minigameDropSpeed;
+
+        const landingY =
+          595
+          - minigameState.stackedCount * 34;
 
         if (minigameState.bowlY >= landingY) {
-          minigameState.bowlY = landingY;
+          minigameState.bowlY =
+            landingY;
+
           checkMinigameLanding();
+
           return;
         }
       }
 
       drawMinigame();
 
-      minigameAnimationId = requestAnimationFrame(animateMinigame);
+      minigameAnimationId =
+        requestAnimationFrame(
+          animateMinigame,
+        );
     }
 
     function dropMinigameBowl() {
-      if (!minigameState.active || minigameState.phase !== "moving") {
+      if (
+        !minigameState.active
+        || minigameState.phase !== "moving"
+      ) {
         return;
       }
 
-      minigameState.phase = "dropping";
+      /*
+        落とすボタンを押した瞬間のX位置を保存。
+      */
+      minigameState.lockedDropX =
+        minigameState.bowlX;
+
+      minigameState.phase =
+        "dropping";
     }
 
     function checkMinigameLanding() {
-      minigameState.phase = "waiting";
+      minigameState.phase =
+        "waiting";
 
       /*
-        青い範囲内なら成功。
-        中心線だけではなく、successLeftX〜successRightXの間を成功にする。
+        青帯の内側なら成功。
+        描画と判定で同じ座標を使う。
       */
       const succeeded =
-        minigameState.bowlX >= minigameState.successLeftX
-        && minigameState.bowlX <= minigameState.successRightX;
+        minigameState.lockedDropX
+          >= minigameState.successLeftX
+        && minigameState.lockedDropX
+          <= minigameState.successRightX;
 
       if (succeeded) {
         minigameState.stackedCount += 1;
@@ -2063,100 +2338,220 @@
           : "ずれた！",
       );
 
-      minigameSpawnTimerId = window.setTimeout(
-        spawnMinigameBowl,
-        480,
-      );
+      minigameSpawnTimerId =
+        window.setTimeout(
+          spawnMinigameBowl,
+          480,
+        );
     }
 
     function drawMinigame(message = "") {
-      const canvas = elements.minigameCanvas;
-      const context = canvas.getContext("2d");
+      const canvas =
+        elements.minigameCanvas;
 
-      const centerX = minigameState.successCenterX;
-      const leftX = minigameState.successLeftX;
-      const rightX = minigameState.successRightX;
-      const rangeWidth = rightX - leftX;
+      const context =
+        canvas.getContext("2d");
 
-      context.clearRect(0, 0, canvas.width, canvas.height);
+      const centerX =
+        minigameState.centerX;
 
-      context.fillStyle = "#d8f2ff";
-      context.fillRect(0, 0, canvas.width, canvas.height);
+      const leftX =
+        minigameState.successLeftX;
 
-      context.fillStyle = "#203040";
-      context.textAlign = "center";
-      context.font = "bold 42px sans-serif";
-      context.fillText("ミニゲーム：お椀をまっすぐ落とせ！", centerX, 62);
+      const rightX =
+        minigameState.successRightX;
 
-      context.font = "bold 22px sans-serif";
-      context.fillText("青い範囲内にお椀が来た瞬間に「落とす」を押す", centerX, 104);
+      const successWidth =
+        rightX - leftX;
 
-      context.textAlign = "left";
-      context.font = "bold 27px sans-serif";
+      context.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+      );
+
+      context.fillStyle =
+        "#d8f2ff";
+
+      context.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+      );
+
+      context.fillStyle =
+        "#203040";
+
+      context.textAlign =
+        "center";
+
+      context.font =
+        "bold 42px sans-serif";
+
+      context.fillText(
+        "ミニゲーム：お椀をまっすぐ落とせ！",
+        centerX,
+        62,
+      );
+
+      context.font =
+        "bold 22px sans-serif";
+
+      context.fillText(
+        "青い範囲内にお椀が来た瞬間に「落とす」を押す",
+        centerX,
+        104,
+      );
+
+      context.textAlign =
+        "left";
+
+      context.font =
+        "bold 27px sans-serif";
+
       context.fillText(
         `${minigameState.currentIndex}/${SETTINGS.minigameBowls}`,
         72,
         155,
       );
 
-      context.font = "bold 22px sans-serif";
-      context.fillText(`成功: ${minigameState.stackedCount}個`, 72, 190);
+      context.font =
+        "bold 22px sans-serif";
+
+      context.fillText(
+        `成功: ${minigameState.stackedCount}個`,
+        72,
+        190,
+      );
 
       /*
-        青の成功範囲。
-        この範囲内なら成功。
+        青い成功範囲。
+        判定で使う座標と同じleftX・rightXを使う。
       */
-      context.fillStyle = "rgba(76, 124, 255, 0.16)";
-      context.fillRect(leftX, 130, rangeWidth, 485);
+      context.fillStyle =
+        "rgba(76, 124, 255, 0.18)";
+
+      context.fillRect(
+        leftX,
+        130,
+        successWidth,
+        485,
+      );
 
       /*
-        成功範囲の両端も薄く表示。
+        青帯の左右端。
       */
-      context.strokeStyle = "rgba(76, 124, 255, 0.55)";
-      context.lineWidth = 2;
-      context.setLineDash([5, 5]);
+      context.strokeStyle =
+        "rgba(76, 124, 255, 0.60)";
+
+      context.lineWidth =
+        2;
+
+      context.setLineDash([
+        5,
+        5,
+      ]);
 
       context.beginPath();
-      context.moveTo(leftX, 130);
-      context.lineTo(leftX, 615);
+
+      context.moveTo(
+        leftX,
+        130,
+      );
+
+      context.lineTo(
+        leftX,
+        615,
+      );
+
       context.stroke();
 
       context.beginPath();
-      context.moveTo(rightX, 130);
-      context.lineTo(rightX, 615);
+
+      context.moveTo(
+        rightX,
+        130,
+      );
+
+      context.lineTo(
+        rightX,
+        615,
+      );
+
       context.stroke();
 
       /*
         中心線。
-        青い範囲の正確な中心。
+        青帯の中央座標centerXと完全一致。
       */
-      context.strokeStyle = "#4b7cff";
-      context.lineWidth = 3;
-      context.setLineDash([9, 7]);
+      context.strokeStyle =
+        "#4b7cff";
+
+      context.lineWidth =
+        3;
+
+      context.setLineDash([
+        9,
+        7,
+      ]);
+
       context.beginPath();
-      context.moveTo(centerX, 130);
-      context.lineTo(centerX, 615);
+
+      context.moveTo(
+        centerX,
+        130,
+      );
+
+      context.lineTo(
+        centerX,
+        615,
+      );
+
       context.stroke();
+
       context.setLineDash([]);
 
       /*
-        積む台。
+        台。
       */
-      context.fillStyle = "#7b4a24";
-      context.fillRect(300, 615, 400, 22);
+      context.fillStyle =
+        "#7b4a24";
+
+      context.fillRect(
+        300,
+        615,
+        400,
+        22,
+      );
 
       /*
         積み上がったお椀。
       */
-      for (let index = 0; index < minigameState.stackedCount; index += 1) {
-        const y = 590 - index * 34;
-        drawMinigameBowl(context, centerX, y);
+      for (
+        let index = 0;
+        index < minigameState.stackedCount;
+        index += 1
+      ) {
+        const y =
+          590
+          - index * 34;
+
+        drawMinigameBowl(
+          context,
+          centerX,
+          y,
+        );
       }
 
       /*
-        現在動いているお椀。
+        操作中のお椀。
       */
-      if (minigameState.phase !== "waiting") {
+      if (
+        minigameState.phase === "moving"
+        || minigameState.phase === "dropping"
+      ) {
         drawMinigameBowl(
           context,
           minigameState.bowlX,
@@ -2165,15 +2560,30 @@
       }
 
       if (message) {
-        context.fillStyle = "#203040";
-        context.textAlign = "center";
-        context.font = "bold 34px sans-serif";
-        context.fillText(message, centerX, 240);
+        context.fillStyle =
+          "#203040";
+
+        context.textAlign =
+          "center";
+
+        context.font =
+          "bold 34px sans-serif";
+
+        context.fillText(
+          message,
+          centerX,
+          240,
+        );
       }
     }
 
-    function drawMinigameBowl(context, x, y) {
-      const image = minigameState.bowlImage;
+    function drawMinigameBowl(
+      context,
+      x,
+      y,
+    ) {
+      const image =
+        minigameState.bowlImage;
 
       if (image) {
         const width = 175;
@@ -2190,12 +2600,27 @@
         return;
       }
 
-      context.fillStyle = "#fff4cf";
-      context.strokeStyle = "#4b2e16";
-      context.lineWidth = 3;
+      context.fillStyle =
+        "#fff4cf";
+
+      context.strokeStyle =
+        "#4b2e16";
+
+      context.lineWidth =
+        3;
 
       context.beginPath();
-      context.ellipse(x, y, 68, 20, 0, 0, Math.PI * 2);
+
+      context.ellipse(
+        x,
+        y,
+        68,
+        20,
+        0,
+        0,
+        Math.PI * 2,
+      );
+
       context.fill();
       context.stroke();
     }
@@ -2217,45 +2642,112 @@
 
       minigameState.active = false;
       minigameState.phase = "finished";
-      minigameState.bonusSeconds = calculateMinigameBonus();
 
-      const canvas = elements.minigameCanvas;
-      const context = canvas.getContext("2d");
+      minigameState.bonusSeconds =
+        calculateMinigameBonus();
 
-      context.clearRect(0, 0, canvas.width, canvas.height);
+      const canvas =
+        elements.minigameCanvas;
 
-      context.fillStyle = "#d8f2ff";
-      context.fillRect(0, 0, canvas.width, canvas.height);
+      const context =
+        canvas.getContext("2d");
 
-      context.fillStyle = "#fff4cf";
-      context.strokeStyle = "#4b2e16";
-      context.lineWidth = 4;
-      context.fillRect(235, 170, 530, 300);
-      context.strokeRect(235, 170, 530, 300);
+      context.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+      );
 
-      context.fillStyle = "#203040";
-      context.textAlign = "center";
-      context.font = "bold 48px sans-serif";
-      context.fillText("ミニゲーム終了！", 500, 245);
+      context.fillStyle =
+        "#d8f2ff";
 
-      context.font = "bold 30px sans-serif";
-      context.fillText(`積めたお椀: ${minigameState.stackedCount}個`, 500, 325);
-      context.fillText(`ボーナスタイム: +${minigameState.bonusSeconds}秒`, 500, 375);
+      context.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+      );
 
-      elements.dropButton.textContent = "ゲームに戻る";
+      context.fillStyle =
+        "#fff4cf";
+
+      context.strokeStyle =
+        "#4b2e16";
+
+      context.lineWidth =
+        4;
+
+      context.fillRect(
+        235,
+        170,
+        530,
+        300,
+      );
+
+      context.strokeRect(
+        235,
+        170,
+        530,
+        300,
+      );
+
+      context.fillStyle =
+        "#203040";
+
+      context.textAlign =
+        "center";
+
+      context.font =
+        "bold 48px sans-serif";
+
+      context.fillText(
+        "ミニゲーム終了！",
+        500,
+        245,
+      );
+
+      context.font =
+        "bold 30px sans-serif";
+
+      context.fillText(
+        `積めたお椀: ${minigameState.stackedCount}個`,
+        500,
+        325,
+      );
+
+      context.fillText(
+        `ボーナスタイム: +${minigameState.bonusSeconds}秒`,
+        500,
+        375,
+      );
+
+      elements.dropButton.textContent =
+        "ゲームに戻る";
     }
 
     function returnFromMinigame() {
-      const bonusSeconds = minigameState.bonusSeconds;
-      const stackedCount = minigameState.stackedCount;
+      const bonusSeconds =
+        minigameState.bonusSeconds;
 
-      elements.dropButton.textContent = "落とす";
+      const stackedCount =
+        minigameState.stackedCount;
+
+      elements.dropButton.textContent =
+        "落とす";
 
       gameState.paused = false;
       gameState.running = true;
-      gameState.timeLeft += bonusSeconds;
-      gameState.timeBarMax += bonusSeconds;
-      gameState.endTimestamp = performance.now() + gameState.timeLeft * 1000;
+
+      gameState.timeLeft +=
+        bonusSeconds;
+
+      gameState.timeBarMax +=
+        bonusSeconds;
+
+      gameState.endTimestamp =
+        performance.now()
+        + gameState.timeLeft * 1000;
 
       showScreen("game");
 
@@ -2279,8 +2771,13 @@
     }
 
     function stopMinigameAnimation() {
-      cancelAnimationFrame(minigameAnimationId);
-      window.clearTimeout(minigameSpawnTimerId);
+      cancelAnimationFrame(
+        minigameAnimationId,
+      );
+
+      window.clearTimeout(
+        minigameSpawnTimerId,
+      );
     }
 
     function finishGame(forceMessage = "") {
@@ -2291,48 +2788,79 @@
       gameState.running = false;
       gameState.gameOver = true;
 
-      cancelAnimationFrame(timerAnimationId);
+      cancelAnimationFrame(
+        timerAnimationId,
+      );
 
       let resultText = "";
 
       if (forceMessage) {
-        resultText += `${forceMessage}\n`;
+        resultText +=
+          `${forceMessage}\n`;
       }
 
-      resultText += `あなたの記録: ${gameState.totalBowls}杯`;
+      resultText +=
+        `あなたの記録: ${gameState.totalBowls}杯`;
 
       if (gameState.mode === "real") {
-        const { rank, total } = addRankingScore(gameState.totalBowls);
-        resultText += `\nあなたは ${total}人中 ${rank}位 です。`;
+        const {
+          rank,
+          total,
+        } =
+          addRankingScore(
+            gameState.totalBowls,
+          );
+
+        resultText +=
+          `\nあなたは ${total}人中 ${rank}位 です。`;
       } else {
-        resultText += "\n練習モードなのでランキングには登録されません。";
+        resultText +=
+          "\n練習モードなのでランキングには登録されません。";
       }
 
-      const aiRecord = finishAiAnalysis();
-      resultText += formatAiResult(aiRecord);
+      const aiRecord =
+        finishAiAnalysis();
 
-      if (gameState.mode === "real" && aiRecord) {
+      resultText +=
+        formatAiResult(aiRecord);
+
+      if (
+        gameState.mode === "real"
+        && aiRecord
+      ) {
         saveAiRecord(aiRecord);
       }
 
-      elements.resultMessage.textContent = resultText;
+      elements.resultMessage.textContent =
+        resultText;
 
       showScreen("result");
     }
 
     function stopGameplay() {
-      cancelAnimationFrame(timerAnimationId);
-      window.clearInterval(countdownTimerId);
+      cancelAnimationFrame(
+        timerAnimationId,
+      );
+
+      window.clearInterval(
+        countdownTimerId,
+      );
+
       gameState.running = false;
     }
 
     function loadRanking() {
       try {
-        const ranking = JSON.parse(
-          localStorage.getItem(SETTINGS.rankingKey) ?? "[]",
-        );
+        const ranking =
+          JSON.parse(
+            localStorage.getItem(
+              SETTINGS.rankingKey,
+            ) ?? "[]",
+          );
 
-        return Array.isArray(ranking) ? ranking : [];
+        return Array.isArray(ranking)
+          ? ranking
+          : [];
       } catch {
         return [];
       }
@@ -2346,23 +2874,33 @@
     }
 
     function addRankingScore(score) {
-      const ranking = loadRanking();
+      const ranking =
+        loadRanking();
 
       const record = {
         id:
           crypto.randomUUID
             ? crypto.randomUUID()
             : `${Date.now()}-${Math.random()}`,
+
         score,
-        createdAt: new Date().toLocaleString("ja-JP"),
+
+        createdAt:
+          new Date().toLocaleString("ja-JP"),
       };
 
       ranking.push(record);
-      ranking.sort((a, b) => b.score - a.score);
+
+      ranking.sort(
+        (a, b) => b.score - a.score,
+      );
+
       saveRanking(ranking);
 
       const rank =
-        ranking.findIndex((row) => row.id === record.id) + 1;
+        ranking.findIndex(
+          (row) => row.id === record.id,
+        ) + 1;
 
       return {
         rank,
@@ -2371,20 +2909,31 @@
     }
 
     function showRanking() {
-      const ranking = loadRanking()
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 10);
+      const ranking =
+        loadRanking()
+          .sort(
+            (a, b) => b.score - a.score,
+          )
+          .slice(0, 10);
 
       elements.rankingList.replaceChildren();
 
       if (ranking.length === 0) {
-        const item = document.createElement("li");
-        item.textContent = "まだ記録がありません。";
+        const item =
+          document.createElement("li");
+
+        item.textContent =
+          "まだ記録がありません。";
+
         elements.rankingList.append(item);
       } else {
         for (const record of ranking) {
-          const item = document.createElement("li");
-          item.textContent = `${record.score}杯　${record.createdAt}`;
+          const item =
+            document.createElement("li");
+
+          item.textContent =
+            `${record.score}杯　${record.createdAt}`;
+
           elements.rankingList.append(item);
         }
       }
@@ -2394,76 +2943,129 @@
 
     document
       .querySelector("#practice-menu-button")
-      .addEventListener("click", startPracticeExplanation);
+      .addEventListener(
+        "click",
+        startPracticeExplanation,
+      );
 
     document
       .querySelector("#real-menu-button")
-      .addEventListener("click", () => {
-        startGame("real");
-      });
+      .addEventListener(
+        "click",
+        () => {
+          startGame("real");
+        },
+      );
 
     document
       .querySelector("#ranking-menu-button")
-      .addEventListener("click", showRanking);
+      .addEventListener(
+        "click",
+        showRanking,
+      );
 
     document
       .querySelector("#practice-next-button")
-      .addEventListener("click", nextPracticeMessage);
+      .addEventListener(
+        "click",
+        nextPracticeMessage,
+      );
 
     document
       .querySelector("#practice-back-button")
-      .addEventListener("click", showTitle);
+      .addEventListener(
+        "click",
+        showTitle,
+      );
 
     document
       .querySelector("#eat-button")
-      .addEventListener("click", eatCurrentItem);
+      .addEventListener(
+        "click",
+        eatCurrentItem,
+      );
 
     document
       .querySelector("#skip-button")
-      .addEventListener("click", skipCurrentItem);
+      .addEventListener(
+        "click",
+        skipCurrentItem,
+      );
 
     document
       .querySelector("#drop-button")
-      .addEventListener("click", handleDropButton);
+      .addEventListener(
+        "click",
+        handleDropButton,
+      );
 
     document
       .querySelector("#retry-button")
-      .addEventListener("click", () => {
-        startGame(gameState.mode);
-      });
+      .addEventListener(
+        "click",
+        () => {
+          startGame(gameState.mode);
+        },
+      );
 
     document
       .querySelector("#result-ranking-button")
-      .addEventListener("click", showRanking);
+      .addEventListener(
+        "click",
+        showRanking,
+      );
 
     document
       .querySelector("#result-title-button")
-      .addEventListener("click", showTitle);
+      .addEventListener(
+        "click",
+        showTitle,
+      );
 
     document
       .querySelector("#ranking-back-button")
-      .addEventListener("click", showTitle);
+      .addEventListener(
+        "click",
+        showTitle,
+      );
 
     document
       .querySelector("#download-ai-data-button")
-      .addEventListener("click", downloadAiRecords);
+      .addEventListener(
+        "click",
+        downloadAiRecords,
+      );
 
     document
       .querySelector("#clear-ai-data-button")
-      .addEventListener("click", clearAiRecords);
+      .addEventListener(
+        "click",
+        clearAiRecords,
+      );
 
-    window.addEventListener("keydown", (event) => {
-      if (event.code !== "Space") {
-        return;
-      }
+    /*
+      PCではスペースキーでも落とせる。
+    */
+    window.addEventListener(
+      "keydown",
+      (event) => {
+        if (event.code !== "Space") {
+          return;
+        }
 
-      if (!screens.minigame.classList.contains("active")) {
-        return;
-      }
+        if (
+          !screens.minigame.classList.contains(
+            "active",
+          )
+        ) {
+          return;
+        }
 
-      event.preventDefault();
-      handleDropButton();
-    });
+        event.preventDefault();
+
+        handleDropButton();
+      },
+    );
 
     initialiseStaticImages();
     showTitle();
