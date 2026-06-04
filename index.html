@@ -1,22 +1,12 @@
 
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>わんこそば連打ゲーム</title>
 
   <style>
-    /* =========================================================
-       全体
-    ========================================================= */
-
     * {
       box-sizing: border-box;
     }
@@ -24,49 +14,36 @@
     :root {
       --paper: #fff4cf;
       --paper-strong: #ffe29a;
-
       --brown: #5a3518;
       --brown-dark: #2b1709;
-
       --accent: #ffb340;
       --sky: #d8f2ff;
+      --success-blue: rgba(76, 124, 255, 0.16);
+      --success-line: #4b7cff;
     }
 
     html,
     body {
       width: 100%;
       min-height: 100%;
-
       margin: 0;
-
       color: var(--brown-dark);
       background: #222;
-
-      font-family:
-        "Yu Gothic UI",
-        "Hiragino Kaku Gothic ProN",
-        "Meiryo",
-        sans-serif;
+      font-family: "Yu Gothic UI", "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
     }
 
     button {
       border: 3px solid rgba(90, 53, 24, 0.48);
       border-radius: 0;
-
       padding: 10px 20px;
-
       color: #090603;
       background: var(--paper);
-
       font: inherit;
       font-size: 20px;
       font-weight: 800;
-
       cursor: pointer;
       touch-action: manipulation;
-
-      box-shadow:
-        3px 3px 0 rgba(90, 53, 24, 0.42);
+      box-shadow: 3px 3px 0 rgba(90, 53, 24, 0.42);
     }
 
     button:hover {
@@ -80,25 +57,18 @@
 
     .app-shell {
       position: relative;
-
       width: min(100vw, 1000px);
       height: min(100vh, 700px);
       min-height: 700px;
-
       margin: 0 auto;
-
       overflow: hidden;
-
       background: #ddd;
     }
 
     .screen {
       position: absolute;
-
       inset: 0;
-
       display: none;
-
       overflow: hidden;
     }
 
@@ -108,20 +78,15 @@
 
     .screen-bg {
       position: absolute;
-
       inset: 0;
-
       width: 100%;
       height: 100%;
-
       object-fit: cover;
     }
 
     .screen-shade {
       position: absolute;
-
       inset: 0;
-
       background: rgba(20, 10, 0, 0.28);
     }
 
@@ -133,30 +98,19 @@
       background: rgba(15, 5, 0, 0.46);
     }
 
-
-    /* =========================================================
-       タイトル画面
-    ========================================================= */
-
     .title-content {
       position: relative;
-
       z-index: 2;
-
       display: grid;
       justify-items: center;
-
-      padding-top: 38px;
-
+      padding-top: 34px;
       text-align: center;
     }
 
     .title-content h1,
     .screen-title {
       margin: 0;
-
       color: #fff1c8;
-
       text-shadow:
         3px 3px 0 var(--brown-dark),
         -1px -1px 0 var(--brown-dark),
@@ -170,142 +124,94 @@
     }
 
     .title-content p {
-      margin: 14px 0 10px;
-
+      margin: 14px 0 9px;
       color: #fff1c8;
-
       font-size: clamp(15px, 2.2vw, 21px);
       font-weight: 800;
-
-      text-shadow:
-        2px 2px 0 var(--brown-dark);
+      text-shadow: 2px 2px 0 var(--brown-dark);
     }
 
     .age-panel {
       display: flex;
-
       align-items: center;
       justify-content: center;
-
       gap: 10px;
-
       width: min(330px, 78vw);
-
-      margin: 8px 0;
+      margin: 7px 0;
       padding: 9px 14px;
-
       border: 3px solid var(--brown);
-
       background: var(--paper);
-
       font-size: 19px;
       font-weight: 800;
     }
 
     .age-panel input {
       width: 92px;
-
       padding: 6px 8px;
-
       border: 2px solid var(--brown);
-
       font-size: 19px;
       font-weight: 800;
-
       text-align: center;
     }
 
     .menu-panel {
       display: grid;
-
       gap: 8px;
-
       width: min(330px, 78vw);
-
       padding: 11px;
-
       background: rgba(255, 203, 99, 0.78);
     }
 
     .ai-data-buttons {
       display: flex;
-
       flex-wrap: wrap;
       justify-content: center;
-
       gap: 8px;
-
       width: min(520px, 90vw);
-
-      margin-top: 10px;
+      margin-top: 9px;
     }
 
     .ai-data-buttons button {
       padding: 7px 11px;
-
       font-size: 13px;
     }
 
     .ai-note {
-      margin-top: 7px;
-
-      color: #fff1c8;
-
-      font-size: 12px;
-      font-weight: 800;
-
-      text-shadow:
-        1px 1px 0 var(--brown-dark);
+      margin-top: 6px !important;
+      color: #fff1c8 !important;
+      font-size: 12px !important;
+      font-weight: 800 !important;
+      text-shadow: 1px 1px 0 var(--brown-dark) !important;
     }
-
-
-    /* =========================================================
-       練習説明
-    ========================================================= */
 
     .screen-title {
       position: relative;
-
       z-index: 3;
-
       margin-top: 36px;
-
       text-align: center;
-
       font-size: clamp(34px, 5vw, 48px);
     }
 
     .guide-image {
       position: absolute;
-
       z-index: 3;
-
       top: 17%;
       right: 4%;
-
       width: min(34%, 340px);
       height: min(68%, 470px);
-
       object-fit: contain;
       object-position: center bottom;
     }
 
     .practice-card {
       position: absolute;
-
       z-index: 4;
-
       top: 45%;
       left: 13%;
-
       width: min(570px, 62%);
-
       padding: 18px;
-
       border: 3px solid var(--brown);
-
       background: var(--paper);
-
       font-size: clamp(16px, 2.2vw, 21px);
       font-weight: 800;
     }
@@ -316,61 +222,38 @@
 
     .bottom-buttons {
       position: absolute;
-
       z-index: 5;
-
       bottom: 9%;
       left: 50%;
-
       display: grid;
-
       gap: 14px;
-
       width: min(240px, 52vw);
-
       transform: translateX(-50%);
     }
 
-
-    /* =========================================================
-       通常ゲーム：上部
-    ========================================================= */
-
     .game-hud {
       position: absolute;
-
       z-index: 7;
-
       top: 10px;
-      left: 52%;
-
-      width: min(520px, 54%);
-
+      left: 55%;
+      width: min(530px, 56%);
       padding: 8px 16px;
-
       border: 3px solid var(--brown);
-
       background: var(--paper);
-
       transform: translateX(-50%);
     }
 
     .hud-top-row,
     .time-row {
       display: flex;
-
       align-items: center;
-
       gap: 16px;
-
       font-weight: 800;
     }
 
     .hud-top-row {
       justify-content: space-between;
-
       margin-bottom: 5px;
-
       font-size: 18px;
     }
 
@@ -380,211 +263,142 @@
 
     .effect-label {
       margin-top: 4px;
-
       font-size: 14px;
       font-weight: 800;
     }
 
     .time-bar {
       flex: 1;
-
       height: 20px;
-
       border: 2px solid var(--brown);
-
       overflow: hidden;
-
       background: #d8c99b;
     }
 
     .time-bar-fill {
       width: 100%;
       height: 100%;
-
       background: var(--accent);
-
-      transition:
-        width 0.1s linear;
+      transition: width 0.1s linear;
     }
-
-
-    /* =========================================================
-       左側：食べ終わったお椀
-    ========================================================= */
 
     .left-bowl-panel {
       position: absolute;
-
       z-index: 4;
-
       top: 20px;
       bottom: 22px;
       left: 14px;
-
       width: 265px;
-
       border: 3px solid var(--brown);
-
       overflow: hidden;
-
       background: var(--paper);
     }
 
     .left-bowl-panel h3 {
       margin: 12px 0 5px;
-
       text-align: center;
-
       font-size: 24px;
     }
 
     .left-bowl-stack {
       display: grid;
-
-      grid-template-columns:
-        repeat(3, 1fr);
-
+      grid-template-columns: repeat(3, 1fr);
       align-content: start;
-
       gap: 6px;
-
       padding: 12px;
     }
 
     .bowl-slot {
       display: grid;
-
       place-items: center;
-
       width: 74px;
       height: 52px;
-
       overflow: hidden;
-
       font-size: 30px;
     }
 
     .bowl-slot img {
       width: 74px;
       height: 50px;
-
       object-fit: contain;
     }
 
-
-    /* =========================================================
-       中央：食べ物・操作
-    ========================================================= */
-
     .game-main-area {
       position: absolute;
-
       z-index: 5;
-
-      top: 105px;
-      right: 270px;
+      top: 108px;
+      right: 260px;
       bottom: 0;
       left: 285px;
     }
 
     .speech-card {
       position: absolute;
-
       top: 0;
       left: 50%;
-
       width: 380px;
       min-height: 92px;
-
       padding: 13px 18px;
-
       border: 3px solid var(--brown);
-
       background: var(--paper);
-
       transform: translateX(-50%);
     }
 
     .speech-card p {
       margin: 0;
-
       white-space: pre-line;
-
       font-size: 18px;
       font-weight: 800;
     }
 
     .food-stage {
       position: absolute;
-
-      top: 155px;
+      top: 150px;
       left: 50%;
-
       display: grid;
-
       place-items: center;
-
       width: 450px;
-      height: 260px;
-
+      height: 270px;
       overflow: visible;
-
       transform: translateX(-50%);
     }
 
     .current-item-image {
       display: block;
-
       width: 450px;
-      height: 280px;
-
+      height: 290px;
       object-fit: contain;
       object-position: center bottom;
     }
 
     .item-fallback {
       display: grid;
-
       place-items: center;
-
       width: 280px;
       height: 165px;
-
       border: 3px solid var(--brown);
-
       background: var(--paper);
-
       font-size: 30px;
       font-weight: 800;
     }
 
     .click-progress {
       position: absolute;
-
-      top: 418px;
+      top: 420px;
       left: 50%;
-
       transform: translateX(-50%);
-
       font-size: 34px;
       font-weight: 900;
-
-      text-shadow:
-        1px 1px 0 #fff1c8;
+      text-shadow: 1px 1px 0 #fff1c8;
     }
 
     .game-buttons {
       position: absolute;
-
-      top: 470px;
+      top: 472px;
       left: 50%;
-
       display: grid;
-
       gap: 11px;
-
       width: 290px;
-
       transform: translateX(-50%);
     }
 
@@ -592,65 +406,37 @@
       width: 100%;
     }
 
-
-    /* =========================================================
-       右側：先生
-    ========================================================= */
-
     .waiter-image {
       position: absolute;
-
       z-index: 4;
-
-      top: 150px;
-      right: 8px;
-
-      width: 260px;
+      top: 188px;
+      right: -28px;
+      width: 315px;
       height: 440px;
-
       object-fit: contain;
-      object-position: center bottom;
+      object-position: center;
+      transform: rotate(90deg);
+      transform-origin: center center;
     }
-
-
-    /* =========================================================
-       一時メッセージ
-    ========================================================= */
 
     .floating-message {
       position: absolute;
-
       z-index: 10;
-
       top: 145px;
       left: 50%;
-
       width: min(430px, 72%);
-
       padding: 12px;
-
       border: 3px solid var(--brown);
-
       background: var(--paper);
-
       text-align: center;
-
       font-size: 17px;
       font-weight: 800;
-
       transform: translateX(-50%);
     }
 
-
-    /* =========================================================
-       カウントダウン
-    ========================================================= */
-
     .countdown-screen {
       display: none;
-
       place-items: center;
-
       background: rgba(0, 0, 0, 0.84);
     }
 
@@ -660,15 +446,9 @@
 
     .countdown-number {
       color: #fff;
-
       font-size: min(30vw, 170px);
       font-weight: 900;
     }
-
-
-    /* =========================================================
-       ミニゲーム
-    ========================================================= */
 
     .minigame-screen {
       background: var(--sky);
@@ -685,83 +465,56 @@
 
     .drop-button {
       position: absolute;
-
       bottom: 25px;
       left: 50%;
-
       width: min(320px, 68vw);
-
       transform: translateX(-50%);
-
       font-size: 22px;
     }
-
-
-    /* =========================================================
-       結果・ランキング
-    ========================================================= */
 
     .result-card,
     .ranking-card {
       position: relative;
-
       z-index: 3;
-
       width: min(680px, 91%);
-
-      margin: 52px auto 0;
-
-      padding: 24px;
-
+      margin: 50px auto 0;
+      padding: 23px;
       border: 4px solid var(--brown);
-
       background: var(--paper);
-
       text-align: center;
     }
 
     .result-card h2,
     .ranking-card h2 {
       margin: 0 0 14px;
-
       font-size: 39px;
     }
 
     .result-card p {
       white-space: pre-line;
-
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 800;
     }
 
     .result-buttons {
       display: flex;
-
       flex-wrap: wrap;
-
       justify-content: center;
-
       gap: 12px;
-
       margin-top: 19px;
     }
 
     .ranking-note {
       margin-top: -8px;
-
       font-size: 14px;
       font-weight: 700;
     }
 
     .ranking-list {
       min-height: 305px;
-
       margin: 18px auto;
-
       padding-left: 2.2em;
-
       text-align: left;
-
       font-size: 18px;
       font-weight: 800;
     }
@@ -770,18 +523,13 @@
       padding: 4px 8px;
     }
 
-
-    /* =========================================================
-       スマホ調整
-    ========================================================= */
-
     @media (max-width: 720px) {
       .app-shell {
         min-height: 760px;
       }
 
       .title-content {
-        padding-top: 42px;
+        padding-top: 40px;
       }
 
       .title-content h1 {
@@ -791,23 +539,19 @@
       .practice-card {
         top: 45%;
         left: 5%;
-
         width: 72%;
       }
 
       .guide-image {
         top: 18%;
         right: 0;
-
         width: 40%;
       }
 
       .game-hud {
         top: 8px;
         left: 60%;
-
         width: 77%;
-
         padding: 7px 11px;
       }
 
@@ -818,7 +562,6 @@
       .left-bowl-panel {
         top: 100px;
         left: 6px;
-
         width: 136px;
       }
 
@@ -827,11 +570,8 @@
       }
 
       .left-bowl-stack {
-        grid-template-columns:
-          repeat(2, 1fr);
-
+        grid-template-columns: repeat(2, 1fr);
         gap: 4px;
-
         padding: 7px;
       }
 
@@ -862,7 +602,6 @@
 
       .food-stage {
         top: 142px;
-
         width: 95%;
         height: 245px;
       }
@@ -874,31 +613,26 @@
 
       .click-progress {
         top: 390px;
-
         font-size: 31px;
       }
 
       .game-buttons {
         top: 440px;
-
         width: 220px;
       }
 
       .waiter-image {
-        top: 205px;
-        right: -19px;
-
-        width: 145px;
-        height: 285px;
-
-        opacity: 0.94;
+        top: 235px;
+        right: -24px;
+        width: 185px;
+        height: 295px;
+        transform: rotate(90deg);
       }
 
       .result-card,
       .ranking-card {
-        margin-top: 38px;
-
-        padding: 17px;
+        margin-top: 37px;
+        padding: 16px;
       }
 
       .result-card h2,
@@ -907,396 +641,172 @@
       }
 
       .result-card p {
-        font-size: 17px;
+        font-size: 16px;
       }
     }
   </style>
 </head>
 
-
 <body>
   <main class="app-shell">
 
-    <!-- ======================================================
-         タイトル画面
-    ======================================================= -->
-
-    <section
-      id="title-screen"
-      class="screen active"
-    >
-      <img
-        class="screen-bg"
-        data-asset="background"
-        alt=""
-      >
-
+    <section id="title-screen" class="screen active">
+      <img class="screen-bg" data-asset="background" alt="">
       <div class="screen-shade"></div>
 
       <div class="title-content">
-        <h1>
-          わんこそば<br>
-          連打ゲーム
-        </h1>
+        <h1>わんこそば<br>連打ゲーム</h1>
 
-        <p>
-          食べる？ 食べない？ お椀が積もれば時間も積もる。
-        </p>
+        <p>食べる？ 食べない？ お椀が積もれば時間も積もる。</p>
 
         <div class="age-panel">
-          <label for="actual-age-input">
-            実年齢
-          </label>
-
-          <input
-            id="actual-age-input"
-            type="number"
-            min="5"
-            max="99"
-            inputmode="numeric"
-            placeholder="例：21"
-          >
+          <label for="actual-age-input">実年齢</label>
+          <input id="actual-age-input" type="number" min="5" max="99" inputmode="numeric" placeholder="例：21">
         </div>
 
         <div class="menu-panel">
-          <button id="practice-menu-button">
-            練習モード
-          </button>
-
-          <button id="real-menu-button">
-            本番モード
-          </button>
-
-          <button id="ranking-menu-button">
-            ランキング
-          </button>
+          <button id="practice-menu-button">練習モード</button>
+          <button id="real-menu-button">本番モード</button>
+          <button id="ranking-menu-button">ランキング</button>
         </div>
 
         <div class="ai-data-buttons">
-          <button id="download-ai-data-button">
-            AI学習用CSVを保存
-          </button>
-
-          <button id="clear-ai-data-button">
-            AI記録を削除
-          </button>
+          <button id="download-ai-data-button">AI学習用CSVを保存</button>
+          <button id="clear-ai-data-button">AI記録を削除</button>
         </div>
 
         <p class="ai-note">
-          AI学習用データとして保存されるのは本番モードの記録だけです。
+          本番モードでは、AIが反応時間・正解率・ミス回数を分析します。
         </p>
       </div>
     </section>
 
-
-    <!-- ======================================================
-         練習説明
-    ======================================================= -->
-
-    <section
-      id="practice-screen"
-      class="screen"
-    >
-      <img
-        class="screen-bg"
-        data-asset="background"
-        alt=""
-      >
-
+    <section id="practice-screen" class="screen">
+      <img class="screen-bg" data-asset="background" alt="">
       <div class="screen-shade light"></div>
 
-      <h2 class="screen-title">
-        練習説明
-      </h2>
+      <h2 class="screen-title">練習説明</h2>
 
-      <img
-        class="guide-image"
-        data-asset="guide"
-        alt="案内役"
-      >
+      <img class="guide-image" data-asset="guide" alt="案内役">
 
       <div class="practice-card">
         <p id="practice-message"></p>
       </div>
 
       <div class="bottom-buttons">
-        <button id="practice-next-button">
-          次へ
-        </button>
-
-        <button id="practice-back-button">
-          タイトルへ
-        </button>
+        <button id="practice-next-button">次へ</button>
+        <button id="practice-back-button">タイトルへ</button>
       </div>
     </section>
 
-
-    <!-- ======================================================
-         通常ゲーム
-    ======================================================= -->
-
-    <section
-      id="game-screen"
-      class="screen"
-    >
-      <img
-        class="screen-bg"
-        data-asset="background"
-        alt=""
-      >
-
+    <section id="game-screen" class="screen">
+      <img class="screen-bg" data-asset="background" alt="">
       <div class="screen-shade light"></div>
 
       <div class="game-hud">
         <div class="hud-top-row">
-          <span id="mode-label">
-            モード: 練習
-          </span>
-
-          <span id="bowl-count-label">
-            杯数: 0
-          </span>
+          <span id="mode-label">モード: 練習</span>
+          <span id="bowl-count-label">杯数: 0</span>
         </div>
 
         <div class="time-row">
-          <span id="time-label">
-            残り 10 秒
-          </span>
-
+          <span id="time-label">残り 10 秒</span>
           <div class="time-bar">
-            <div
-              id="time-bar-fill"
-              class="time-bar-fill"
-            ></div>
+            <div id="time-bar-fill" class="time-bar-fill"></div>
           </div>
         </div>
 
-        <div
-          id="effect-label"
-          class="effect-label"
-        >
-          効果: なし
-        </div>
+        <div id="effect-label" class="effect-label">効果: なし</div>
       </div>
 
-
       <aside class="left-bowl-panel">
-        <h3>
-          お椀
-        </h3>
-
-        <div
-          id="left-bowl-stack"
-          class="left-bowl-stack"
-        ></div>
+        <h3>お椀</h3>
+        <div id="left-bowl-stack" class="left-bowl-stack"></div>
       </aside>
-
 
       <div class="game-main-area">
         <div class="speech-card">
-          <p id="speech-text">
-            次の食べ物を準備中...
-          </p>
+          <p id="speech-text">次の食べ物を準備中...</p>
         </div>
 
         <div class="food-stage">
-          <img
-            id="current-item-image"
-            class="current-item-image"
-            alt=""
-          >
-
-          <div
-            id="item-fallback"
-            class="item-fallback hidden"
-          ></div>
+          <img id="current-item-image" class="current-item-image" alt="">
+          <div id="item-fallback" class="item-fallback hidden"></div>
         </div>
 
-        <div
-          id="click-progress"
-          class="click-progress"
-        >
-          0 / 1
-        </div>
+        <div id="click-progress" class="click-progress">0 / 1</div>
 
         <div class="game-buttons">
-          <button id="eat-button">
-            食べる
-          </button>
-
-          <button id="skip-button">
-            食べない
-          </button>
+          <button id="eat-button">食べる</button>
+          <button id="skip-button">食べない</button>
         </div>
       </div>
 
+      <img class="waiter-image" data-asset="waiter" alt="学部長">
 
-      <img
-        class="waiter-image"
-        data-asset="waiter"
-        alt="給仕係"
-      >
-
-
-      <div
-        id="floating-message"
-        class="floating-message hidden"
-      ></div>
+      <div id="floating-message" class="floating-message hidden"></div>
     </section>
 
-
-    <!-- ======================================================
-         カウントダウン
-    ======================================================= -->
-
-    <section
-      id="countdown-screen"
-      class="screen countdown-screen"
-    >
-      <div
-        id="countdown-number"
-        class="countdown-number"
-      >
-        3
-      </div>
+    <section id="countdown-screen" class="screen countdown-screen">
+      <div id="countdown-number" class="countdown-number">3</div>
     </section>
 
-
-    <!-- ======================================================
-         お椀積みミニゲーム
-    ======================================================= -->
-
-    <section
-      id="minigame-screen"
-      class="screen minigame-screen"
-    >
-      <canvas
-        id="minigame-canvas"
-        width="1000"
-        height="700"
-      ></canvas>
-
-      <button
-        id="drop-button"
-        class="drop-button"
-      >
-        落とす
-      </button>
+    <section id="minigame-screen" class="screen minigame-screen">
+      <canvas id="minigame-canvas" width="1000" height="700"></canvas>
+      <button id="drop-button" class="drop-button">落とす</button>
     </section>
 
-
-    <!-- ======================================================
-         結果
-    ======================================================= -->
-
-    <section
-      id="result-screen"
-      class="screen"
-    >
-      <img
-        class="screen-bg"
-        data-asset="background"
-        alt=""
-      >
-
+    <section id="result-screen" class="screen">
+      <img class="screen-bg" data-asset="background" alt="">
       <div class="screen-shade strong"></div>
 
       <div class="result-card">
-        <h2>
-          結果発表
-        </h2>
-
+        <h2>結果発表</h2>
         <p id="result-message"></p>
 
         <div class="result-buttons">
-          <button id="retry-button">
-            もう一度
-          </button>
-
-          <button id="result-ranking-button">
-            ランキング
-          </button>
-
-          <button id="result-title-button">
-            タイトル
-          </button>
+          <button id="retry-button">もう一度</button>
+          <button id="result-ranking-button">ランキング</button>
+          <button id="result-title-button">タイトル</button>
         </div>
       </div>
     </section>
 
-
-    <!-- ======================================================
-         ランキング
-    ======================================================= -->
-
-    <section
-      id="ranking-screen"
-      class="screen"
-    >
-      <img
-        class="screen-bg"
-        data-asset="background"
-        alt=""
-      >
-
+    <section id="ranking-screen" class="screen">
+      <img class="screen-bg" data-asset="background" alt="">
       <div class="screen-shade strong"></div>
 
       <div class="ranking-card">
-        <h2>
-          ランキング
-        </h2>
-
-        <p class="ranking-note">
-          この端末で遊んだ本番モードの記録
-        </p>
-
-        <ol
-          id="ranking-list"
-          class="ranking-list"
-        ></ol>
-
-        <button id="ranking-back-button">
-          タイトルへ
-        </button>
+        <h2>ランキング</h2>
+        <p class="ranking-note">この端末で遊んだ本番モードの記録</p>
+        <ol id="ranking-list" class="ranking-list"></ol>
+        <button id="ranking-back-button">タイトルへ</button>
       </div>
     </section>
 
   </main>
 
-
   <script>
     "use strict";
-
-
-    /* =========================================================
-       通常ゲーム設定
-    ========================================================= */
 
     const SETTINGS = {
       practiceSeconds: 10,
       realSeconds: 30,
-
       countdownSeconds: 3,
-
       effectTurns: 5,
-
       bowlsToTriggerMinigame: 10,
-
       minigameBowls: 10,
 
       /*
-        成功範囲。
-        以前の18pxから、約3倍の54pxへ変更。
+        ミニゲーム成功範囲。
+        中心線から左右54px。
+        青い範囲内にお椀の中心が入れば成功。
       */
-
       minigameGoodRange: 54,
 
       /*
-        お椀が出るたびに、
-        この中から速度をランダム抽選する。
-        以前より全体的に遅く設定。
+        お椀1個ごとにランダム選択される横移動速度。
       */
-
       minigameSpeedChoices: [
         2.5,
         3,
@@ -1309,181 +819,94 @@
       ],
 
       minigameDropSpeed: 14,
-
-      minigameMoveLeft: 210,
-      minigameMoveRight: 790,
-
       rankingKey: "wankosoba-ranking-v1",
+      aiStorageKey: "wankosoba-ai-records-v1",
     };
-
-
-    /* =========================================================
-       食べ物・危険物・効果アイテム
-    ========================================================= */
 
     const ITEMS = [
       {
         key: "soba",
         name: "そば",
         category: "noodle",
-
         clicks: 1,
         weight: 25,
       },
-
       {
         key: "udon",
         name: "うどん",
         category: "noodle",
-
         clicks: 3,
         weight: 18,
       },
-
       {
         key: "ramen",
         name: "中華麺",
         category: "noodle",
-
         clicks: 5,
         weight: 14,
       },
-
       {
         key: "houtou",
         name: "ほうとう",
         category: "noodle",
-
         clicks: 10,
         weight: 8,
       },
-
       {
         key: "dark_matter",
         name: "ダークマター",
         category: "bad",
-
         penalty: "gameOver",
-
         weight: 6,
       },
-
       {
         key: "rock",
         name: "岩",
         category: "bad",
-
         penalty: "minusBowls",
-
         weight: 7,
       },
-
       {
         key: "rock_salt",
         name: "岩塩",
         category: "effect",
-
         effectType: "multiply",
         effectValue: 2,
-
         weight: 7,
       },
-
       {
         key: "moss",
         name: "苔",
         category: "effect",
-
         effectType: "multiply",
         effectValue: 3,
-
         weight: 5,
       },
-
       {
         key: "yakumi",
         name: "薬味",
         category: "effect",
-
         effectType: "oneClick",
         effectValue: 1,
-
         weight: 10,
       },
     ];
 
-
-    /* =========================================================
-       画像読み込み
-       画像は index.html と同じ場所に置く
-    ========================================================= */
-
     const ASSET_CANDIDATES = {
-      background: [
-        "background",
-      ],
-
-      bowl: [
-        "bowl_transparent",
-        "bowl",
-      ],
-
-      waiter: [
-        "waiter_transparent",
-        "waiter",
-      ],
-
-      guide: [
-        "guide_transparent",
-        "guide",
-      ],
-
-      soba: [
-        "soba_transparent",
-        "soba",
-      ],
-
-      udon: [
-        "udon_transparent",
-        "udon",
-      ],
-
-      ramen: [
-        "ramen_transparent",
-        "ramen",
-      ],
-
-      houtou: [
-        "houtou_transparent",
-        "houtou",
-      ],
-
-      dark_matter: [
-        "dark_matter_transparent",
-        "dark_matter",
-      ],
-
-      rock: [
-        "rock_transparent",
-        "rock",
-      ],
-
-      rock_salt: [
-        "rock_salt_transparent",
-        "rock_salt",
-      ],
-
-      moss: [
-        "moss_transparent",
-        "moss",
-      ],
-
-      yakumi: [
-        "yakumi_transparent",
-        "yakumi",
-      ],
+      background: ["background"],
+      bowl: ["bowl_transparent", "bowl"],
+      waiter: ["waiter_transparent", "waiter"],
+      guide: ["guide_transparent", "guide"],
+      soba: ["soba_transparent", "soba"],
+      udon: ["udon_transparent", "udon"],
+      ramen: ["ramen_transparent", "ramen"],
+      houtou: ["houtou_transparent", "houtou"],
+      dark_matter: ["dark_matter_transparent", "dark_matter"],
+      rock: ["rock_transparent", "rock"],
+      rock_salt: ["rock_salt_transparent", "rock_salt"],
+      moss: ["moss_transparent", "moss"],
+      yakumi: ["yakumi_transparent", "yakumi"],
     };
-
 
     const ASSET_EXTENSIONS = [
       ".png",
@@ -1492,2928 +915,1146 @@
       ".webp",
     ];
 
+    const rawImageCache = new Map();
+    const processedImageCache = new Map();
 
-    const rawImageCache =
-      new Map();
+    function makeAssetPaths(key) {
+      const names = ASSET_CANDIDATES[key] ?? [key];
+      const paths = [];
 
-
-    const processedImageCache =
-      new Map();
-
-
-    function makeAssetPaths(
-      key,
-    ) {
-      const names =
-        ASSET_CANDIDATES[key]
-        ?? [key];
-
-      const paths =
-        [];
-
-      for (
-        const name
-        of names
-      ) {
-        for (
-          const extension
-          of ASSET_EXTENSIONS
-        ) {
-          paths.push(
-            `${name}${extension}`,
-          );
+      for (const name of names) {
+        for (const extension of ASSET_EXTENSIONS) {
+          paths.push(`${name}${extension}`);
         }
       }
 
       return paths;
     }
 
-
-    function loadRawImage(
-      key,
-    ) {
-      if (
-        rawImageCache.has(
-          key,
-        )
-      ) {
-        return rawImageCache.get(
-          key,
-        );
+    function loadRawImage(key) {
+      if (rawImageCache.has(key)) {
+        return rawImageCache.get(key);
       }
 
-      const promise =
-        new Promise(
-          (
-            resolve,
-          ) => {
-            const paths =
-              makeAssetPaths(
-                key,
-              );
+      const promise = new Promise((resolve) => {
+        const paths = makeAssetPaths(key);
+        let index = 0;
 
-            let index =
-              0;
-
-            const tryNext =
-              () => {
-                if (
-                  index
-                  >= paths.length
-                ) {
-                  resolve(
-                    null,
-                  );
-
-                  return;
-                }
-
-                const image =
-                  new Image();
-
-                image.onload =
-                  () => {
-                    resolve(
-                      image,
-                    );
-                  };
-
-                image.onerror =
-                  tryNext;
-
-                image.src =
-                  paths[
-                    index
-                  ];
-
-                index +=
-                  1;
-              };
-
-            tryNext();
-          },
-        );
-
-      rawImageCache.set(
-        key,
-        promise,
-      );
-
-      return promise;
-    }
-
-
-    /* =========================================================
-       白背景の自動透過
-
-       画像の端からつながっている白色だけを消す。
-       先生の白いシャツなど、
-       内側にある白色はできるだけ残す。
-    ========================================================= */
-
-    function removeConnectedWhiteBackground(
-      image,
-    ) {
-      const maxSide =
-        1400;
-
-      const scale =
-        Math.min(
-          1,
-
-          maxSide
-          / Math.max(
-            image.naturalWidth,
-            image.naturalHeight,
-          ),
-        );
-
-      const width =
-        Math.max(
-          1,
-
-          Math.round(
-            image.naturalWidth
-            * scale,
-          ),
-        );
-
-      const height =
-        Math.max(
-          1,
-
-          Math.round(
-            image.naturalHeight
-            * scale,
-          ),
-        );
-
-      const canvas =
-        document.createElement(
-          "canvas",
-        );
-
-      canvas.width =
-        width;
-
-      canvas.height =
-        height;
-
-      const context =
-        canvas.getContext(
-          "2d",
-
-          {
-            willReadFrequently:
-              true,
-          },
-        );
-
-      context.drawImage(
-        image,
-
-        0,
-        0,
-        width,
-        height,
-      );
-
-      const imageData =
-        context.getImageData(
-          0,
-          0,
-          width,
-          height,
-        );
-
-      const pixels =
-        imageData.data;
-
-      const visited =
-        new Uint8Array(
-          width
-          * height,
-        );
-
-      const queue =
-        new Int32Array(
-          width
-          * height,
-        );
-
-      let head =
-        0;
-
-      let tail =
-        0;
-
-
-      const isNearWhite =
-        (
-          pixelIndex,
-        ) => {
-          const offset =
-            pixelIndex
-            * 4;
-
-          const red =
-            pixels[
-              offset
-            ];
-
-          const green =
-            pixels[
-              offset + 1
-            ];
-
-          const blue =
-            pixels[
-              offset + 2
-            ];
-
-          const alpha =
-            pixels[
-              offset + 3
-            ];
-
-          const brightest =
-            Math.max(
-              red,
-              green,
-              blue,
-            );
-
-          const darkest =
-            Math.min(
-              red,
-              green,
-              blue,
-            );
-
-          return (
-            alpha > 0
-            && red >= 232
-            && green >= 232
-            && blue >= 232
-            && brightest - darkest <= 42
-          );
-        };
-
-
-      const enqueue =
-        (
-          pixelIndex,
-        ) => {
-          if (
-            pixelIndex < 0
-            || pixelIndex
-              >= width * height
-            || visited[
-              pixelIndex
-            ]
-            || !isNearWhite(
-              pixelIndex,
-            )
-          ) {
+        const tryNext = () => {
+          if (index >= paths.length) {
+            resolve(null);
             return;
           }
 
-          visited[
-            pixelIndex
-          ] =
-            1;
+          const image = new Image();
 
-          queue[
-            tail
-          ] =
-            pixelIndex;
+          image.onload = () => {
+            resolve(image);
+          };
 
-          tail +=
-            1;
+          image.onerror = tryNext;
+          image.src = paths[index];
+          index += 1;
         };
 
+        tryNext();
+      });
 
-      for (
-        let x = 0;
-        x < width;
-        x += 1
-      ) {
-        enqueue(
-          x,
-        );
-
-        enqueue(
-          (
-            height - 1
-          )
-          * width
-          + x,
-        );
-      }
-
-
-      for (
-        let y = 0;
-        y < height;
-        y += 1
-      ) {
-        enqueue(
-          y
-          * width,
-        );
-
-        enqueue(
-          y
-          * width
-          + width
-          - 1,
-        );
-      }
-
-
-      while (
-        head
-        < tail
-      ) {
-        const pixelIndex =
-          queue[
-            head
-          ];
-
-        head +=
-          1;
-
-        const offset =
-          pixelIndex
-          * 4;
-
-        pixels[
-          offset + 3
-        ] =
-          0;
-
-        const x =
-          pixelIndex
-          % width;
-
-        const y =
-          Math.floor(
-            pixelIndex
-            / width,
-          );
-
-        if (
-          x > 0
-        ) {
-          enqueue(
-            pixelIndex
-            - 1,
-          );
-        }
-
-        if (
-          x
-          < width - 1
-        ) {
-          enqueue(
-            pixelIndex
-            + 1,
-          );
-        }
-
-        if (
-          y > 0
-        ) {
-          enqueue(
-            pixelIndex
-            - width,
-          );
-        }
-
-        if (
-          y
-          < height - 1
-        ) {
-          enqueue(
-            pixelIndex
-            + width,
-          );
-        }
-      }
-
-
-      context.putImageData(
-        imageData,
-
-        0,
-        0,
-      );
-
-      return canvas.toDataURL(
-        "image/png",
-      );
-    }
-
-
-    async function loadProcessedImage(
-      key,
-    ) {
-      if (
-        processedImageCache.has(
-          key,
-        )
-      ) {
-        return processedImageCache.get(
-          key,
-        );
-      }
-
-      const promise =
-        (
-          async () => {
-            const rawImage =
-              await loadRawImage(
-                key,
-              );
-
-            if (
-              !rawImage
-            ) {
-              return null;
-            }
-
-            try {
-              const processedImage =
-                new Image();
-
-              processedImage.src =
-                removeConnectedWhiteBackground(
-                  rawImage,
-                );
-
-              if (
-                processedImage.decode
-              ) {
-                try {
-                  await processedImage.decode();
-                }
-
-                catch {
-                  /*
-                    srcは使えるため、
-                    そのまま続行する。
-                  */
-                }
-              }
-
-              return processedImage;
-            }
-
-            catch {
-              /*
-                画像加工に失敗した場合は、
-                元画像を表示する。
-              */
-
-              return rawImage;
-            }
-          }
-        )();
-
-      processedImageCache.set(
-        key,
-        promise,
-      );
-
+      rawImageCache.set(key, promise);
       return promise;
     }
 
+    /*
+      白背景の自動透過。
+      画像の端からつながっている白い部分だけを消す。
+    */
+    function removeConnectedWhiteBackground(image) {
+      const maxSide = 1400;
+      const scale = Math.min(
+        1,
+        maxSide / Math.max(image.naturalWidth, image.naturalHeight),
+      );
+
+      const width = Math.max(1, Math.round(image.naturalWidth * scale));
+      const height = Math.max(1, Math.round(image.naturalHeight * scale));
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+
+      const context = canvas.getContext(
+        "2d",
+        {
+          willReadFrequently: true,
+        },
+      );
+
+      context.drawImage(image, 0, 0, width, height);
+
+      const imageData = context.getImageData(0, 0, width, height);
+      const pixels = imageData.data;
+
+      const visited = new Uint8Array(width * height);
+      const queue = new Int32Array(width * height);
+
+      let head = 0;
+      let tail = 0;
+
+      const isNearWhite = (pixelIndex) => {
+        const offset = pixelIndex * 4;
+        const red = pixels[offset];
+        const green = pixels[offset + 1];
+        const blue = pixels[offset + 2];
+        const alpha = pixels[offset + 3];
+
+        const brightest = Math.max(red, green, blue);
+        const darkest = Math.min(red, green, blue);
+
+        return (
+          alpha > 0
+          && red >= 232
+          && green >= 232
+          && blue >= 232
+          && brightest - darkest <= 42
+        );
+      };
+
+      const enqueue = (pixelIndex) => {
+        if (
+          pixelIndex < 0
+          || pixelIndex >= width * height
+          || visited[pixelIndex]
+          || !isNearWhite(pixelIndex)
+        ) {
+          return;
+        }
+
+        visited[pixelIndex] = 1;
+        queue[tail] = pixelIndex;
+        tail += 1;
+      };
+
+      for (let x = 0; x < width; x += 1) {
+        enqueue(x);
+        enqueue((height - 1) * width + x);
+      }
+
+      for (let y = 0; y < height; y += 1) {
+        enqueue(y * width);
+        enqueue(y * width + width - 1);
+      }
+
+      while (head < tail) {
+        const pixelIndex = queue[head];
+        head += 1;
+
+        pixels[pixelIndex * 4 + 3] = 0;
+
+        const x = pixelIndex % width;
+        const y = Math.floor(pixelIndex / width);
+
+        if (x > 0) {
+          enqueue(pixelIndex - 1);
+        }
+
+        if (x < width - 1) {
+          enqueue(pixelIndex + 1);
+        }
+
+        if (y > 0) {
+          enqueue(pixelIndex - width);
+        }
+
+        if (y < height - 1) {
+          enqueue(pixelIndex + width);
+        }
+      }
+
+      context.putImageData(imageData, 0, 0);
+
+      return canvas.toDataURL("image/png");
+    }
+
+    async function loadProcessedImage(key) {
+      if (processedImageCache.has(key)) {
+        return processedImageCache.get(key);
+      }
+
+      const promise = (async () => {
+        const rawImage = await loadRawImage(key);
+
+        if (!rawImage) {
+          return null;
+        }
+
+        try {
+          const processedImage = new Image();
+          processedImage.src = removeConnectedWhiteBackground(rawImage);
+
+          if (processedImage.decode) {
+            try {
+              await processedImage.decode();
+            } catch {
+              /*
+                srcが使えるため続行。
+              */
+            }
+          }
+
+          return processedImage;
+        } catch {
+          return rawImage;
+        }
+      })();
+
+      processedImageCache.set(key, promise);
+      return promise;
+    }
 
     async function initialiseStaticImages() {
-      const images =
-        document.querySelectorAll(
-          "img[data-asset]",
-        );
+      const images = document.querySelectorAll("img[data-asset]");
 
-      for (
-        const imageElement
-        of images
-      ) {
-        const key =
-          imageElement.dataset.asset;
+      for (const imageElement of images) {
+        const key = imageElement.dataset.asset;
 
         const image =
           key === "background"
-            ? await loadRawImage(
-                key,
-              )
-            : await loadProcessedImage(
-                key,
-              );
+            ? await loadRawImage(key)
+            : await loadProcessedImage(key);
 
-        if (
-          image
-        ) {
-          imageElement.src =
-            image.src;
-
-          imageElement.hidden =
-            false;
-        }
-
-        else {
-          imageElement.hidden =
-            true;
+        if (image) {
+          imageElement.src = image.src;
+          imageElement.hidden = false;
+        } else {
+          imageElement.hidden = true;
         }
       }
     }
-
-
-    /* =========================================================
-       AI反射神経年齢
-    ========================================================= */
-
-    /*
-      現在のAIは仮モデル。
-
-      本番モードでプレイデータを集めて、
-      Pythonで学習済みmodel.jsonを作成すると、
-      GitHub上のmodel.jsonを自動で優先して使用する。
-    */
-
-    const AI_FALLBACK_MODEL = {
-      status:
-        "provisional",
-
-      modelType:
-        "ridge-regression",
-
-      trainedRows:
-        0,
-
-      featureNames: [
-        "avgReactionMs",
-        "medianReactionMs",
-        "accuracy",
-        "mistakes",
-        "bowls",
-        "responses",
-      ],
-
-      means: [
-        900,
-        850,
-        0.75,
-        3,
-        12,
-        18,
-      ],
-
-      scales: [
-        300,
-        280,
-        0.18,
-        3,
-        8,
-        10,
-      ],
-
-      coefficients: [
-        4.5,
-        3,
-        -5.5,
-        1.2,
-        -0.5,
-        -0.25,
-      ],
-
-      intercept:
-        33,
-
-      minAge:
-        6,
-
-      maxAge:
-        90,
-    };
-
-
-    let aiModel =
-      AI_FALLBACK_MODEL;
-
-
-    async function loadAiModel() {
-      try {
-        const response =
-          await fetch(
-            "./model.json",
-
-            {
-              cache:
-                "no-store",
-            },
-          );
-
-        if (
-          !response.ok
-        ) {
-          return;
-        }
-
-        const loadedModel =
-          await response.json();
-
-        if (
-          !Array.isArray(
-            loadedModel.featureNames,
-          )
-          || !Array.isArray(
-            loadedModel.means,
-          )
-          || !Array.isArray(
-            loadedModel.scales,
-          )
-          || !Array.isArray(
-            loadedModel.coefficients,
-          )
-        ) {
-          return;
-        }
-
-        aiModel =
-          loadedModel;
-      }
-
-      catch {
-        /*
-          model.jsonがまだ無い場合は、
-          仮モデルを使う。
-        */
-      }
-    }
-
-
-    const ReflexAI =
-      (
-        () => {
-          const storageKey =
-            "wankosoba-ai-records-v1";
-
-          let session =
-            null;
-
-
-          function getAgeInput() {
-            return document.querySelector(
-              "#actual-age-input",
-            );
-          }
-
-
-          function getActualAge() {
-            const input =
-              getAgeInput();
-
-            if (
-              !input
-            ) {
-              return null;
-            }
-
-            const age =
-              Number.parseInt(
-                input.value,
-                10,
-              );
-
-            if (
-              !Number.isFinite(
-                age,
-              )
-              || age < 5
-              || age > 99
-            ) {
-              return null;
-            }
-
-            return age;
-          }
-
-
-          function requireAge() {
-            const age =
-              getActualAge();
-
-            if (
-              age !== null
-            ) {
-              return true;
-            }
-
-            alert(
-              "ゲームを始める前に、実年齢を5〜99歳で入力してください。",
-            );
-
-            getAgeInput()
-              ?.focus();
-
-            return false;
-          }
-
-
-          function startSession() {
-            const actualAge =
-              getActualAge();
-
-            if (
-              actualAge === null
-            ) {
-              return false;
-            }
-
-            session = {
-              actualAge,
-
-              itemShownAt:
-                0,
-
-              currentItemRecorded:
-                false,
-
-              reactionTimes:
-                [],
-
-              correctDecisions:
-                0,
-
-              mistakes:
-                0,
-
-              responses:
-                0,
-
-              finished:
-                false,
-            };
-
-            return true;
-          }
-
-
-          function onItemShown(
-            item,
-          ) {
-            if (
-              !session
-              || !item
-            ) {
-              return;
-            }
-
-            session.itemShownAt =
-              performance.now();
-
-            session.currentItemRecorded =
-              false;
-          }
-
-
-          function isCorrectAction(
-            action,
-            item,
-          ) {
-            if (
-              item.category
-              === "bad"
-            ) {
-              return (
-                action
-                === "skip"
-              );
-            }
-
-            return (
-              action
-              === "eat"
-            );
-          }
-
-
-          function onAction(
-            action,
-            item,
-          ) {
-            if (
-              !session
-              || session.finished
-              || !item
-              || session.currentItemRecorded
-            ) {
-              return;
-            }
-
-            const reactionMs =
-              Math.max(
-                0,
-
-                performance.now()
-                - session.itemShownAt,
-              );
-
-            session
-              .reactionTimes
-              .push(
-                reactionMs,
-              );
-
-            session.responses +=
-              1;
-
-            session.currentItemRecorded =
-              true;
-
-            if (
-              isCorrectAction(
-                action,
-                item,
-              )
-            ) {
-              session.correctDecisions +=
-                1;
-            }
-
-            else {
-              session.mistakes +=
-                1;
-            }
-          }
-
-
-          function calculateMedian(
-            values,
-          ) {
-            if (
-              values.length
-              === 0
-            ) {
-              return 0;
-            }
-
-            const sorted =
-              [
-                ...values,
-              ]
-                .sort(
-                  (
-                    a,
-                    b,
-                  ) => {
-                    return (
-                      a - b
-                    );
-                  },
-                );
-
-            const middle =
-              Math.floor(
-                sorted.length
-                / 2,
-              );
-
-            if (
-              sorted.length
-              % 2
-              === 1
-            ) {
-              return sorted[
-                middle
-              ];
-            }
-
-            return (
-              sorted[
-                middle - 1
-              ]
-              + sorted[
-                middle
-              ]
-            )
-            / 2;
-          }
-
-
-          function clamp(
-            value,
-            min,
-            max,
-          ) {
-            return Math.min(
-              max,
-
-              Math.max(
-                min,
-                value,
-              ),
-            );
-          }
-
-
-          function predictReflexAge(
-            metrics,
-          ) {
-            const values =
-              aiModel
-                .featureNames
-                .map(
-                  (
-                    featureName,
-                  ) => {
-                    return metrics[
-                      featureName
-                    ];
-                  },
-                );
-
-            let prediction =
-              aiModel.intercept;
-
-            for (
-              let index = 0;
-              index < values.length;
-              index += 1
-            ) {
-              const scale =
-                aiModel
-                  .scales[
-                    index
-                  ]
-                || 1;
-
-              const standardisedValue =
-                (
-                  values[
-                    index
-                  ]
-                  - aiModel
-                    .means[
-                      index
-                    ]
-                )
-                / scale;
-
-              prediction +=
-                standardisedValue
-                * aiModel
-                  .coefficients[
-                    index
-                  ];
-            }
-
-            return Number(
-              clamp(
-                prediction,
-
-                aiModel.minAge
-                ?? 5,
-
-                aiModel.maxAge
-                ?? 99,
-              )
-                .toFixed(
-                  1,
-                ),
-            );
-          }
-
-
-          function finishSession(
-            bowls,
-            saveForTraining,
-          ) {
-            if (
-              !session
-              || session.finished
-            ) {
-              return null;
-            }
-
-            session.finished =
-              true;
-
-            const reactionTimes =
-              session.reactionTimes;
-
-            const avgReactionMs =
-              reactionTimes.length
-              > 0
-                ? reactionTimes
-                    .reduce(
-                      (
-                        sum,
-                        value,
-                      ) => {
-                        return (
-                          sum
-                          + value
-                        );
-                      },
-                      0,
-                    )
-                  / reactionTimes.length
-                : 1500;
-
-            const medianReactionMs =
-              reactionTimes.length
-              > 0
-                ? calculateMedian(
-                    reactionTimes,
-                  )
-                : 1500;
-
-            const accuracy =
-              session.responses
-              > 0
-                ? session.correctDecisions
-                  / session.responses
-                : 0;
-
-            const metrics = {
-              avgReactionMs:
-                Number(
-                  avgReactionMs
-                    .toFixed(
-                      1,
-                    ),
-                ),
-
-              medianReactionMs:
-                Number(
-                  medianReactionMs
-                    .toFixed(
-                      1,
-                    ),
-                ),
-
-              accuracy:
-                Number(
-                  accuracy
-                    .toFixed(
-                      4,
-                    ),
-                ),
-
-              mistakes:
-                session.mistakes,
-
-              bowls,
-
-              responses:
-                session.responses,
-            };
-
-            const predictedAge =
-              predictReflexAge(
-                metrics,
-              );
-
-            const difference =
-              Number(
-                (
-                  predictedAge
-                  - session.actualAge
-                )
-                  .toFixed(
-                    1,
-                  ),
-              );
-
-            const record = {
-              recordedAt:
-                new Date()
-                  .toISOString(),
-
-              actualAge:
-                session.actualAge,
-
-              predictedAge,
-
-              difference,
-
-              modelStatus:
-                aiModel.status
-                ?? "trained",
-
-              modelType:
-                aiModel.modelType
-                ?? "unknown",
-
-              ...metrics,
-            };
-
-            if (
-              saveForTraining
-            ) {
-              saveRecord(
-                record,
-              );
-            }
-
-            return record;
-          }
-
-
-          function formatResult(
-            record,
-          ) {
-            if (
-              !record
-            ) {
-              return "";
-            }
-
-            let differenceText =
-              "実年齢と同じくらい";
-
-            if (
-              record.difference
-              < 0
-            ) {
-              differenceText =
-                (
-                  `実年齢より `
-                  + `${Math.abs(
-                    record.difference,
-                  )}`
-                  + `歳 若い`
-                );
-            }
-
-            if (
-              record.difference
-              > 0
-            ) {
-              differenceText =
-                (
-                  `実年齢より `
-                  + `${record.difference}`
-                  + `歳 高い`
-                );
-            }
-
-            const modelLabel =
-              record.modelStatus
-              === "trained"
-                ? "学習済みAI"
-                : "仮モデル";
-
-            return [
-              "",
-              "【AI反射神経年齢】",
-              `実年齢: ${record.actualAge}歳`,
-              `予測年齢: ${record.predictedAge}歳`,
-              `判定: ${differenceText}`,
-              `平均反応時間: ${Math.round(record.avgReactionMs)}ms`,
-              `正解率: ${(record.accuracy * 100).toFixed(1)}%`,
-              `ミス回数: ${record.mistakes}回`,
-              `使用モデル: ${modelLabel}`,
-            ]
-              .join(
-                "\n",
-              );
-          }
-
-
-          function loadRecords() {
-            try {
-              const records =
-                JSON.parse(
-                  localStorage.getItem(
-                    storageKey,
-                  )
-                  ?? "[]",
-                );
-
-              return Array.isArray(
-                records,
-              )
-                ? records
-                : [];
-            }
-
-            catch {
-              return [];
-            }
-          }
-
-
-          function saveRecord(
-            record,
-          ) {
-            const records =
-              loadRecords();
-
-            records.push(
-              record,
-            );
-
-            localStorage.setItem(
-              storageKey,
-
-              JSON.stringify(
-                records,
-              ),
-            );
-          }
-
-
-          function downloadRecords() {
-            const records =
-              loadRecords();
-
-            if (
-              records.length
-              === 0
-            ) {
-              alert(
-                "まだ保存できる本番モードの記録がありません。",
-              );
-
-              return;
-            }
-
-            const columns = [
-              "actual_age",
-              "avg_reaction_ms",
-              "median_reaction_ms",
-              "accuracy",
-              "mistakes",
-              "bowls",
-              "responses",
-              "predicted_age",
-              "difference",
-              "recorded_at",
-            ];
-
-            const lines = [
-              columns.join(
-                ",",
-              ),
-            ];
-
-            for (
-              const row
-              of records
-            ) {
-              lines.push(
-                [
-                  row.actualAge,
-                  row.avgReactionMs,
-                  row.medianReactionMs,
-                  row.accuracy,
-                  row.mistakes,
-                  row.bowls,
-                  row.responses,
-                  row.predictedAge,
-                  row.difference,
-                  row.recordedAt,
-                ]
-                  .join(
-                    ",",
-                  ),
-              );
-            }
-
-            const blob =
-              new Blob(
-                [
-                  "\uFEFF"
-                  + lines.join(
-                    "\n",
-                  ),
-                ],
-
-                {
-                  type:
-                    "text/csv;charset=utf-8",
-                },
-              );
-
-            const url =
-              URL.createObjectURL(
-                blob,
-              );
-
-            const link =
-              document.createElement(
-                "a",
-              );
-
-            link.href =
-              url;
-
-            link.download =
-              "wankosoba_ai_records.csv";
-
-            document.body.append(
-              link,
-            );
-
-            link.click();
-
-            link.remove();
-
-            URL.revokeObjectURL(
-              url,
-            );
-          }
-
-
-          function clearRecords() {
-            const accepted =
-              confirm(
-                "この端末に保存されたAI学習用データを削除しますか？",
-              );
-
-            if (
-              !accepted
-            ) {
-              return;
-            }
-
-            localStorage.removeItem(
-              storageKey,
-            );
-
-            alert(
-              "AI学習用データを削除しました。",
-            );
-          }
-
-
-          return {
-            getActualAge,
-            requireAge,
-            startSession,
-            onItemShown,
-            onAction,
-            finishSession,
-            formatResult,
-            downloadRecords,
-            clearRecords,
-          };
-        }
-      )();
-
-
-    /* =========================================================
-       HTML要素
-    ========================================================= */
 
     const screens = {
-      title:
-        document.querySelector(
-          "#title-screen",
-        ),
-
-      practice:
-        document.querySelector(
-          "#practice-screen",
-        ),
-
-      game:
-        document.querySelector(
-          "#game-screen",
-        ),
-
-      countdown:
-        document.querySelector(
-          "#countdown-screen",
-        ),
-
-      minigame:
-        document.querySelector(
-          "#minigame-screen",
-        ),
-
-      result:
-        document.querySelector(
-          "#result-screen",
-        ),
-
-      ranking:
-        document.querySelector(
-          "#ranking-screen",
-        ),
+      title: document.querySelector("#title-screen"),
+      practice: document.querySelector("#practice-screen"),
+      game: document.querySelector("#game-screen"),
+      countdown: document.querySelector("#countdown-screen"),
+      minigame: document.querySelector("#minigame-screen"),
+      result: document.querySelector("#result-screen"),
+      ranking: document.querySelector("#ranking-screen"),
     };
-
 
     const elements = {
-      practiceMessage:
-        document.querySelector(
-          "#practice-message",
-        ),
-
-      practiceNextButton:
-        document.querySelector(
-          "#practice-next-button",
-        ),
-
-      modeLabel:
-        document.querySelector(
-          "#mode-label",
-        ),
-
-      bowlCountLabel:
-        document.querySelector(
-          "#bowl-count-label",
-        ),
-
-      timeLabel:
-        document.querySelector(
-          "#time-label",
-        ),
-
-      timeBarFill:
-        document.querySelector(
-          "#time-bar-fill",
-        ),
-
-      effectLabel:
-        document.querySelector(
-          "#effect-label",
-        ),
-
-      leftBowlStack:
-        document.querySelector(
-          "#left-bowl-stack",
-        ),
-
-      speechText:
-        document.querySelector(
-          "#speech-text",
-        ),
-
-      currentItemImage:
-        document.querySelector(
-          "#current-item-image",
-        ),
-
-      itemFallback:
-        document.querySelector(
-          "#item-fallback",
-        ),
-
-      clickProgress:
-        document.querySelector(
-          "#click-progress",
-        ),
-
-      floatingMessage:
-        document.querySelector(
-          "#floating-message",
-        ),
-
-      countdownNumber:
-        document.querySelector(
-          "#countdown-number",
-        ),
-
-      resultMessage:
-        document.querySelector(
-          "#result-message",
-        ),
-
-      rankingList:
-        document.querySelector(
-          "#ranking-list",
-        ),
-
-      minigameCanvas:
-        document.querySelector(
-          "#minigame-canvas",
-        ),
-
-      dropButton:
-        document.querySelector(
-          "#drop-button",
-        ),
+      practiceMessage: document.querySelector("#practice-message"),
+      practiceNextButton: document.querySelector("#practice-next-button"),
+      modeLabel: document.querySelector("#mode-label"),
+      bowlCountLabel: document.querySelector("#bowl-count-label"),
+      timeLabel: document.querySelector("#time-label"),
+      timeBarFill: document.querySelector("#time-bar-fill"),
+      effectLabel: document.querySelector("#effect-label"),
+      leftBowlStack: document.querySelector("#left-bowl-stack"),
+      speechText: document.querySelector("#speech-text"),
+      currentItemImage: document.querySelector("#current-item-image"),
+      itemFallback: document.querySelector("#item-fallback"),
+      clickProgress: document.querySelector("#click-progress"),
+      floatingMessage: document.querySelector("#floating-message"),
+      countdownNumber: document.querySelector("#countdown-number"),
+      resultMessage: document.querySelector("#result-message"),
+      rankingList: document.querySelector("#ranking-list"),
+      minigameCanvas: document.querySelector("#minigame-canvas"),
+      dropButton: document.querySelector("#drop-button"),
     };
-
-
-    /* =========================================================
-       練習説明
-    ========================================================= */
 
     const PRACTICE_MESSAGES = [
-      (
-        "ここは練習モードです。"
-        + "まずは、わんこそばの流れを確認します。"
-      ),
-
-      (
-        "そば・うどん・中華麺・ほうとうは食べられます。"
-        + "必要なクリック回数がそれぞれ違います。"
-      ),
-
-      (
-        "ダークマターと岩は食べちゃダメです。"
-        + "出てきたら「食べない」を押して回避します。"
-      ),
-
-      (
-        "岩塩はクリック数2倍、苔は3倍、"
-        + "薬味は全部1回になります。"
-        + "効果は次の5皿に続きます。"
-      ),
-
-      (
-        "お椀が10個たまるとミニゲームです。"
-        + "左右に動くお椀が中央に来たら"
-        + "「落とす」を押します。"
-      ),
-
-      (
-        "本番モードでは、反応時間・正解率・ミス回数をAIが分析します。"
-        + "入力した実年齢との差も最後に表示します。"
-      ),
-
-      (
-        "説明はここまで。"
-        + "次は10秒の練習プレイです。"
-      ),
+      "ここは練習モードです。まずは、わんこそばの流れを確認します。",
+      "そば・うどん・中華麺・ほうとうは食べられます。必要なクリック回数がそれぞれ違います。",
+      "ダークマターと岩は食べちゃダメです。出てきたら「食べない」を押して回避します。",
+      "岩塩はクリック数2倍、苔は3倍、薬味は全部1回になります。効果は次の5皿に続きます。",
+      "お椀が10個たまるとミニゲームです。青い範囲内にお椀が来た瞬間に「落とす」を押します。",
+      "本番モードでは、反応時間・正解率・ミス回数を記録します。AIが反射神経年齢を予測し、実年齢との差を表示します。",
+      "説明はここまで。次は10秒の練習プレイです。",
     ];
 
-
-    let practiceMessageIndex =
-      0;
-
-
-    /* =========================================================
-       通常ゲーム状態
-    ========================================================= */
+    let practiceMessageIndex = 0;
 
     const gameState = {
-      mode:
-        "practice",
-
-      running:
-        false,
-
-      paused:
-        false,
-
-      gameOver:
-        false,
-
-      totalBowls:
-        0,
-
-      bowlsSinceMinigame:
-        0,
-
-      currentItem:
-        null,
-
-      currentClicks:
-        0,
-
-      requiredClicks:
-        0,
-
-      activeEffect:
-        null,
-
-      effectTurnsLeft:
-        0,
-
-      timeLeft:
-        0,
-
-      timeBarMax:
-        0,
-
-      endTimestamp:
-        0,
+      mode: "practice",
+      running: false,
+      paused: false,
+      gameOver: false,
+      totalBowls: 0,
+      bowlsSinceMinigame: 0,
+      currentItem: null,
+      currentClicks: 0,
+      requiredClicks: 0,
+      activeEffect: null,
+      effectTurnsLeft: 0,
+      timeLeft: 0,
+      timeBarMax: 0,
+      endTimestamp: 0,
     };
 
-
-    /* =========================================================
-       ミニゲーム状態
-    ========================================================= */
+    const aiState = {
+      actualAge: null,
+      itemShownAt: 0,
+      currentItemRecorded: false,
+      reactionTimes: [],
+      correctDecisions: 0,
+      mistakes: 0,
+      responses: 0,
+      finished: false,
+    };
 
     const minigameState = {
-      active:
-        false,
-
-      phase:
-        "idle",
-
-      currentIndex:
-        0,
-
-      stackedCount:
-        0,
-
-      bowlX:
-        500,
-
-      bowlY:
-        145,
-
-      moveSpeed:
-        8,
-
-      bowlImage:
-        null,
-
-      bonusSeconds:
-        0,
+      active: false,
+      phase: "idle",
+      currentIndex: 0,
+      stackedCount: 0,
+      bowlX: 500,
+      bowlY: 145,
+      moveSpeed: 8,
+      bowlImage: null,
+      bonusSeconds: 0,
+      successCenterX: 500,
+      successLeftX: 446,
+      successRightX: 554,
+      moveLeftX: 210,
+      moveRightX: 790,
     };
 
+    let timerAnimationId = null;
+    let countdownTimerId = null;
+    let floatingMessageTimerId = null;
+    let minigameAnimationId = null;
+    let minigameSpawnTimerId = null;
+    let itemRenderVersion = 0;
 
-    let timerAnimationId =
-      null;
-
-    let countdownTimerId =
-      null;
-
-    let floatingMessageTimerId =
-      null;
-
-    let minigameAnimationId =
-      null;
-
-    let minigameSpawnTimerId =
-      null;
-
-    let itemRenderVersion =
-      0;
-
-
-    /* =========================================================
-       画面切り替え
-    ========================================================= */
-
-    function showScreen(
-      screenName,
-    ) {
-      for (
-        const screen
-        of Object.values(
-          screens,
-        )
-      ) {
-        screen.classList.remove(
-          "active",
-        );
+    function showScreen(screenName) {
+      for (const screen of Object.values(screens)) {
+        screen.classList.remove("active");
       }
 
-      screens[
-        screenName
-      ]
-        .classList
-        .add(
-          "active",
-        );
+      screens[screenName].classList.add("active");
     }
-
 
     function showTitle() {
       stopGameplay();
-
       stopMinigameAnimation();
-
-      showScreen(
-        "title",
-      );
+      showScreen("title");
     }
 
+    function getActualAge() {
+      const input = document.querySelector("#actual-age-input");
+      const age = Number.parseInt(input.value, 10);
 
-    /* =========================================================
-       練習説明
-    ========================================================= */
+      if (!Number.isFinite(age) || age < 5 || age > 99) {
+        return null;
+      }
+
+      return age;
+    }
+
+    function requireAge() {
+      const age = getActualAge();
+
+      if (age !== null) {
+        return true;
+      }
+
+      alert("ゲームを始める前に、実年齢を5〜99歳で入力してください。");
+      document.querySelector("#actual-age-input").focus();
+
+      return false;
+    }
+
+    function resetAiState() {
+      aiState.actualAge = getActualAge();
+      aiState.itemShownAt = 0;
+      aiState.currentItemRecorded = false;
+      aiState.reactionTimes = [];
+      aiState.correctDecisions = 0;
+      aiState.mistakes = 0;
+      aiState.responses = 0;
+      aiState.finished = false;
+    }
+
+    function recordItemShown() {
+      aiState.itemShownAt = performance.now();
+      aiState.currentItemRecorded = false;
+    }
+
+    function isCorrectAiAction(action, item) {
+      if (item.category === "bad") {
+        return action === "skip";
+      }
+
+      return action === "eat";
+    }
+
+    function recordAiAction(action, item) {
+      if (aiState.finished || !item || aiState.currentItemRecorded) {
+        return;
+      }
+
+      const reactionMs = Math.max(0, performance.now() - aiState.itemShownAt);
+
+      aiState.reactionTimes.push(reactionMs);
+      aiState.responses += 1;
+      aiState.currentItemRecorded = true;
+
+      if (isCorrectAiAction(action, item)) {
+        aiState.correctDecisions += 1;
+      } else {
+        aiState.mistakes += 1;
+      }
+    }
+
+    function calculateMedian(values) {
+      if (values.length === 0) {
+        return 0;
+      }
+
+      const sorted = [...values].sort((a, b) => a - b);
+      const middle = Math.floor(sorted.length / 2);
+
+      if (sorted.length % 2 === 1) {
+        return sorted[middle];
+      }
+
+      return (sorted[middle - 1] + sorted[middle]) / 2;
+    }
+
+    function clamp(value, min, max) {
+      return Math.min(max, Math.max(min, value));
+    }
+
+    /*
+      仮AIモデル。
+      実データを集めたあとで、係数を差し替える想定。
+    */
+    function predictReflexAge(metrics) {
+      let predictedAge = 28;
+
+      predictedAge += (metrics.avgReactionMs - 600) * 0.015;
+      predictedAge += (metrics.medianReactionMs - 560) * 0.008;
+      predictedAge += (metrics.accuracy - 0.85) * -16;
+      predictedAge += (metrics.mistakes - 1) * 1.25;
+      predictedAge += (metrics.bowls - 12) * -0.18;
+      predictedAge += (metrics.responses - 18) * -0.05;
+
+      return Number(clamp(predictedAge, 5, 90).toFixed(1));
+    }
+
+    function finishAiAnalysis() {
+      if (aiState.finished) {
+        return null;
+      }
+
+      aiState.finished = true;
+
+      const reactionTimes = aiState.reactionTimes;
+
+      const avgReactionMs =
+        reactionTimes.length > 0
+          ? reactionTimes.reduce((sum, value) => sum + value, 0) / reactionTimes.length
+          : 1500;
+
+      const medianReactionMs =
+        reactionTimes.length > 0
+          ? calculateMedian(reactionTimes)
+          : 1500;
+
+      const accuracy =
+        aiState.responses > 0
+          ? aiState.correctDecisions / aiState.responses
+          : 0;
+
+      const metrics = {
+        avgReactionMs: Number(avgReactionMs.toFixed(1)),
+        medianReactionMs: Number(medianReactionMs.toFixed(1)),
+        accuracy: Number(accuracy.toFixed(4)),
+        mistakes: aiState.mistakes,
+        bowls: gameState.totalBowls,
+        responses: aiState.responses,
+      };
+
+      const predictedAge = predictReflexAge(metrics);
+      const difference = Number((predictedAge - aiState.actualAge).toFixed(1));
+
+      return {
+        recordedAt: new Date().toISOString(),
+        actualAge: aiState.actualAge,
+        predictedAge,
+        difference,
+        ...metrics,
+      };
+    }
+
+    function formatAiResult(record) {
+      if (!record) {
+        return "";
+      }
+
+      let differenceText = "実年齢と同じくらい";
+
+      if (record.difference < 0) {
+        differenceText = `実年齢より ${Math.abs(record.difference)}歳 若い`;
+      }
+
+      if (record.difference > 0) {
+        differenceText = `実年齢より ${record.difference}歳 高い`;
+      }
+
+      return [
+        "",
+        "【AI反射神経年齢】",
+        `実年齢: ${record.actualAge}歳`,
+        `予測年齢: ${record.predictedAge}歳`,
+        `判定: ${differenceText}`,
+        `平均反応時間: ${Math.round(record.avgReactionMs)}ms`,
+        `反応時間中央値: ${Math.round(record.medianReactionMs)}ms`,
+        `正解率: ${(record.accuracy * 100).toFixed(1)}%`,
+        `ミス回数: ${record.mistakes}回`,
+        `回答回数: ${record.responses}回`,
+        "使用モデル: 仮モデル",
+      ].join("\n");
+    }
+
+    function loadAiRecords() {
+      try {
+        const records = JSON.parse(localStorage.getItem(SETTINGS.aiStorageKey) ?? "[]");
+        return Array.isArray(records) ? records : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveAiRecord(record) {
+      const records = loadAiRecords();
+      records.push(record);
+      localStorage.setItem(SETTINGS.aiStorageKey, JSON.stringify(records));
+    }
+
+    function downloadAiRecords() {
+      const records = loadAiRecords();
+
+      if (records.length === 0) {
+        alert("まだ保存できる本番モードの記録がありません。");
+        return;
+      }
+
+      const lines = [
+        [
+          "actual_age",
+          "avg_reaction_ms",
+          "median_reaction_ms",
+          "accuracy",
+          "mistakes",
+          "bowls",
+          "responses",
+          "predicted_age",
+          "difference",
+          "recorded_at",
+        ].join(","),
+      ];
+
+      for (const row of records) {
+        lines.push([
+          row.actualAge,
+          row.avgReactionMs,
+          row.medianReactionMs,
+          row.accuracy,
+          row.mistakes,
+          row.bowls,
+          row.responses,
+          row.predictedAge,
+          row.difference,
+          row.recordedAt,
+        ].join(","));
+      }
+
+      const blob = new Blob(
+        [
+          "\uFEFF" + lines.join("\n"),
+        ],
+        {
+          type: "text/csv;charset=utf-8",
+        },
+      );
+
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+
+      link.href = url;
+      link.download = "wankosoba_ai_records.csv";
+
+      document.body.append(link);
+      link.click();
+      link.remove();
+
+      URL.revokeObjectURL(url);
+    }
+
+    function clearAiRecords() {
+      const accepted = confirm("この端末に保存されたAI学習用データを削除しますか？");
+
+      if (!accepted) {
+        return;
+      }
+
+      localStorage.removeItem(SETTINGS.aiStorageKey);
+      alert("AI学習用データを削除しました。");
+    }
 
     function startPracticeExplanation() {
-      if (
-        !ReflexAI.requireAge()
-      ) {
+      if (!requireAge()) {
         return;
       }
 
       stopGameplay();
-
       stopMinigameAnimation();
 
-      practiceMessageIndex =
-        0;
-
+      practiceMessageIndex = 0;
       updatePracticeMessage();
-
-      showScreen(
-        "practice",
-      );
+      showScreen("practice");
     }
-
 
     function updatePracticeMessage() {
-      elements
-        .practiceMessage
-        .textContent =
-          PRACTICE_MESSAGES[
-            practiceMessageIndex
-          ];
+      elements.practiceMessage.textContent = PRACTICE_MESSAGES[practiceMessageIndex];
 
-      const isLastMessage =
-        (
-          practiceMessageIndex
-          === PRACTICE_MESSAGES.length - 1
-        );
+      const isLastMessage = practiceMessageIndex === PRACTICE_MESSAGES.length - 1;
 
-      elements
-        .practiceNextButton
-        .textContent =
-          isLastMessage
-            ? "練習プレイへ"
-            : "次へ";
+      elements.practiceNextButton.textContent =
+        isLastMessage
+          ? "練習プレイへ"
+          : "次へ";
     }
 
-
     function nextPracticeMessage() {
-      const isLastMessage =
-        (
-          practiceMessageIndex
-          === PRACTICE_MESSAGES.length - 1
-        );
+      const isLastMessage = practiceMessageIndex === PRACTICE_MESSAGES.length - 1;
 
-      if (
-        isLastMessage
-      ) {
-        startGame(
-          "practice",
-        );
-
+      if (isLastMessage) {
+        startGame("practice");
         return;
       }
 
-      practiceMessageIndex +=
-        1;
-
+      practiceMessageIndex += 1;
       updatePracticeMessage();
     }
 
-
-    /* =========================================================
-       ゲーム開始
-    ========================================================= */
-
-    function resetGameState(
-      mode,
-    ) {
+    function resetGameState(mode) {
       stopGameplay();
-
       stopMinigameAnimation();
 
-      gameState.mode =
-        mode;
-
-      gameState.running =
-        false;
-
-      gameState.paused =
-        false;
-
-      gameState.gameOver =
-        false;
-
-      gameState.totalBowls =
-        0;
-
-      gameState.bowlsSinceMinigame =
-        0;
-
-      gameState.currentItem =
-        null;
-
-      gameState.currentClicks =
-        0;
-
-      gameState.requiredClicks =
-        0;
-
-      gameState.activeEffect =
-        null;
-
-      gameState.effectTurnsLeft =
-        0;
+      gameState.mode = mode;
+      gameState.running = false;
+      gameState.paused = false;
+      gameState.gameOver = false;
+      gameState.totalBowls = 0;
+      gameState.bowlsSinceMinigame = 0;
+      gameState.currentItem = null;
+      gameState.currentClicks = 0;
+      gameState.requiredClicks = 0;
+      gameState.activeEffect = null;
+      gameState.effectTurnsLeft = 0;
 
       gameState.timeLeft =
         mode === "practice"
           ? SETTINGS.practiceSeconds
           : SETTINGS.realSeconds;
 
-      gameState.timeBarMax =
-        gameState.timeLeft;
+      gameState.timeBarMax = gameState.timeLeft;
 
-      elements
-        .leftBowlStack
-        .replaceChildren();
+      elements.leftBowlStack.replaceChildren();
 
+      resetAiState();
       updateHud();
     }
 
-
-    function startGame(
-      mode,
-    ) {
-      if (
-        !ReflexAI.requireAge()
-      ) {
-        showTitle();
-
+    function startGame(mode) {
+      if (!requireAge()) {
         return;
       }
 
-      ReflexAI.startSession();
+      resetGameState(mode);
 
-      resetGameState(
-        mode,
-      );
-
-      if (
-        mode
-        === "real"
-      ) {
+      if (mode === "real") {
         startCountdown();
-
         return;
       }
 
       beginGameplay();
     }
 
-
     function startCountdown() {
-      let count =
-        SETTINGS.countdownSeconds;
+      let count = SETTINGS.countdownSeconds;
 
-      showScreen(
-        "countdown",
-      );
+      showScreen("countdown");
 
-      elements
-        .countdownNumber
-        .textContent =
-          String(
-            count,
-          );
+      elements.countdownNumber.textContent = String(count);
 
-      countdownTimerId =
-        window.setInterval(
-          () => {
-            count -=
-              1;
+      countdownTimerId = window.setInterval(() => {
+        count -= 1;
 
-            if (
-              count
-              <= 0
-            ) {
-              window.clearInterval(
-                countdownTimerId,
-              );
+        if (count <= 0) {
+          window.clearInterval(countdownTimerId);
+          countdownTimerId = null;
 
-              countdownTimerId =
-                null;
+          beginGameplay();
+          return;
+        }
 
-              beginGameplay();
-
-              return;
-            }
-
-            elements
-              .countdownNumber
-              .textContent =
-                String(
-                  count,
-                );
-          },
-          1000,
-        );
+        elements.countdownNumber.textContent = String(count);
+      }, 1000);
     }
 
-
     function beginGameplay() {
-      showScreen(
-        "game",
-      );
+      showScreen("game");
 
-      gameState.running =
-        true;
-
-      gameState.endTimestamp =
-        (
-          performance.now()
-          + gameState.timeLeft
-            * 1000
-        );
+      gameState.running = true;
+      gameState.endTimestamp = performance.now() + gameState.timeLeft * 1000;
 
       nextItem();
-
       updateTimer();
     }
 
-
     function updateTimer() {
-      if (
-        !gameState.running
-        || gameState.paused
-        || gameState.gameOver
-      ) {
+      if (!gameState.running || gameState.paused || gameState.gameOver) {
         return;
       }
 
-      gameState.timeLeft =
-        Math.max(
-          0,
-
-          (
-            gameState.endTimestamp
-            - performance.now()
-          )
-          / 1000,
-        );
+      gameState.timeLeft = Math.max(
+        0,
+        (gameState.endTimestamp - performance.now()) / 1000,
+      );
 
       updateHud();
 
-      if (
-        gameState.timeLeft
-        <= 0
-      ) {
+      if (gameState.timeLeft <= 0) {
         finishGame();
-
         return;
       }
 
-      timerAnimationId =
-        requestAnimationFrame(
-          updateTimer,
-        );
+      timerAnimationId = requestAnimationFrame(updateTimer);
     }
-
 
     function updateHud() {
       const modeText =
-        gameState.mode
-        === "practice"
+        gameState.mode === "practice"
           ? "練習"
           : "本番";
 
-      elements
-        .modeLabel
-        .textContent =
-          `モード: ${modeText}`;
-
-      elements
-        .bowlCountLabel
-        .textContent =
-          `杯数: ${gameState.totalBowls}`;
-
-      elements
-        .timeLabel
-        .textContent =
-          (
-            `残り `
-            + `${Math.ceil(
-              gameState.timeLeft,
-            )}`
-            + ` 秒`
-          );
+      elements.modeLabel.textContent = `モード: ${modeText}`;
+      elements.bowlCountLabel.textContent = `杯数: ${gameState.totalBowls}`;
+      elements.timeLabel.textContent = `残り ${Math.ceil(gameState.timeLeft)} 秒`;
 
       const ratio =
-        gameState.timeBarMax
-        > 0
-          ? Math.min(
-              1,
-
-              Math.max(
-                0,
-
-                gameState.timeLeft
-                / gameState.timeBarMax,
-              ),
-            )
+        gameState.timeBarMax > 0
+          ? Math.min(1, Math.max(0, gameState.timeLeft / gameState.timeBarMax))
           : 0;
 
-      elements
-        .timeBarFill
-        .style
-        .width =
-          `${ratio * 100}%`;
+      elements.timeBarFill.style.width = `${ratio * 100}%`;
 
-      if (
-        !gameState.activeEffect
-      ) {
-        elements
-          .effectLabel
-          .textContent =
-            "効果: なし";
-
+      if (!gameState.activeEffect) {
+        elements.effectLabel.textContent = "効果: なし";
         return;
       }
 
-      elements
-        .effectLabel
-        .textContent =
-          (
-            `効果: `
-            + `${gameState.activeEffect.label}`
-            + ` / 残り`
-            + `${gameState.effectTurnsLeft}`
-            + `皿`
-          );
+      elements.effectLabel.textContent =
+        `効果: ${gameState.activeEffect.label} / 残り${gameState.effectTurnsLeft}皿`;
     }
 
-
-    /* =========================================================
-       アイテム抽選
-    ========================================================= */
-
     function chooseWeightedItem() {
-      const totalWeight =
-        ITEMS.reduce(
-          (
-            sum,
-            item,
-          ) => {
-            return (
-              sum
-              + item.weight
-            );
-          },
-          0,
-        );
+      const totalWeight = ITEMS.reduce((sum, item) => sum + item.weight, 0);
+      let randomValue = Math.random() * totalWeight;
 
-      let randomValue =
-        Math.random()
-        * totalWeight;
+      for (const item of ITEMS) {
+        randomValue -= item.weight;
 
-      for (
-        const item
-        of ITEMS
-      ) {
-        randomValue -=
-          item.weight;
-
-        if (
-          randomValue
-          <= 0
-        ) {
+        if (randomValue <= 0) {
           return item;
         }
       }
 
-      return ITEMS[
-        ITEMS.length - 1
-      ];
+      return ITEMS[ITEMS.length - 1];
     }
 
-
-    function calculateRequiredClicks(
-      item,
-    ) {
-      if (
-        item.category
-        !== "noodle"
-      ) {
+    function calculateRequiredClicks(item) {
+      if (item.category !== "noodle") {
         return 0;
       }
 
-      if (
-        !gameState.activeEffect
-      ) {
+      if (!gameState.activeEffect) {
         return item.clicks;
       }
 
-      if (
-        gameState
-          .activeEffect
-          .type
-        === "multiply"
-      ) {
-        return (
-          item.clicks
-          * gameState
-            .activeEffect
-            .value
-        );
+      if (gameState.activeEffect.type === "multiply") {
+        return item.clicks * gameState.activeEffect.value;
       }
 
-      if (
-        gameState
-          .activeEffect
-          .type
-        === "oneClick"
-      ) {
+      if (gameState.activeEffect.type === "oneClick") {
         return 1;
       }
 
       return item.clicks;
     }
 
-
     function nextItem() {
-      if (
-        !gameState.running
-        || gameState.gameOver
-      ) {
+      if (!gameState.running || gameState.gameOver) {
         return;
       }
 
-      gameState.currentItem =
-        chooseWeightedItem();
+      gameState.currentItem = chooseWeightedItem();
+      gameState.currentClicks = 0;
+      gameState.requiredClicks = calculateRequiredClicks(gameState.currentItem);
 
-      gameState.currentClicks =
-        0;
-
-      gameState.requiredClicks =
-        calculateRequiredClicks(
-          gameState.currentItem,
-        );
-
-      ReflexAI.onItemShown(
-        gameState.currentItem,
-      );
-
+      recordItemShown();
       renderCurrentItem();
     }
 
-
     async function renderCurrentItem() {
-      const item =
-        gameState.currentItem;
+      const item = gameState.currentItem;
 
-      if (
-        !item
-      ) {
+      if (!item) {
         return;
       }
 
-      const renderVersion =
-        itemRenderVersion
-        + 1;
+      const renderVersion = itemRenderVersion + 1;
+      itemRenderVersion = renderVersion;
 
-      itemRenderVersion =
-        renderVersion;
+      let speech = `次は ${item.name}！`;
 
-      let speech =
-        `次は ${item.name}！`;
-
-      if (
-        item.category
-        === "noodle"
-      ) {
-        speech +=
-          (
-            `\n`
-            + `${gameState.requiredClicks}`
-            + `回クリックで食べる！`
-          );
+      if (item.category === "noodle") {
+        speech += `\n${gameState.requiredClicks}回クリックで食べる！`;
+      } else if (item.category === "bad") {
+        speech += "\nこれは食べちゃダメ！";
+      } else {
+        speech += "\n食べると効果発動！";
       }
 
-      else if (
-        item.category
-        === "bad"
-      ) {
-        speech +=
-          "\nこれは食べちゃダメ！";
+      elements.speechText.textContent = speech;
+
+      if (item.category === "noodle") {
+        elements.clickProgress.textContent =
+          `${gameState.currentClicks} / ${gameState.requiredClicks}`;
+      } else if (item.category === "bad") {
+        elements.clickProgress.textContent = "食べちゃダメ！";
+      } else {
+        elements.clickProgress.textContent = "効果アイテム";
       }
 
-      else {
-        speech +=
-          "\n食べると効果発動！";
-      }
+      elements.currentItemImage.hidden = true;
+      elements.itemFallback.classList.add("hidden");
 
-      elements
-        .speechText
-        .textContent =
-          speech;
+      const image = await loadProcessedImage(item.key);
 
-      if (
-        item.category
-        === "noodle"
-      ) {
-        elements
-          .clickProgress
-          .textContent =
-            (
-              `${gameState.currentClicks}`
-              + ` / `
-              + `${gameState.requiredClicks}`
-            );
-      }
-
-      else if (
-        item.category
-        === "bad"
-      ) {
-        elements
-          .clickProgress
-          .textContent =
-            "食べちゃダメ！";
-      }
-
-      else {
-        elements
-          .clickProgress
-          .textContent =
-            "効果アイテム";
-      }
-
-      elements
-        .currentItemImage
-        .hidden =
-          true;
-
-      elements
-        .itemFallback
-        .classList
-        .add(
-          "hidden",
-        );
-
-      const image =
-        await loadProcessedImage(
-          item.key,
-        );
-
-      if (
-        renderVersion
-          !== itemRenderVersion
-        || item
-          !== gameState.currentItem
-      ) {
+      if (renderVersion !== itemRenderVersion || item !== gameState.currentItem) {
         return;
       }
 
-      if (
-        image
-      ) {
-        elements
-          .currentItemImage
-          .src =
-            image.src;
-
-        elements
-          .currentItemImage
-          .hidden =
-            false;
-      }
-
-      else {
-        elements
-          .itemFallback
-          .textContent =
-            item.name;
-
-        elements
-          .itemFallback
-          .classList
-          .remove(
-            "hidden",
-          );
+      if (image) {
+        elements.currentItemImage.src = image.src;
+        elements.currentItemImage.hidden = false;
+      } else {
+        elements.itemFallback.textContent = item.name;
+        elements.itemFallback.classList.remove("hidden");
       }
     }
 
-
-    /* =========================================================
-       食べる・食べない
-    ========================================================= */
-
     function eatCurrentItem() {
-      if (
-        !gameState.running
-        || gameState.gameOver
-        || !gameState.currentItem
-      ) {
+      if (!gameState.running || gameState.gameOver || !gameState.currentItem) {
         return;
       }
 
-      const item =
-        gameState.currentItem;
+      const item = gameState.currentItem;
 
-      ReflexAI.onAction(
-        "eat",
-        item,
-      );
+      recordAiAction("eat", item);
 
-      if (
-        item.category
-        === "noodle"
-      ) {
-        gameState.currentClicks +=
-          1;
+      if (item.category === "noodle") {
+        gameState.currentClicks += 1;
 
-        if (
-          gameState.currentClicks
-          >= gameState.requiredClicks
-        ) {
+        if (gameState.currentClicks >= gameState.requiredClicks) {
           eatNoodleSuccessfully();
-
           return;
         }
 
         renderCurrentItem();
-
         return;
       }
 
-      if (
-        item.category
-        === "bad"
-      ) {
-        handleBadItem(
-          item,
-        );
-
+      if (item.category === "bad") {
+        handleBadItem(item);
         return;
       }
 
-      applyEffect(
-        item,
-      );
-
+      applyEffect(item);
       nextItem();
     }
-
 
     function skipCurrentItem() {
-      if (
-        !gameState.running
-        || gameState.gameOver
-        || !gameState.currentItem
-      ) {
+      if (!gameState.running || gameState.gameOver || !gameState.currentItem) {
         return;
       }
 
-      ReflexAI.onAction(
-        "skip",
-        gameState.currentItem,
-      );
+      recordAiAction("skip", gameState.currentItem);
 
-      if (
-        gameState
-          .currentItem
-          .category
-        === "bad"
-      ) {
-        showFloatingMessage(
-          "回避成功！",
-        );
-      }
-
-      else {
-        showFloatingMessage(
-          (
-            `${gameState.currentItem.name}`
-            + `を見送った`
-          ),
-        );
+      if (gameState.currentItem.category === "bad") {
+        showFloatingMessage("回避成功！");
+      } else {
+        showFloatingMessage(`${gameState.currentItem.name}を見送った`);
       }
 
       nextItem();
     }
-
 
     function eatNoodleSuccessfully() {
-      gameState.totalBowls +=
-        1;
-
-      gameState.bowlsSinceMinigame +=
-        1;
+      gameState.totalBowls += 1;
+      gameState.bowlsSinceMinigame += 1;
 
       appendLeftBowl();
-
       reduceEffectTurn();
-
       updateHud();
 
-      if (
-        gameState.bowlsSinceMinigame
-        >= SETTINGS.bowlsToTriggerMinigame
-      ) {
-        gameState.bowlsSinceMinigame =
-          0;
-
+      if (gameState.bowlsSinceMinigame >= SETTINGS.bowlsToTriggerMinigame) {
+        gameState.bowlsSinceMinigame = 0;
         startMinigame();
-
         return;
       }
 
       nextItem();
     }
 
-
     async function appendLeftBowl() {
-      const slot =
-        document.createElement(
-          "div",
-        );
+      const slot = document.createElement("div");
+      slot.className = "bowl-slot";
+      elements.leftBowlStack.append(slot);
 
-      slot.className =
-        "bowl-slot";
+      const image = await loadProcessedImage("bowl");
 
-      elements
-        .leftBowlStack
-        .append(
-          slot,
-        );
-
-      const image =
-        await loadProcessedImage(
-          "bowl",
-        );
-
-      if (
-        image
-      ) {
-        const imageElement =
-          document.createElement(
-            "img",
-          );
-
-        imageElement.src =
-          image.src;
-
-        imageElement.alt =
-          "お椀";
-
-        slot.append(
-          imageElement,
-        );
+      if (image) {
+        const imageElement = document.createElement("img");
+        imageElement.src = image.src;
+        imageElement.alt = "お椀";
+        slot.append(imageElement);
+      } else {
+        slot.textContent = "🥣";
       }
 
-      else {
-        slot.textContent =
-          "🥣";
-      }
-
-      while (
-        elements
-          .leftBowlStack
-          .children
-          .length
-        > 45
-      ) {
-        elements
-          .leftBowlStack
-          .firstElementChild
-          .remove();
+      while (elements.leftBowlStack.children.length > 45) {
+        elements.leftBowlStack.firstElementChild.remove();
       }
     }
 
-
-    function removeLeftBowls(
-      count,
-    ) {
-      for (
-        let index = 0;
-        index < count;
-        index += 1
-      ) {
-        elements
-          .leftBowlStack
-          .lastElementChild
-          ?.remove();
+    function removeLeftBowls(count) {
+      for (let index = 0; index < count; index += 1) {
+        elements.leftBowlStack.lastElementChild?.remove();
       }
     }
-
-
-    /* =========================================================
-       特殊効果・危険物
-    ========================================================= */
 
     function reduceEffectTurn() {
-      if (
-        !gameState.activeEffect
-      ) {
+      if (!gameState.activeEffect) {
         return;
       }
 
-      gameState.effectTurnsLeft -=
-        1;
+      gameState.effectTurnsLeft -= 1;
 
-      if (
-        gameState.effectTurnsLeft
-        <= 0
-      ) {
-        gameState.activeEffect =
-          null;
-
-        gameState.effectTurnsLeft =
-          0;
+      if (gameState.effectTurnsLeft <= 0) {
+        gameState.activeEffect = null;
+        gameState.effectTurnsLeft = 0;
       }
     }
 
-
-    function handleBadItem(
-      item,
-    ) {
-      if (
-        item.penalty
-        === "gameOver"
-      ) {
-        finishGame(
-          "ダークマターを食べてしまった……",
-        );
-
+    function handleBadItem(item) {
+      if (item.penalty === "gameOver") {
+        finishGame("ダークマターを食べてしまった……");
         return;
       }
 
-      if (
-        item.penalty
-        === "minusBowls"
-      ) {
-        const lostBowls =
-          Math.min(
-            3,
-            gameState.totalBowls,
-          );
+      if (item.penalty === "minusBowls") {
+        const lostBowls = Math.min(3, gameState.totalBowls);
+        gameState.totalBowls -= lostBowls;
 
-        gameState.totalBowls -=
-          lostBowls;
+        removeLeftBowls(lostBowls);
 
-        removeLeftBowls(
-          lostBowls,
-        );
-
-        showFloatingMessage(
-          (
-            `岩を食べた！ `
-            + `お椀が`
-            + `${lostBowls}`
-            + `個減った！`
-          ),
-        );
+        showFloatingMessage(`岩を食べた！ お椀が${lostBowls}個減った！`);
 
         updateHud();
-
         nextItem();
       }
     }
 
-
-    function applyEffect(
-      item,
-    ) {
-      if (
-        item.effectType
-        === "multiply"
-      ) {
+    function applyEffect(item) {
+      if (item.effectType === "multiply") {
         gameState.activeEffect = {
-          type:
-            "multiply",
-
-          value:
-            item.effectValue,
-
-          label:
-            (
-              `${item.name}: `
-              + `クリック×`
-              + `${item.effectValue}`
-            ),
+          type: "multiply",
+          value: item.effectValue,
+          label: `${item.name}: クリック×${item.effectValue}`,
         };
 
-        gameState.effectTurnsLeft =
-          SETTINGS.effectTurns;
+        gameState.effectTurnsLeft = SETTINGS.effectTurns;
 
         showFloatingMessage(
-          (
-            `${item.name}発動！ `
-            + `次の`
-            + `${SETTINGS.effectTurns}`
-            + `皿はクリック×`
-            + `${item.effectValue}`
-          ),
+          `${item.name}発動！ 次の${SETTINGS.effectTurns}皿はクリック×${item.effectValue}`,
         );
 
         updateHud();
-
         return;
       }
 
-      if (
-        item.effectType
-        === "oneClick"
-      ) {
+      if (item.effectType === "oneClick") {
         gameState.activeEffect = {
-          type:
-            "oneClick",
-
-          value:
-            1,
-
-          label:
-            `${item.name}: 全部1回`,
+          type: "oneClick",
+          value: 1,
+          label: `${item.name}: 全部1回`,
         };
 
-        gameState.effectTurnsLeft =
-          SETTINGS.effectTurns;
+        gameState.effectTurnsLeft = SETTINGS.effectTurns;
 
         showFloatingMessage(
-          (
-            `${item.name}発動！ `
-            + `次の`
-            + `${SETTINGS.effectTurns}`
-            + `皿は全部1回`
-          ),
+          `${item.name}発動！ 次の${SETTINGS.effectTurns}皿は全部1回`,
         );
 
         updateHud();
       }
     }
 
+    function showFloatingMessage(message) {
+      window.clearTimeout(floatingMessageTimerId);
 
-    function showFloatingMessage(
-      message,
-    ) {
-      window.clearTimeout(
-        floatingMessageTimerId,
-      );
+      elements.floatingMessage.textContent = message;
+      elements.floatingMessage.classList.remove("hidden");
 
-      elements
-        .floatingMessage
-        .textContent =
-          message;
-
-      elements
-        .floatingMessage
-        .classList
-        .remove(
-          "hidden",
-        );
-
-      floatingMessageTimerId =
-        window.setTimeout(
-          () => {
-            elements
-              .floatingMessage
-              .classList
-              .add(
-                "hidden",
-              );
-          },
-          750,
-        );
+      floatingMessageTimerId = window.setTimeout(() => {
+        elements.floatingMessage.classList.add("hidden");
+      }, 750);
     }
 
-
-    /* =========================================================
-       ミニゲーム
-    ========================================================= */
-
     async function startMinigame() {
-      gameState.paused =
-        true;
+      gameState.paused = true;
+      gameState.running = false;
 
-      gameState.running =
-        false;
+      cancelAnimationFrame(timerAnimationId);
 
-      cancelAnimationFrame(
-        timerAnimationId,
+      gameState.timeLeft = Math.max(
+        0,
+        (gameState.endTimestamp - performance.now()) / 1000,
       );
-
-      gameState.timeLeft =
-        Math.max(
-          0,
-
-          (
-            gameState.endTimestamp
-            - performance.now()
-          )
-          / 1000,
-        );
 
       stopMinigameAnimation();
 
-      minigameState.active =
-        true;
+      minigameState.active = true;
+      minigameState.phase = "idle";
+      minigameState.currentIndex = 0;
+      minigameState.stackedCount = 0;
+      minigameState.bonusSeconds = 0;
+      minigameState.bowlImage = await loadProcessedImage("bowl");
 
-      minigameState.phase =
-        "idle";
+      /*
+        ミニゲームの成功範囲をここで確定。
+        青い範囲の中央と、中心線のX座標を完全に一致させる。
+      */
+      minigameState.successCenterX = elements.minigameCanvas.width / 2;
+      minigameState.successLeftX =
+        minigameState.successCenterX - SETTINGS.minigameGoodRange;
+      minigameState.successRightX =
+        minigameState.successCenterX + SETTINGS.minigameGoodRange;
 
-      minigameState.currentIndex =
-        0;
+      minigameState.moveLeftX = 210;
+      minigameState.moveRightX = 790;
 
-      minigameState.stackedCount =
-        0;
+      elements.dropButton.textContent = "落とす";
 
-      minigameState.bonusSeconds =
-        0;
-
-      minigameState.bowlImage =
-        await loadProcessedImage(
-          "bowl",
-        );
-
-      elements
-        .dropButton
-        .textContent =
-          "落とす";
-
-      showScreen(
-        "minigame",
-      );
+      showScreen("minigame");
 
       spawnMinigameBowl();
     }
 
-
     function spawnMinigameBowl() {
-      if (
-        !minigameState.active
-      ) {
+      if (!minigameState.active) {
         return;
       }
 
-      if (
-        minigameState.currentIndex
-        >= SETTINGS.minigameBowls
-      ) {
+      if (minigameState.currentIndex >= SETTINGS.minigameBowls) {
         finishMinigame();
-
         return;
       }
 
-      minigameState.currentIndex +=
-        1;
-
-      minigameState.bowlY =
-        145;
-
-      /*
-        お椀が出るたびに、
-        横移動速度を毎回ランダムで変える。
-      */
+      minigameState.currentIndex += 1;
+      minigameState.bowlY = 145;
 
       const speedIndex =
-        Math.floor(
-          Math.random()
-          * SETTINGS
-            .minigameSpeedChoices
-            .length,
-        );
+        Math.floor(Math.random() * SETTINGS.minigameSpeedChoices.length);
 
-      minigameState.moveSpeed =
-        SETTINGS
-          .minigameSpeedChoices[
-            speedIndex
-          ];
+      minigameState.moveSpeed = SETTINGS.minigameSpeedChoices[speedIndex];
 
-      const startsFromLeft =
-        Math.random()
-        < 0.5;
+      const startsFromLeft = Math.random() < 0.5;
 
-      if (
-        startsFromLeft
-      ) {
-        minigameState.bowlX =
-          SETTINGS
-            .minigameMoveLeft;
+      if (startsFromLeft) {
+        minigameState.bowlX = minigameState.moveLeftX;
+      } else {
+        minigameState.bowlX = minigameState.moveRightX;
+        minigameState.moveSpeed *= -1;
       }
 
-      else {
-        minigameState.bowlX =
-          SETTINGS
-            .minigameMoveRight;
-
-        minigameState.moveSpeed *=
-          -1;
-      }
-
-      minigameState.phase =
-        "moving";
+      minigameState.phase = "moving";
 
       animateMinigame();
     }
 
-
     function animateMinigame() {
-      if (
-        !minigameState.active
-      ) {
+      if (!minigameState.active) {
         return;
       }
 
-      if (
-        minigameState.phase
-        === "moving"
-      ) {
-        minigameState.bowlX +=
-          minigameState.moveSpeed;
+      if (minigameState.phase === "moving") {
+        minigameState.bowlX += minigameState.moveSpeed;
 
-        if (
-          minigameState.bowlX
-          <= SETTINGS
-            .minigameMoveLeft
-        ) {
-          minigameState.bowlX =
-            SETTINGS
-              .minigameMoveLeft;
-
-          minigameState.moveSpeed =
-            Math.abs(
-              minigameState.moveSpeed,
-            );
+        if (minigameState.bowlX <= minigameState.moveLeftX) {
+          minigameState.bowlX = minigameState.moveLeftX;
+          minigameState.moveSpeed = Math.abs(minigameState.moveSpeed);
         }
 
-        if (
-          minigameState.bowlX
-          >= SETTINGS
-            .minigameMoveRight
-        ) {
-          minigameState.bowlX =
-            SETTINGS
-              .minigameMoveRight;
-
-          minigameState.moveSpeed =
-            -Math.abs(
-              minigameState.moveSpeed,
-            );
+        if (minigameState.bowlX >= minigameState.moveRightX) {
+          minigameState.bowlX = minigameState.moveRightX;
+          minigameState.moveSpeed = -Math.abs(minigameState.moveSpeed);
         }
       }
 
-      if (
-        minigameState.phase
-        === "dropping"
-      ) {
-        minigameState.bowlY +=
-          SETTINGS
-            .minigameDropSpeed;
+      if (minigameState.phase === "dropping") {
+        minigameState.bowlY += SETTINGS.minigameDropSpeed;
 
-        const landingY =
-          (
-            595
-            - minigameState.stackedCount
-              * 34
-          );
+        const landingY = 595 - minigameState.stackedCount * 34;
 
-        if (
-          minigameState.bowlY
-          >= landingY
-        ) {
-          minigameState.bowlY =
-            landingY;
-
+        if (minigameState.bowlY >= landingY) {
+          minigameState.bowlY = landingY;
           checkMinigameLanding();
-
           return;
         }
       }
 
       drawMinigame();
 
-      minigameAnimationId =
-        requestAnimationFrame(
-          animateMinigame,
-        );
+      minigameAnimationId = requestAnimationFrame(animateMinigame);
     }
 
-
     function dropMinigameBowl() {
-      if (
-        !minigameState.active
-        || minigameState.phase
-          !== "moving"
-      ) {
+      if (!minigameState.active || minigameState.phase !== "moving") {
         return;
       }
 
-      minigameState.phase =
-        "dropping";
+      minigameState.phase = "dropping";
     }
 
-
     function checkMinigameLanding() {
-      minigameState.phase =
-        "waiting";
+      minigameState.phase = "waiting";
 
-      const distanceFromCenter =
-        Math.abs(
-          minigameState.bowlX
-          - 500,
-        );
-
+      /*
+        青い範囲内なら成功。
+        中心線だけではなく、successLeftX〜successRightXの間を成功にする。
+      */
       const succeeded =
-        (
-          distanceFromCenter
-          <= SETTINGS.minigameGoodRange
-        );
+        minigameState.bowlX >= minigameState.successLeftX
+        && minigameState.bowlX <= minigameState.successRightX;
 
-      if (
-        succeeded
-      ) {
-        minigameState.stackedCount +=
-          1;
+      if (succeeded) {
+        minigameState.stackedCount += 1;
       }
 
       drawMinigame(
@@ -4422,199 +2063,100 @@
           : "ずれた！",
       );
 
-      minigameSpawnTimerId =
-        window.setTimeout(
-          spawnMinigameBowl,
-          480,
-        );
+      minigameSpawnTimerId = window.setTimeout(
+        spawnMinigameBowl,
+        480,
+      );
     }
 
+    function drawMinigame(message = "") {
+      const canvas = elements.minigameCanvas;
+      const context = canvas.getContext("2d");
 
-    function drawMinigame(
-      message = "",
-    ) {
-      const canvas =
-        elements.minigameCanvas;
+      const centerX = minigameState.successCenterX;
+      const leftX = minigameState.successLeftX;
+      const rightX = minigameState.successRightX;
+      const rangeWidth = rightX - leftX;
 
-      const context =
-        canvas.getContext(
-          "2d",
-        );
+      context.clearRect(0, 0, canvas.width, canvas.height);
 
-      context.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height,
-      );
+      context.fillStyle = "#d8f2ff";
+      context.fillRect(0, 0, canvas.width, canvas.height);
 
-      context.fillStyle =
-        "#d8f2ff";
+      context.fillStyle = "#203040";
+      context.textAlign = "center";
+      context.font = "bold 42px sans-serif";
+      context.fillText("ミニゲーム：お椀をまっすぐ落とせ！", centerX, 62);
 
-      context.fillRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height,
-      );
+      context.font = "bold 22px sans-serif";
+      context.fillText("青い範囲内にお椀が来た瞬間に「落とす」を押す", centerX, 104);
 
-      context.fillStyle =
-        "#203040";
-
-      context.textAlign =
-        "center";
-
-      context.font =
-        "bold 42px sans-serif";
-
+      context.textAlign = "left";
+      context.font = "bold 27px sans-serif";
       context.fillText(
-        "ミニゲーム：お椀をまっすぐ落とせ！",
-        500,
-        62,
-      );
-
-      context.font =
-        "bold 22px sans-serif";
-
-      context.fillText(
-        "左右に動くお椀が中央に来た瞬間に「落とす」を押す",
-        500,
-        104,
-      );
-
-      context.textAlign =
-        "left";
-
-      context.font =
-        "bold 27px sans-serif";
-
-      context.fillText(
-        (
-          `${minigameState.currentIndex}`
-          + `/`
-          + `${SETTINGS.minigameBowls}`
-        ),
+        `${minigameState.currentIndex}/${SETTINGS.minigameBowls}`,
         72,
         155,
       );
 
-      context.font =
-        "bold 22px sans-serif";
-
-      context.fillText(
-        (
-          `成功: `
-          + `${minigameState.stackedCount}`
-          + `個`
-        ),
-        72,
-        190,
-      );
-
+      context.font = "bold 22px sans-serif";
+      context.fillText(`成功: ${minigameState.stackedCount}個`, 72, 190);
 
       /*
-        成功範囲。
-        中央線から左右54px。
+        青の成功範囲。
+        この範囲内なら成功。
       */
-
-      context.fillStyle =
-        "rgba(76, 124, 255, 0.13)";
-
-      context.fillRect(
-        (
-          500
-          - SETTINGS.minigameGoodRange
-        ),
-        130,
-        (
-          SETTINGS.minigameGoodRange
-          * 2
-        ),
-        485,
-      );
-
+      context.fillStyle = "rgba(76, 124, 255, 0.16)";
+      context.fillRect(leftX, 130, rangeWidth, 485);
 
       /*
-        中央線。
+        成功範囲の両端も薄く表示。
       */
-
-      context.strokeStyle =
-        "#4b7cff";
-
-      context.setLineDash([
-        9,
-        7,
-      ]);
-
-      context.lineWidth =
-        3;
+      context.strokeStyle = "rgba(76, 124, 255, 0.55)";
+      context.lineWidth = 2;
+      context.setLineDash([5, 5]);
 
       context.beginPath();
-
-      context.moveTo(
-        500,
-        130,
-      );
-
-      context.lineTo(
-        500,
-        615,
-      );
-
+      context.moveTo(leftX, 130);
+      context.lineTo(leftX, 615);
       context.stroke();
 
-      context.setLineDash([]);
-
+      context.beginPath();
+      context.moveTo(rightX, 130);
+      context.lineTo(rightX, 615);
+      context.stroke();
 
       /*
-        積み上げる台。
+        中心線。
+        青い範囲の正確な中心。
       */
+      context.strokeStyle = "#4b7cff";
+      context.lineWidth = 3;
+      context.setLineDash([9, 7]);
+      context.beginPath();
+      context.moveTo(centerX, 130);
+      context.lineTo(centerX, 615);
+      context.stroke();
+      context.setLineDash([]);
 
-      context.fillStyle =
-        "#7b4a24";
-
-      context.fillRect(
-        300,
-        615,
-        400,
-        22,
-      );
-
+      /*
+        積む台。
+      */
+      context.fillStyle = "#7b4a24";
+      context.fillRect(300, 615, 400, 22);
 
       /*
         積み上がったお椀。
       */
-
-      for (
-        let index = 0;
-        index
-          < minigameState
-            .stackedCount;
-        index += 1
-      ) {
-        const y =
-          (
-            590
-            - index
-              * 34
-          );
-
-        drawMinigameBowl(
-          context,
-          500,
-          y,
-        );
+      for (let index = 0; index < minigameState.stackedCount; index += 1) {
+        const y = 590 - index * 34;
+        drawMinigameBowl(context, centerX, y);
       }
-
 
       /*
         現在動いているお椀。
       */
-
-      if (
-        minigameState.phase
-        !== "waiting"
-      ) {
+      if (minigameState.phase !== "waiting") {
         drawMinigameBowl(
           context,
           minigameState.bowlX,
@@ -4622,54 +2164,25 @@
         );
       }
 
-
-      if (
-        message
-      ) {
-        context.fillStyle =
-          "#203040";
-
-        context.textAlign =
-          "center";
-
-        context.font =
-          "bold 34px sans-serif";
-
-        context.fillText(
-          message,
-          500,
-          240,
-        );
+      if (message) {
+        context.fillStyle = "#203040";
+        context.textAlign = "center";
+        context.font = "bold 34px sans-serif";
+        context.fillText(message, centerX, 240);
       }
     }
 
+    function drawMinigameBowl(context, x, y) {
+      const image = minigameState.bowlImage;
 
-    function drawMinigameBowl(
-      context,
-      x,
-      y,
-    ) {
-      const image =
-        minigameState.bowlImage;
-
-      if (
-        image
-      ) {
-        const width =
-          175;
-
-        const height =
-          104;
+      if (image) {
+        const width = 175;
+        const height = 104;
 
         context.drawImage(
           image,
-
-          x
-          - width / 2,
-
-          y
-          - height / 2,
-
+          x - width / 2,
+          y - height / 2,
           width,
           height,
         );
@@ -4677,745 +2190,282 @@
         return;
       }
 
-
-      /*
-        bowl.jpgが無い場合の仮表示。
-      */
-
-      context.fillStyle =
-        "#fff4cf";
-
-      context.strokeStyle =
-        "#4b2e16";
-
-      context.lineWidth =
-        3;
+      context.fillStyle = "#fff4cf";
+      context.strokeStyle = "#4b2e16";
+      context.lineWidth = 3;
 
       context.beginPath();
-
-      context.ellipse(
-        x,
-        y,
-
-        68,
-        20,
-
-        0,
-        0,
-
-        Math.PI
-        * 2,
-      );
-
+      context.ellipse(x, y, 68, 20, 0, 0, Math.PI * 2);
       context.fill();
-
       context.stroke();
     }
 
-
     function calculateMinigameBonus() {
-      if (
-        minigameState.stackedCount
-        === 10
-      ) {
+      if (minigameState.stackedCount === 10) {
         return 20;
       }
 
-      if (
-        minigameState.stackedCount
-        >= 5
-      ) {
-        return (
-          minigameState.stackedCount
-          + 5
-        );
+      if (minigameState.stackedCount >= 5) {
+        return minigameState.stackedCount + 5;
       }
 
-      return (
-        minigameState.stackedCount
-      );
+      return minigameState.stackedCount;
     }
-
 
     function finishMinigame() {
       stopMinigameAnimation();
 
-      minigameState.active =
-        false;
+      minigameState.active = false;
+      minigameState.phase = "finished";
+      minigameState.bonusSeconds = calculateMinigameBonus();
 
-      minigameState.phase =
-        "finished";
+      const canvas = elements.minigameCanvas;
+      const context = canvas.getContext("2d");
 
-      minigameState.bonusSeconds =
-        calculateMinigameBonus();
+      context.clearRect(0, 0, canvas.width, canvas.height);
 
-      const canvas =
-        elements.minigameCanvas;
+      context.fillStyle = "#d8f2ff";
+      context.fillRect(0, 0, canvas.width, canvas.height);
 
-      const context =
-        canvas.getContext(
-          "2d",
-        );
+      context.fillStyle = "#fff4cf";
+      context.strokeStyle = "#4b2e16";
+      context.lineWidth = 4;
+      context.fillRect(235, 170, 530, 300);
+      context.strokeRect(235, 170, 530, 300);
 
-      context.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height,
-      );
+      context.fillStyle = "#203040";
+      context.textAlign = "center";
+      context.font = "bold 48px sans-serif";
+      context.fillText("ミニゲーム終了！", 500, 245);
 
-      context.fillStyle =
-        "#d8f2ff";
+      context.font = "bold 30px sans-serif";
+      context.fillText(`積めたお椀: ${minigameState.stackedCount}個`, 500, 325);
+      context.fillText(`ボーナスタイム: +${minigameState.bonusSeconds}秒`, 500, 375);
 
-      context.fillRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height,
-      );
-
-      context.fillStyle =
-        "#fff4cf";
-
-      context.strokeStyle =
-        "#4b2e16";
-
-      context.lineWidth =
-        4;
-
-      context.fillRect(
-        235,
-        170,
-        530,
-        300,
-      );
-
-      context.strokeRect(
-        235,
-        170,
-        530,
-        300,
-      );
-
-      context.fillStyle =
-        "#203040";
-
-      context.textAlign =
-        "center";
-
-      context.font =
-        "bold 48px sans-serif";
-
-      context.fillText(
-        "ミニゲーム終了！",
-        500,
-        245,
-      );
-
-      context.font =
-        "bold 30px sans-serif";
-
-      context.fillText(
-        (
-          `積めたお椀: `
-          + `${minigameState.stackedCount}`
-          + `個`
-        ),
-        500,
-        325,
-      );
-
-      context.fillText(
-        (
-          `ボーナスタイム: +`
-          + `${minigameState.bonusSeconds}`
-          + `秒`
-        ),
-        500,
-        375,
-      );
-
-      elements
-        .dropButton
-        .textContent =
-          "ゲームに戻る";
+      elements.dropButton.textContent = "ゲームに戻る";
     }
 
-
     function returnFromMinigame() {
-      const bonusSeconds =
-        minigameState.bonusSeconds;
+      const bonusSeconds = minigameState.bonusSeconds;
+      const stackedCount = minigameState.stackedCount;
 
-      const stackedCount =
-        minigameState.stackedCount;
+      elements.dropButton.textContent = "落とす";
 
-      elements
-        .dropButton
-        .textContent =
-          "落とす";
+      gameState.paused = false;
+      gameState.running = true;
+      gameState.timeLeft += bonusSeconds;
+      gameState.timeBarMax += bonusSeconds;
+      gameState.endTimestamp = performance.now() + gameState.timeLeft * 1000;
 
-      gameState.paused =
-        false;
-
-      gameState.running =
-        true;
-
-      gameState.timeLeft +=
-        bonusSeconds;
-
-      gameState.timeBarMax +=
-        bonusSeconds;
-
-      gameState.endTimestamp =
-        (
-          performance.now()
-          + gameState.timeLeft
-            * 1000
-        );
-
-      showScreen(
-        "game",
-      );
+      showScreen("game");
 
       nextItem();
 
       showFloatingMessage(
-        (
-          `ミニゲーム: `
-          + `${stackedCount}`
-          + `個成功！ +`
-          + `${bonusSeconds}`
-          + `秒`
-        ),
+        `ミニゲーム: ${stackedCount}個成功！ +${bonusSeconds}秒`,
       );
 
       updateHud();
-
       updateTimer();
     }
 
-
     function handleDropButton() {
-      if (
-        minigameState.phase
-        === "finished"
-      ) {
+      if (minigameState.phase === "finished") {
         returnFromMinigame();
-
         return;
       }
 
       dropMinigameBowl();
     }
 
-
     function stopMinigameAnimation() {
-      cancelAnimationFrame(
-        minigameAnimationId,
-      );
-
-      window.clearTimeout(
-        minigameSpawnTimerId,
-      );
+      cancelAnimationFrame(minigameAnimationId);
+      window.clearTimeout(minigameSpawnTimerId);
     }
 
-
-    /* =========================================================
-       結果画面
-    ========================================================= */
-
-    function finishGame(
-      forceMessage = "",
-    ) {
-      if (
-        gameState.gameOver
-      ) {
+    function finishGame(forceMessage = "") {
+      if (gameState.gameOver) {
         return;
       }
 
-      gameState.running =
-        false;
+      gameState.running = false;
+      gameState.gameOver = true;
 
-      gameState.gameOver =
-        true;
+      cancelAnimationFrame(timerAnimationId);
 
-      cancelAnimationFrame(
-        timerAnimationId,
-      );
+      let resultText = "";
 
-      let resultText =
-        "";
-
-      if (
-        forceMessage
-      ) {
-        resultText +=
-          `${forceMessage}\n`;
+      if (forceMessage) {
+        resultText += `${forceMessage}\n`;
       }
 
-      resultText +=
-        (
-          `あなたの記録: `
-          + `${gameState.totalBowls}`
-          + `杯`
-        );
+      resultText += `あなたの記録: ${gameState.totalBowls}杯`;
 
-      if (
-        gameState.mode
-        === "real"
-      ) {
-        const {
-          rank,
-          total,
-        } =
-          addRankingScore(
-            gameState.totalBowls,
-          );
-
-        resultText +=
-          (
-            `\nあなたは `
-            + `${total}`
-            + `人中 `
-            + `${rank}`
-            + `位 です。`
-          );
+      if (gameState.mode === "real") {
+        const { rank, total } = addRankingScore(gameState.totalBowls);
+        resultText += `\nあなたは ${total}人中 ${rank}位 です。`;
+      } else {
+        resultText += "\n練習モードなのでランキングには登録されません。";
       }
 
-      else {
-        resultText +=
-          (
-            "\n練習モードなので"
-            + "ランキングには登録されません。"
-          );
+      const aiRecord = finishAiAnalysis();
+      resultText += formatAiResult(aiRecord);
+
+      if (gameState.mode === "real" && aiRecord) {
+        saveAiRecord(aiRecord);
       }
 
+      elements.resultMessage.textContent = resultText;
 
-      /*
-        本番モードだけAI学習用データとして保存する。
-        練習モードでもAI判定自体は表示する。
-      */
-
-      const aiResult =
-        ReflexAI.finishSession(
-          gameState.totalBowls,
-
-          gameState.mode
-          === "real",
-        );
-
-      if (
-        aiResult
-      ) {
-        resultText +=
-          ReflexAI.formatResult(
-            aiResult,
-          );
-      }
-
-
-      elements
-        .resultMessage
-        .textContent =
-          resultText;
-
-      showScreen(
-        "result",
-      );
+      showScreen("result");
     }
-
 
     function stopGameplay() {
-      cancelAnimationFrame(
-        timerAnimationId,
-      );
-
-      window.clearInterval(
-        countdownTimerId,
-      );
-
-      gameState.running =
-        false;
+      cancelAnimationFrame(timerAnimationId);
+      window.clearInterval(countdownTimerId);
+      gameState.running = false;
     }
-
-
-    /* =========================================================
-       ランキング
-    ========================================================= */
 
     function loadRanking() {
       try {
-        const ranking =
-          JSON.parse(
-            localStorage.getItem(
-              SETTINGS.rankingKey,
-            )
-            ?? "[]",
-          );
+        const ranking = JSON.parse(
+          localStorage.getItem(SETTINGS.rankingKey) ?? "[]",
+        );
 
-        return Array.isArray(
-          ranking,
-        )
-          ? ranking
-          : [];
-      }
-
-      catch {
+        return Array.isArray(ranking) ? ranking : [];
+      } catch {
         return [];
       }
     }
 
-
-    function saveRanking(
-      ranking,
-    ) {
+    function saveRanking(ranking) {
       localStorage.setItem(
         SETTINGS.rankingKey,
-
-        JSON.stringify(
-          ranking,
-        ),
+        JSON.stringify(ranking),
       );
     }
 
-
-    function addRankingScore(
-      score,
-    ) {
-      const ranking =
-        loadRanking();
+    function addRankingScore(score) {
+      const ranking = loadRanking();
 
       const record = {
         id:
           crypto.randomUUID
             ? crypto.randomUUID()
-            : (
-                `${Date.now()}`
-                + `-`
-                + `${Math.random()}`
-              ),
-
+            : `${Date.now()}-${Math.random()}`,
         score,
-
-        createdAt:
-          new Date()
-            .toLocaleString(
-              "ja-JP",
-            ),
+        createdAt: new Date().toLocaleString("ja-JP"),
       };
 
-      ranking.push(
-        record,
-      );
-
-      ranking.sort(
-        (
-          a,
-          b,
-        ) => {
-          return (
-            b.score
-            - a.score
-          );
-        },
-      );
-
-      saveRanking(
-        ranking,
-      );
+      ranking.push(record);
+      ranking.sort((a, b) => b.score - a.score);
+      saveRanking(ranking);
 
       const rank =
-        (
-          ranking.findIndex(
-            (
-              row,
-            ) => {
-              return (
-                row.id
-                === record.id
-              );
-            },
-          )
-          + 1
-        );
+        ranking.findIndex((row) => row.id === record.id) + 1;
 
       return {
         rank,
-
-        total:
-          ranking.length,
+        total: ranking.length,
       };
     }
 
-
     function showRanking() {
-      const ranking =
-        loadRanking()
-          .sort(
-            (
-              a,
-              b,
-            ) => {
-              return (
-                b.score
-                - a.score
-              );
-            },
-          )
-          .slice(
-            0,
-            10,
-          );
+      const ranking = loadRanking()
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 10);
 
-      elements
-        .rankingList
-        .replaceChildren();
+      elements.rankingList.replaceChildren();
 
-      if (
-        ranking.length
-        === 0
-      ) {
-        const item =
-          document.createElement(
-            "li",
-          );
-
-        item.textContent =
-          "まだ記録がありません。";
-
-        elements
-          .rankingList
-          .append(
-            item,
-          );
-      }
-
-      else {
-        for (
-          const record
-          of ranking
-        ) {
-          const item =
-            document.createElement(
-              "li",
-            );
-
-          item.textContent =
-            (
-              `${record.score}`
-              + `杯　`
-              + `${record.createdAt}`
-            );
-
-          elements
-            .rankingList
-            .append(
-              item,
-            );
+      if (ranking.length === 0) {
+        const item = document.createElement("li");
+        item.textContent = "まだ記録がありません。";
+        elements.rankingList.append(item);
+      } else {
+        for (const record of ranking) {
+          const item = document.createElement("li");
+          item.textContent = `${record.score}杯　${record.createdAt}`;
+          elements.rankingList.append(item);
         }
       }
 
-      showScreen(
-        "ranking",
-      );
+      showScreen("ranking");
     }
 
-
-    /* =========================================================
-       ボタン登録
-    ========================================================= */
+    document
+      .querySelector("#practice-menu-button")
+      .addEventListener("click", startPracticeExplanation);
 
     document
-      .querySelector(
-        "#practice-menu-button",
-      )
-      .addEventListener(
-        "click",
-        startPracticeExplanation,
-      );
-
+      .querySelector("#real-menu-button")
+      .addEventListener("click", () => {
+        startGame("real");
+      });
 
     document
-      .querySelector(
-        "#real-menu-button",
-      )
-      .addEventListener(
-        "click",
-        () => {
-          startGame(
-            "real",
-          );
-        },
-      );
-
+      .querySelector("#ranking-menu-button")
+      .addEventListener("click", showRanking);
 
     document
-      .querySelector(
-        "#ranking-menu-button",
-      )
-      .addEventListener(
-        "click",
-        showRanking,
-      );
-
+      .querySelector("#practice-next-button")
+      .addEventListener("click", nextPracticeMessage);
 
     document
-      .querySelector(
-        "#practice-next-button",
-      )
-      .addEventListener(
-        "click",
-        nextPracticeMessage,
-      );
-
+      .querySelector("#practice-back-button")
+      .addEventListener("click", showTitle);
 
     document
-      .querySelector(
-        "#practice-back-button",
-      )
-      .addEventListener(
-        "click",
-        showTitle,
-      );
-
+      .querySelector("#eat-button")
+      .addEventListener("click", eatCurrentItem);
 
     document
-      .querySelector(
-        "#eat-button",
-      )
-      .addEventListener(
-        "click",
-        eatCurrentItem,
-      );
-
+      .querySelector("#skip-button")
+      .addEventListener("click", skipCurrentItem);
 
     document
-      .querySelector(
-        "#skip-button",
-      )
-      .addEventListener(
-        "click",
-        skipCurrentItem,
-      );
-
+      .querySelector("#drop-button")
+      .addEventListener("click", handleDropButton);
 
     document
-      .querySelector(
-        "#drop-button",
-      )
-      .addEventListener(
-        "click",
-        handleDropButton,
-      );
-
+      .querySelector("#retry-button")
+      .addEventListener("click", () => {
+        startGame(gameState.mode);
+      });
 
     document
-      .querySelector(
-        "#retry-button",
-      )
-      .addEventListener(
-        "click",
-        () => {
-          startGame(
-            gameState.mode,
-          );
-        },
-      );
-
+      .querySelector("#result-ranking-button")
+      .addEventListener("click", showRanking);
 
     document
-      .querySelector(
-        "#result-ranking-button",
-      )
-      .addEventListener(
-        "click",
-        showRanking,
-      );
-
+      .querySelector("#result-title-button")
+      .addEventListener("click", showTitle);
 
     document
-      .querySelector(
-        "#result-title-button",
-      )
-      .addEventListener(
-        "click",
-        showTitle,
-      );
-
+      .querySelector("#ranking-back-button")
+      .addEventListener("click", showTitle);
 
     document
-      .querySelector(
-        "#ranking-back-button",
-      )
-      .addEventListener(
-        "click",
-        showTitle,
-      );
-
+      .querySelector("#download-ai-data-button")
+      .addEventListener("click", downloadAiRecords);
 
     document
-      .querySelector(
-        "#download-ai-data-button",
-      )
-      .addEventListener(
-        "click",
-        ReflexAI.downloadRecords,
-      );
+      .querySelector("#clear-ai-data-button")
+      .addEventListener("click", clearAiRecords);
 
+    window.addEventListener("keydown", (event) => {
+      if (event.code !== "Space") {
+        return;
+      }
 
-    document
-      .querySelector(
-        "#clear-ai-data-button",
-      )
-      .addEventListener(
-        "click",
-        ReflexAI.clearRecords,
-      );
+      if (!screens.minigame.classList.contains("active")) {
+        return;
+      }
 
-
-    /*
-      PCではスペースキーでも
-      ミニゲームのお椀を落とせる。
-    */
-
-    window.addEventListener(
-      "keydown",
-      (
-        event,
-      ) => {
-        if (
-          event.code
-          !== "Space"
-        ) {
-          return;
-        }
-
-        if (
-          !screens
-            .minigame
-            .classList
-            .contains(
-              "active",
-            )
-        ) {
-          return;
-        }
-
-        event.preventDefault();
-
-        handleDropButton();
-      },
-    );
-
-
-    /* =========================================================
-       起動
-    ========================================================= */
-
-    loadAiModel();
+      event.preventDefault();
+      handleDropButton();
+    });
 
     initialiseStaticImages();
-
     showTitle();
   </script>
 </body>
