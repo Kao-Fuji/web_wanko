@@ -38,7 +38,6 @@
       margin: 0;
 
       color: var(--brown-dark);
-
       background: #222;
 
       font-family:
@@ -62,7 +61,6 @@
       font-weight: 800;
 
       cursor: pointer;
-
       touch-action: manipulation;
 
       box-shadow:
@@ -83,7 +81,6 @@
 
       width: min(100vw, 1000px);
       height: min(100vh, 700px);
-
       min-height: 620px;
 
       margin: 0 auto;
@@ -145,7 +142,6 @@
       z-index: 2;
 
       display: grid;
-
       justify-items: center;
 
       padding-top: 60px;
@@ -168,7 +164,6 @@
 
     .title-content h1 {
       font-size: clamp(44px, 7vw, 74px);
-
       line-height: 1.06;
     }
 
@@ -1115,27 +1110,19 @@
     ========================================================= */
 
     const SETTINGS = {
-      // 練習・本番の時間
       practiceSeconds: 10,
       realSeconds: 30,
 
-      // 本番開始前
       countdownSeconds: 3,
 
-      // 岩塩・苔・薬味の効果が続く杯数
       effectTurns: 5,
 
-      // 何杯でミニゲームを始めるか
       bowlsToTriggerMinigame: 10,
 
-      // ミニゲームで落とすお椀の数
       minigameBowls: 10,
 
-      // 中心から左右何px以内なら成功か
-      // 小さいほど難しい
       minigameGoodRange: 18,
 
-      // お椀ごとにランダムで選ぶ速度
       minigameSpeedChoices: [
         4.5,
         5.5,
@@ -1147,14 +1134,11 @@
         13,
       ],
 
-      // 下に落ちる速度
       minigameDropSpeed: 14,
 
-      // 左右に動く範囲
       minigameMoveLeft: 210,
       minigameMoveRight: 790,
 
-      // ランキング保存用
       rankingKey: "wankosoba-ranking-v1",
     };
 
@@ -1164,7 +1148,6 @@
     ========================================================= */
 
     const ITEMS = [
-      // 食べられる麺
       {
         key: "soba",
         name: "そば",
@@ -1197,7 +1180,6 @@
         weight: 8,
       },
 
-      // 食べてはいけないもの
       {
         key: "dark_matter",
         name: "ダークマター",
@@ -1214,7 +1196,6 @@
         weight: 7,
       },
 
-      // 効果アイテム
       {
         key: "rock_salt",
         name: "岩塩",
@@ -1249,14 +1230,19 @@
     ========================================================= */
 
     /*
+      画像は index.html と同じ場所から探します。
+
+      例:
+      background.jpg
+      bowl.jpg
+      waiter.jpg
+
       透過PNGがあとから増えた場合は、
-      JPGよりも透過版を優先して使います。
+      JPGより透過版を優先します。
 
       例:
       waiter_transparent.png
       waiter.jpg
-
-      両方あれば waiter_transparent.png が優先。
     */
 
     const ASSET_CANDIDATES = {
@@ -1334,7 +1320,9 @@
     ];
 
 
-    function makeAssetPaths(key) {
+    function makeAssetPaths(
+      key,
+    ) {
       const names =
         ASSET_CANDIDATES[key]
         ?? [key];
@@ -1342,13 +1330,20 @@
       const paths =
         [];
 
-      for (const name of names) {
+      for (
+        const name
+        of names
+      ) {
         for (
           const extension
           of ASSET_EXTENSIONS
         ) {
+          /*
+            画像は index.html と同じ場所にあるため、
+            assets/ は付けません。
+          */
           paths.push(
-            `assets/${name}${extension}`,
+            `${name}${extension}`,
           );
         }
       }
@@ -1424,7 +1419,9 @@
       key,
     ) {
       return new Promise(
-        (resolve) => {
+        (
+          resolve,
+        ) => {
           const image =
             new Image();
 
@@ -2143,7 +2140,7 @@
 
 
     /* =========================================================
-       アイテム抽選・クリック数
+       アイテム抽選
     ========================================================= */
 
     function chooseWeightedItem() {
@@ -2742,7 +2739,7 @@
 
 
     /* =========================================================
-       ミニゲーム開始
+       ミニゲーム
     ========================================================= */
 
     async function startMinigame() {
@@ -3019,7 +3016,6 @@
         canvas.height,
       );
 
-      // 背景
       context.fillStyle =
         "#d8f2ff";
 
@@ -3030,7 +3026,6 @@
         canvas.height,
       );
 
-      // タイトル
       context.fillStyle =
         "#203040";
 
@@ -3055,7 +3050,6 @@
         104,
       );
 
-      // 成功数
       context.textAlign =
         "left";
 
@@ -3085,7 +3079,6 @@
         190,
       );
 
-      // 狭い成功範囲
       context.fillStyle =
         "rgba(76, 124, 255, 0.13)";
 
@@ -3102,7 +3095,6 @@
         485,
       );
 
-      // 中央線
       context.strokeStyle =
         "#4b7cff";
 
@@ -3130,7 +3122,6 @@
 
       context.setLineDash([]);
 
-      // 台
       context.fillStyle =
         "#7b4a24";
 
@@ -3141,7 +3132,6 @@
         22,
       );
 
-      // 積み上げたお椀
       for (
         let index = 0;
         index
@@ -3162,7 +3152,6 @@
         );
       }
 
-      // 今動いているお椀
       if (
         minigameState.phase
         !== "waiting"
@@ -3174,7 +3163,6 @@
         );
       }
 
-      // 成功・失敗
       if (
         message
       ) {
@@ -3224,7 +3212,6 @@
         return;
       }
 
-      // bowl.jpg がなければ仮のお椀
       context.fillStyle =
         "#fff4cf";
 
@@ -3253,7 +3240,6 @@
 
 
     function calculateMinigameBonus() {
-      // 10個成功
       if (
         minigameState.stackedCount
         === 10
@@ -3261,7 +3247,6 @@
         return 20;
       }
 
-      // 5〜9個成功
       if (
         minigameState.stackedCount
         >= 5
@@ -3272,7 +3257,6 @@
         );
       }
 
-      // 0〜4個成功
       return (
         minigameState.stackedCount
       );
@@ -3871,11 +3855,6 @@
         showTitle,
       );
 
-
-    /*
-      PCでスペースキーを押しても、
-      ミニゲームのお椀を落とせる。
-    */
 
     window.addEventListener(
       "keydown",
