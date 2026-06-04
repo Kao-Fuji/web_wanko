@@ -7,31 +7,620 @@
   <title>わんこそば連打ゲーム</title>
 
   <style>
-    *{box-sizing:border-box} :root{--paper:#fff4cf;--paper2:#ffe29a;--brown:#5a3518;--dark:#2b1709;--accent:#ffb340;--sky:#d8f2ff}
-    html,body{width:100%;min-height:100%;margin:0;background:#222;color:var(--dark);font-family:"Yu Gothic UI","Meiryo",sans-serif}
-    button{border:3px solid rgba(90,53,24,.48);padding:10px 20px;background:var(--paper);font:inherit;font-size:20px;font-weight:800;cursor:pointer;touch-action:manipulation;box-shadow:3px 3px 0 rgba(90,53,24,.42)} button:hover{background:var(--paper2)}
-    .hidden,img[hidden]{display:none!important}.app{position:relative;width:min(100vw,1000px);height:min(100vh,700px);min-height:700px;margin:auto;overflow:hidden;background:#ddd}.screen{position:absolute;inset:0;display:none;overflow:hidden}.screen.active{display:block}
-    .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.shade{position:absolute;inset:0;background:rgba(20,10,0,.28)}.shade.light{background:rgba(20,10,0,.14)}.shade.strong{background:rgba(15,5,0,.46)}
+    * {
+      box-sizing: border-box;
+    }
 
-    .title{position:relative;z-index:2;display:grid;justify-items:center;padding-top:34px;text-align:center}.title h1,.screen-title{margin:0;color:#fff1c8;text-shadow:3px 3px 0 var(--dark),-1px -1px 0 var(--dark),1px -1px 0 var(--dark),-1px 1px 0 var(--dark)}.title h1{font-size:clamp(44px,7vw,72px);line-height:1.04}.title p{margin:14px 0 9px;color:#fff1c8;font-size:clamp(15px,2.2vw,21px);font-weight:800;text-shadow:2px 2px 0 var(--dark)}
-    .age{display:flex;align-items:center;justify-content:center;gap:10px;width:min(330px,78vw);margin:7px 0;padding:9px 14px;border:3px solid var(--brown);background:var(--paper);font-size:19px;font-weight:800}.age input{width:92px;padding:6px 8px;border:2px solid var(--brown);font-size:19px;font-weight:800;text-align:center}.menu{display:grid;gap:8px;width:min(330px,78vw);padding:11px;background:rgba(255,203,99,.78)}.ai-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:9px}.ai-buttons button{padding:7px 11px;font-size:13px}.ai-note{font-size:12px!important}
+    :root {
+      --paper: #fff4cf;
+      --paper2: #ffe29a;
+      --brown: #5a3518;
+      --dark: #2b1709;
+      --accent: #ffb340;
+      --sky: #d8f2ff;
+    }
 
-    .screen-title{position:relative;z-index:3;margin-top:36px;text-align:center;font-size:clamp(34px,5vw,48px)}.guide{position:absolute;z-index:3;top:17%;right:4%;width:min(34%,340px);height:min(68%,470px);object-fit:contain;object-position:center bottom}.practice-card{position:absolute;z-index:4;top:45%;left:13%;width:min(570px,62%);padding:18px;border:3px solid var(--brown);background:var(--paper);font-size:clamp(16px,2.2vw,21px);font-weight:800}.practice-card p{margin:0}.bottom-buttons{position:absolute;z-index:5;bottom:9%;left:50%;display:grid;gap:14px;width:min(240px,52vw);transform:translateX(-50%)}
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+      background: #222;
+      color: var(--dark);
+      font-family: "Yu Gothic UI", "Meiryo", sans-serif;
+    }
 
-    .hud{position:absolute;z-index:7;top:10px;left:55%;width:min(530px,56%);padding:8px 16px;border:3px solid var(--brown);background:var(--paper);transform:translateX(-50%)}.hud-top,.time-row{display:flex;align-items:center;gap:16px;font-weight:800}.hud-top{justify-content:space-between;margin-bottom:5px;font-size:18px}.time-row{font-size:16px}.effect{margin-top:4px;font-size:14px;font-weight:800}.bar{flex:1;height:20px;border:2px solid var(--brown);overflow:hidden;background:#d8c99b}.bar>div{width:100%;height:100%;background:var(--accent);transition:width .1s linear}
+    button {
+      border: 3px solid rgba(90, 53, 24, 0.48);
+      padding: 10px 20px;
+      background: var(--paper);
+      font: inherit;
+      font-size: 20px;
+      font-weight: 800;
+      cursor: pointer;
+      touch-action: manipulation;
+      box-shadow: 3px 3px 0 rgba(90, 53, 24, 0.42);
+    }
 
-    .bowl-panel{position:absolute;z-index:4;top:20px;bottom:22px;left:14px;width:265px;border:3px solid var(--brown);overflow:hidden;background:var(--paper)}.bowl-panel h3{margin:12px 0 5px;text-align:center;font-size:24px}.bowl-stack{display:grid;grid-template-columns:repeat(3,1fr);align-content:start;gap:6px;padding:12px}.bowl-slot{display:grid;place-items:center;width:74px;height:52px;overflow:hidden;font-size:30px}.bowl-slot img{width:74px;height:50px;object-fit:contain}
+    button:hover {
+      background: var(--paper2);
+    }
 
-    .game-main{position:absolute;z-index:5;top:108px;right:260px;bottom:0;left:285px}.speech{position:absolute;top:0;left:50%;width:380px;min-height:92px;padding:13px 18px;border:3px solid var(--brown);background:var(--paper);transform:translateX(-50%)}.speech p{margin:0;white-space:pre-line;font-size:18px;font-weight:800}.food-stage{position:absolute;top:150px;left:50%;display:grid;place-items:center;width:450px;height:270px;overflow:visible;transform:translateX(-50%)}.food{display:block;width:450px;height:290px;object-fit:contain;object-position:center bottom}.fallback{display:grid;place-items:center;width:280px;height:165px;border:3px solid var(--brown);background:var(--paper);font-size:30px;font-weight:800}.progress{position:absolute;top:420px;left:50%;transform:translateX(-50%);font-size:34px;font-weight:900;text-shadow:1px 1px 0 #fff1c8}.game-buttons{position:absolute;top:472px;left:50%;display:grid;gap:11px;width:290px;transform:translateX(-50%)}.game-buttons button{width:100%}
+    .hidden,
+    img[hidden] {
+      display: none !important;
+    }
 
-    .waiter{position:absolute;z-index:4;top:150px;right:5px;width:260px;height:470px;object-fit:contain;object-position:center bottom;transform:none}.float{position:absolute;z-index:10;top:145px;left:50%;width:min(430px,72%);padding:12px;border:3px solid var(--brown);background:var(--paper);text-align:center;font-size:17px;font-weight:800;transform:translateX(-50%)}
+    .app {
+      position: relative;
+      width: min(100vw, 1000px);
+      height: min(100vh, 700px);
+      min-height: 700px;
+      margin: auto;
+      overflow: hidden;
+      background: #ddd;
+    }
 
-    .countdown{display:none;place-items:center;background:rgba(0,0,0,.84)}.countdown.active{display:grid}.countdown-number{color:#fff;font-size:min(30vw,170px);font-weight:900}.mini{background:var(--sky)}.mini.active{display:block}#mini-canvas{width:100%;height:100%}.drop{position:absolute;bottom:25px;left:50%;width:min(320px,68vw);transform:translateX(-50%);font-size:22px}
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: none;
+      overflow: hidden;
+    }
 
-    .card{position:relative;z-index:3;width:min(680px,91%);max-height:90%;margin:35px auto 0;padding:23px;border:4px solid var(--brown);overflow-y:auto;background:var(--paper);text-align:center}.card h2{margin:0 0 14px;font-size:39px}.card p{white-space:pre-line;font-size:19px;font-weight:800}.result-buttons{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:19px}.ranking-list{min-height:305px;margin:18px auto;padding-left:2.2em;text-align:left;font-size:18px;font-weight:800}.ranking-list li{padding:4px 8px}
+    .screen.active {
+      display: block;
+    }
 
-    @media(max-width:720px){
-      .app{min-height:760px}.title{padding-top:40px}.title h1{font-size:52px}.practice-card{top:45%;left:5%;width:72%}.guide{top:18%;right:0;width:40%}.hud{top:8px;left:60%;width:77%;padding:7px 11px}.hud-top{font-size:15px}.bowl-panel{top:100px;left:6px;width:136px}.bowl-stack{grid-template-columns:repeat(2,1fr);gap:4px;padding:7px}.bowl-slot{width:58px;height:43px}.bowl-slot img{width:58px;height:41px}.game-main{top:145px;right:6px;left:145px}.speech{width:95%;min-height:78px}.speech p{font-size:15px}.food-stage{top:142px;width:95%;height:245px}.food{width:100%;height:255px}.progress{top:390px;font-size:31px}.game-buttons{top:440px;width:220px}.waiter{top:215px;right:-5px;width:160px;height:315px;transform:none}.card{margin-top:25px;padding:16px}.card h2{font-size:34px}.card p{font-size:16px}
+    .bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .shade {
+      position: absolute;
+      inset: 0;
+      background: rgba(20, 10, 0, 0.28);
+    }
+
+    .shade.light {
+      background: rgba(20, 10, 0, 0.14);
+    }
+
+    .shade.strong {
+      background: rgba(15, 5, 0, 0.46);
+    }
+
+    .title {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      justify-items: center;
+      padding-top: 34px;
+      text-align: center;
+    }
+
+    .title h1,
+    .screen-title {
+      margin: 0;
+      color: #fff1c8;
+      text-shadow:
+        3px 3px 0 var(--dark),
+        -1px -1px 0 var(--dark),
+        1px -1px 0 var(--dark),
+        -1px 1px 0 var(--dark);
+    }
+
+    .title h1 {
+      font-size: clamp(44px, 7vw, 72px);
+      line-height: 1.04;
+    }
+
+    .title p {
+      margin: 14px 0 9px;
+      color: #fff1c8;
+      font-size: clamp(15px, 2.2vw, 21px);
+      font-weight: 800;
+      text-shadow: 2px 2px 0 var(--dark);
+    }
+
+    .age {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: min(330px, 78vw);
+      margin: 7px 0;
+      padding: 9px 14px;
+      border: 3px solid var(--brown);
+      background: var(--paper);
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .age input {
+      width: 92px;
+      padding: 6px 8px;
+      border: 2px solid var(--brown);
+      font-size: 19px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .menu {
+      display: grid;
+      gap: 8px;
+      width: min(330px, 78vw);
+      padding: 11px;
+      background: rgba(255, 203, 99, 0.78);
+    }
+
+    .ai-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 9px;
+    }
+
+    .ai-buttons button {
+      padding: 7px 11px;
+      font-size: 13px;
+    }
+
+    .ai-note {
+      font-size: 12px !important;
+    }
+
+    .screen-title {
+      position: relative;
+      z-index: 3;
+      margin-top: 36px;
+      text-align: center;
+      font-size: clamp(34px, 5vw, 48px);
+    }
+
+    .guide {
+      position: absolute;
+      z-index: 3;
+      top: 17%;
+      right: 4%;
+      width: min(34%, 340px);
+      height: min(68%, 470px);
+      object-fit: contain;
+      object-position: center bottom;
+    }
+
+    .practice-card {
+      position: absolute;
+      z-index: 4;
+      top: 45%;
+      left: 13%;
+      width: min(570px, 62%);
+      padding: 18px;
+      border: 3px solid var(--brown);
+      background: var(--paper);
+      font-size: clamp(16px, 2.2vw, 21px);
+      font-weight: 800;
+    }
+
+    .practice-card p {
+      margin: 0;
+    }
+
+    .bottom-buttons {
+      position: absolute;
+      z-index: 5;
+      bottom: 9%;
+      left: 50%;
+      display: grid;
+      gap: 14px;
+      width: min(240px, 52vw);
+      transform: translateX(-50%);
+    }
+
+    .hud {
+      position: absolute;
+      z-index: 7;
+      top: 10px;
+      left: 55%;
+      width: min(530px, 56%);
+      padding: 8px 16px;
+      border: 3px solid var(--brown);
+      background: var(--paper);
+      transform: translateX(-50%);
+    }
+
+    .hud-top,
+    .time-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-weight: 800;
+    }
+
+    .hud-top {
+      justify-content: space-between;
+      margin-bottom: 5px;
+      font-size: 18px;
+    }
+
+    .time-row {
+      font-size: 16px;
+    }
+
+    .effect {
+      margin-top: 4px;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .bar {
+      flex: 1;
+      height: 20px;
+      border: 2px solid var(--brown);
+      overflow: hidden;
+      background: #d8c99b;
+    }
+
+    .bar > div {
+      width: 100%;
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.1s linear;
+    }
+
+    .bowl-panel {
+      position: absolute;
+      z-index: 4;
+      top: 20px;
+      bottom: 22px;
+      left: 14px;
+      width: 265px;
+      border: 3px solid var(--brown);
+      overflow: hidden;
+      background: var(--paper);
+    }
+
+    .bowl-panel h3 {
+      margin: 12px 0 5px;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .bowl-stack {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      align-content: start;
+      gap: 6px;
+      padding: 12px;
+    }
+
+    .bowl-slot {
+      display: grid;
+      place-items: center;
+      width: 74px;
+      height: 52px;
+      overflow: hidden;
+      font-size: 30px;
+    }
+
+    .bowl-slot img {
+      width: 74px;
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .game-main {
+      position: absolute;
+      z-index: 5;
+      top: 108px;
+      right: 260px;
+      bottom: 0;
+      left: 285px;
+    }
+
+    .speech {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 380px;
+      min-height: 92px;
+      padding: 13px 18px;
+      border: 3px solid var(--brown);
+      background: var(--paper);
+      transform: translateX(-50%);
+    }
+
+    .speech p {
+      margin: 0;
+      white-space: pre-line;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .food-stage {
+      position: absolute;
+      top: 150px;
+      left: 50%;
+      display: grid;
+      place-items: center;
+      width: 450px;
+      height: 270px;
+      overflow: visible;
+      transform: translateX(-50%);
+    }
+
+    .food {
+      display: block;
+      width: 450px;
+      height: 290px;
+      object-fit: contain;
+      object-position: center bottom;
+    }
+
+    .fallback {
+      display: grid;
+      place-items: center;
+      width: 280px;
+      height: 165px;
+      border: 3px solid var(--brown);
+      background: var(--paper);
+      font-size: 30px;
+      font-weight: 800;
+    }
+
+    .progress {
+      position: absolute;
+      top: 420px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 34px;
+      font-weight: 900;
+      text-shadow: 1px 1px 0 #fff1c8;
+    }
+
+    .game-buttons {
+      position: absolute;
+      top: 472px;
+      left: 50%;
+      display: grid;
+      gap: 11px;
+      width: 290px;
+      transform: translateX(-50%);
+    }
+
+    .game-buttons button {
+      width: 100%;
+    }
+
+    .waiter {
+      position: absolute;
+      z-index: 4;
+      top: 150px;
+      right: 5px;
+      width: 260px;
+      height: 470px;
+      object-fit: contain;
+      object-position: center bottom;
+      transform: none;
+    }
+
+    .float {
+      position: absolute;
+      z-index: 10;
+      top: 145px;
+      left: 50%;
+      width: min(430px, 72%);
+      padding: 12px;
+      border: 3px solid var(--brown);
+      background: var(--paper);
+      text-align: center;
+      font-size: 17px;
+      font-weight: 800;
+      transform: translateX(-50%);
+    }
+
+    .countdown {
+      display: none;
+      place-items: center;
+      background: rgba(0, 0, 0, 0.84);
+    }
+
+    .countdown.active {
+      display: grid;
+    }
+
+    .countdown-number {
+      color: #fff;
+      font-size: min(30vw, 170px);
+      font-weight: 900;
+    }
+
+    .mini {
+      background: var(--sky);
+    }
+
+    .mini.active {
+      display: block;
+    }
+
+    #mini-canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    .drop {
+      position: absolute;
+      bottom: 25px;
+      left: 50%;
+      width: min(320px, 68vw);
+      transform: translateX(-50%);
+      font-size: 22px;
+    }
+
+    .card {
+      position: relative;
+      z-index: 3;
+      width: min(680px, 91%);
+      max-height: 90%;
+      margin: 35px auto 0;
+      padding: 23px;
+      border: 4px solid var(--brown);
+      overflow-y: auto;
+      background: var(--paper);
+      text-align: center;
+    }
+
+    .card h2 {
+      margin: 0 0 14px;
+      font-size: 39px;
+    }
+
+    .card p {
+      white-space: pre-line;
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .result-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 19px;
+    }
+
+    .ranking-list {
+      min-height: 305px;
+      margin: 18px auto;
+      padding-left: 2.2em;
+      text-align: left;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .ranking-list li {
+      padding: 4px 8px;
+    }
+
+    @media (max-width: 720px) {
+      .app {
+        min-height: 760px;
+      }
+
+      .title {
+        padding-top: 40px;
+      }
+
+      .title h1 {
+        font-size: 52px;
+      }
+
+      .practice-card {
+        top: 45%;
+        left: 5%;
+        width: 72%;
+      }
+
+      .guide {
+        top: 18%;
+        right: 0;
+        width: 40%;
+      }
+
+      .hud {
+        top: 8px;
+        left: 60%;
+        width: 77%;
+        padding: 7px 11px;
+      }
+
+      .hud-top {
+        font-size: 15px;
+      }
+
+      .bowl-panel {
+        top: 100px;
+        left: 6px;
+        width: 136px;
+      }
+
+      .bowl-stack {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4px;
+        padding: 7px;
+      }
+
+      .bowl-slot {
+        width: 58px;
+        height: 43px;
+      }
+
+      .bowl-slot img {
+        width: 58px;
+        height: 41px;
+      }
+
+      .game-main {
+        top: 145px;
+        right: 6px;
+        left: 145px;
+      }
+
+      .speech {
+        width: 95%;
+        min-height: 78px;
+      }
+
+      .speech p {
+        font-size: 15px;
+      }
+
+      .food-stage {
+        top: 142px;
+        width: 95%;
+        height: 245px;
+      }
+
+      .food {
+        width: 100%;
+        height: 255px;
+      }
+
+      .progress {
+        top: 390px;
+        font-size: 31px;
+      }
+
+      .game-buttons {
+        top: 440px;
+        width: 220px;
+      }
+
+      .waiter {
+        top: 215px;
+        right: -5px;
+        width: 160px;
+        height: 315px;
+        transform: none;
+      }
+
+      .card {
+        margin-top: 25px;
+        padding: 16px;
+      }
+
+      .card h2 {
+        font-size: 34px;
+      }
+
+      .card p {
+        font-size: 16px;
+      }
     }
   </style>
 </head>
@@ -43,28 +632,56 @@
       <div class="shade"></div>
 
       <div class="title">
-        <h1>わんこそば<br>連打ゲーム</h1>
+        <h1>
+          わんこそば<br>
+          連打ゲーム
+        </h1>
 
-        <p>食べる？ 食べない？ お椀が積もれば時間も積もる。</p>
+        <p>
+          食べる？ 食べない？ お椀が積もれば時間も積もる。
+        </p>
 
         <div class="age">
-          <label for="age">実年齢</label>
-          <input id="age" type="number" min="5" max="99" inputmode="numeric" placeholder="例：21">
+          <label for="age">
+            実年齢
+          </label>
+
+          <input
+            id="age"
+            type="number"
+            min="5"
+            max="99"
+            inputmode="numeric"
+            placeholder="例：21"
+          >
         </div>
 
         <div class="menu">
-          <button id="practice-start">練習モード</button>
-          <button id="real-start">本番モード</button>
-          <button id="ranking-open">ランキング</button>
+          <button id="practice-start">
+            練習モード
+          </button>
+
+          <button id="real-start">
+            本番モード
+          </button>
+
+          <button id="ranking-open">
+            ランキング
+          </button>
         </div>
 
         <div class="ai-buttons">
-          <button id="csv">AI学習用CSVを保存</button>
-          <button id="ai-clear">AI記録を削除</button>
+          <button id="csv">
+            AI学習用CSVを保存
+          </button>
+
+          <button id="ai-clear">
+            AI記録を削除
+          </button>
         </div>
 
         <p class="ai-note">
-          本番モードでは、AIが反応時間・正解率・ミス回数を分析します。
+          本番モードでは、保存済みデータから学習した重回帰モデルが反射神経年齢を予測します。
         </p>
       </div>
     </section>
@@ -73,17 +690,28 @@
       <img class="bg" data-asset="background" alt="">
       <div class="shade light"></div>
 
-      <h2 class="screen-title">練習説明</h2>
+      <h2 class="screen-title">
+        練習説明
+      </h2>
 
-      <img class="guide" data-asset="guide" alt="案内役">
+      <img
+        class="guide"
+        data-asset="guide"
+        alt="案内役"
+      >
 
       <div class="practice-card">
         <p id="practice-text"></p>
       </div>
 
       <div class="bottom-buttons">
-        <button id="practice-next">次へ</button>
-        <button id="practice-back">タイトルへ</button>
+        <button id="practice-next">
+          次へ
+        </button>
+
+        <button id="practice-back">
+          タイトルへ
+        </button>
       </div>
     </section>
 
@@ -93,27 +721,42 @@
 
       <div class="hud">
         <div class="hud-top">
-          <span id="mode">モード: 練習</span>
-          <span id="bowls">杯数: 0</span>
+          <span id="mode">
+            モード: 練習
+          </span>
+
+          <span id="bowls">
+            杯数: 0
+          </span>
         </div>
 
         <div class="time-row">
-          <span id="time">残り 10 秒</span>
+          <span id="time">
+            残り 10 秒
+          </span>
 
           <div class="bar">
             <div id="bar-fill"></div>
           </div>
         </div>
 
-        <div id="effect" class="effect">
+        <div
+          id="effect"
+          class="effect"
+        >
           効果: なし
         </div>
       </div>
 
       <aside class="bowl-panel">
-        <h3>お椀</h3>
+        <h3>
+          お椀
+        </h3>
 
-        <div id="bowl-stack" class="bowl-stack"></div>
+        <div
+          id="bowl-stack"
+          class="bowl-stack"
+        ></div>
       </aside>
 
       <div class="game-main">
@@ -124,71 +767,122 @@
         </div>
 
         <div class="food-stage">
-          <img id="food" class="food" alt="">
+          <img
+            id="food"
+            class="food"
+            alt=""
+          >
 
-          <div id="fallback" class="fallback hidden"></div>
+          <div
+            id="fallback"
+            class="fallback hidden"
+          ></div>
         </div>
 
-        <div id="progress" class="progress">
+        <div
+          id="progress"
+          class="progress"
+        >
           0 / 1
         </div>
 
         <div class="game-buttons">
-          <button id="eat">食べる</button>
-          <button id="skip">食べない</button>
+          <button id="eat">
+            食べる
+          </button>
+
+          <button id="skip">
+            食べない
+          </button>
         </div>
       </div>
 
-      <img class="waiter" data-asset="waiter" alt="学部長">
+      <img
+        class="waiter"
+        data-asset="waiter"
+        alt="学部長"
+      >
 
-      <div id="float" class="float hidden"></div>
+      <div
+        id="float"
+        class="float hidden"
+      ></div>
     </section>
 
-    <section id="countdown" class="screen countdown">
-      <div id="countdown-number" class="countdown-number">
+    <section
+      id="countdown"
+      class="screen countdown"
+    >
+      <div
+        id="countdown-number"
+        class="countdown-number"
+      >
         3
       </div>
     </section>
 
-    <section id="mini" class="screen mini">
-      <canvas id="mini-canvas" width="1000" height="700"></canvas>
+    <section
+      id="mini"
+      class="screen mini"
+    >
+      <canvas
+        id="mini-canvas"
+        width="1000"
+        height="700"
+      ></canvas>
 
-      <button id="drop" class="drop">
+      <button
+        id="drop"
+        class="drop"
+      >
         落とす
       </button>
     </section>
 
     <section id="result" class="screen">
       <img class="bg" data-asset="background" alt="">
-
       <div class="shade strong"></div>
 
       <div class="card">
-        <h2>結果発表</h2>
+        <h2>
+          結果発表
+        </h2>
 
         <p id="result-text"></p>
 
         <div class="result-buttons">
-          <button id="retry">もう一度</button>
-          <button id="result-ranking">ランキング</button>
-          <button id="result-title">タイトル</button>
+          <button id="retry">
+            もう一度
+          </button>
+
+          <button id="result-ranking">
+            ランキング
+          </button>
+
+          <button id="result-title">
+            タイトル
+          </button>
         </div>
       </div>
     </section>
 
     <section id="ranking" class="screen">
       <img class="bg" data-asset="background" alt="">
-
       <div class="shade strong"></div>
 
       <div class="card">
-        <h2>ランキング</h2>
+        <h2>
+          ランキング
+        </h2>
 
         <p>
           この端末で遊んだ本番モードの記録
         </p>
 
-        <ol id="ranking-list" class="ranking-list"></ol>
+        <ol
+          id="ranking-list"
+          class="ranking-list"
+        ></ol>
 
         <button id="ranking-back">
           タイトルへ
@@ -200,23 +894,41 @@
   <script>
     "use strict";
 
+    /* =========================================================
+       基本設定
+    ========================================================= */
+
     const S = {
-      practice: 10,
-      real: 30,
-      countdown: 3,
-      effectTurns: 5,
-      trigger: 10,
-      miniBowls: 10,
+      practice:
+        10,
+
+      real:
+        30,
+
+      countdown:
+        3,
+
+      effectTurns:
+        5,
+
+      trigger:
+        10,
+
+      miniBowls:
+        10,
 
       /*
-        成功範囲は中心線から左右54px。
-        以前の約3倍。
+        ミニゲームの青い成功範囲。
+        中心線から左右54px。
       */
-      halfRange: 54,
+
+      halfRange:
+        54,
 
       /*
-        お椀を出すたびに速度を毎回抽選する。
+        お椀が出るたびに速度を再抽選する。
       */
+
       speeds: [
         2.5,
         3,
@@ -228,88 +940,197 @@
         6,
       ],
 
-      dropSpeed: 14,
+      dropSpeed:
+        14,
 
-      rankKey: "wanko-rank-v2",
-      aiKey: "wanko-ai-v2",
+      rankKey:
+        "wanko-rank-v2",
+
+      aiKey:
+        "wanko-ai-v2",
+
+      /*
+        回帰モデルの設定。
+      */
+
+      minTrainingSamples:
+        12,
+
+      ridgeLambda:
+        0.8,
     };
+
+    /* =========================================================
+       食べ物
+    ========================================================= */
 
     const ITEMS = [
       {
-        key: "soba",
-        name: "そば",
-        type: "noodle",
-        clicks: 1,
-        w: 25,
+        key:
+          "soba",
+
+        name:
+          "そば",
+
+        type:
+          "noodle",
+
+        clicks:
+          1,
+
+        w:
+          25,
       },
 
       {
-        key: "udon",
-        name: "うどん",
-        type: "noodle",
-        clicks: 3,
-        w: 18,
+        key:
+          "udon",
+
+        name:
+          "うどん",
+
+        type:
+          "noodle",
+
+        clicks:
+          3,
+
+        w:
+          18,
       },
 
       {
-        key: "ramen",
-        name: "中華麺",
-        type: "noodle",
-        clicks: 5,
-        w: 14,
+        key:
+          "ramen",
+
+        name:
+          "中華麺",
+
+        type:
+          "noodle",
+
+        clicks:
+          5,
+
+        w:
+          14,
       },
 
       {
-        key: "houtou",
-        name: "ほうとう",
-        type: "noodle",
-        clicks: 10,
-        w: 8,
+        key:
+          "houtou",
+
+        name:
+          "ほうとう",
+
+        type:
+          "noodle",
+
+        clicks:
+          10,
+
+        w:
+          8,
       },
 
       {
-        key: "dark_matter",
-        name: "ダークマター",
-        type: "bad",
-        penalty: "over",
-        w: 6,
+        key:
+          "dark_matter",
+
+        name:
+          "ダークマター",
+
+        type:
+          "bad",
+
+        penalty:
+          "over",
+
+        w:
+          6,
       },
 
       {
-        key: "rock",
-        name: "岩",
-        type: "bad",
-        penalty: "minus",
-        w: 7,
+        key:
+          "rock",
+
+        name:
+          "岩",
+
+        type:
+          "bad",
+
+        penalty:
+          "minus",
+
+        w:
+          7,
       },
 
       {
-        key: "rock_salt",
-        name: "岩塩",
-        type: "effect",
-        effect: "multiply",
-        value: 2,
-        w: 7,
+        key:
+          "rock_salt",
+
+        name:
+          "岩塩",
+
+        type:
+          "effect",
+
+        effect:
+          "multiply",
+
+        value:
+          2,
+
+        w:
+          7,
       },
 
       {
-        key: "moss",
-        name: "苔",
-        type: "effect",
-        effect: "multiply",
-        value: 3,
-        w: 5,
+        key:
+          "moss",
+
+        name:
+          "苔",
+
+        type:
+          "effect",
+
+        effect:
+          "multiply",
+
+        value:
+          3,
+
+        w:
+          5,
       },
 
       {
-        key: "yakumi",
-        name: "薬味",
-        type: "effect",
-        effect: "one",
-        value: 1,
-        w: 10,
+        key:
+          "yakumi",
+
+        name:
+          "薬味",
+
+        type:
+          "effect",
+
+        effect:
+          "one",
+
+        value:
+          1,
+
+        w:
+          10,
       },
     ];
+
+    /* =========================================================
+       画像
+    ========================================================= */
 
     const C = {
       background: [
@@ -384,8 +1205,11 @@
       ".webp",
     ];
 
-    const raw = new Map();
-    const processed = new Map();
+    const raw =
+      new Map();
+
+    const processed =
+      new Map();
 
     const $ =
       (
@@ -478,7 +1302,7 @@
     function paths(
       key,
     ) {
-      const out =
+      const output =
         [];
 
       for (
@@ -496,14 +1320,14 @@
           const extension
           of EXT
         ) {
-          out.push(
+          output.push(
             name
             + extension,
           );
         }
       }
 
-      return out;
+      return output;
     }
 
     function loadRaw(
@@ -580,9 +1404,10 @@
     }
 
     /*
+      白背景の自動透過。
       画像の端からつながっている白色だけを消す。
-      内側の白色はなるべく残す。
     */
+
     function removeWhite(
       image,
     ) {
@@ -693,24 +1518,31 @@
 
           const green =
             pixels[
-              offset + 1
+              offset
+              + 1
             ];
 
           const blue =
             pixels[
-              offset + 2
+              offset
+              + 2
             ];
 
           const alpha =
             pixels[
-              offset + 3
+              offset
+              + 3
             ];
 
           return (
             alpha > 0
+
             && red >= 232
+
             && green >= 232
+
             && blue >= 232
+
             && Math.max(
               red,
               green,
@@ -731,12 +1563,15 @@
         ) => {
           if (
             pixelIndex < 0
+
             || pixelIndex
               >= width
               * height
+
             || seen[
               pixelIndex
             ]
+
             || !isWhite(
               pixelIndex,
             )
@@ -769,7 +1604,8 @@
 
         add(
           (
-            height - 1
+            height
+            - 1
           )
           * width
           + x,
@@ -834,7 +1670,8 @@
 
         if (
           x
-          < width - 1
+          < width
+          - 1
         ) {
           add(
             pixelIndex
@@ -853,7 +1690,8 @@
 
         if (
           y
-          < height - 1
+          < height
+          - 1
         ) {
           add(
             pixelIndex
@@ -918,7 +1756,7 @@
 
                 catch {
                   /*
-                    srcは使えるので続行。
+                    srcは使用できるため続行。
                   */
                 }
               }
@@ -954,7 +1792,8 @@
           node.dataset.asset;
 
         const image =
-          key === "background"
+          key
+          === "background"
             ? await loadRaw(
                 key,
               )
@@ -1002,6 +1841,10 @@
         );
     }
 
+    /* =========================================================
+       説明文
+    ========================================================= */
+
     const TUTORIAL = [
       "ここは練習モードです。まずは、わんこそばの流れを確認します。",
 
@@ -1011,9 +1854,9 @@
 
       "岩塩はクリック数2倍、苔は3倍、薬味は全部1回になります。効果は次の5皿に続きます。",
 
-      "お椀が10個たまるとミニゲームです。青い範囲内にお椀が来た瞬間に「落とす」を押します。",
+      "お椀が10個たまるとミニゲームです。青い範囲にお椀が重なった瞬間に「落とす」を押します。",
 
-      "本番モードでは、反応時間・正解率・ミス回数を記録します。AIが反射神経年齢を予測し、実年齢との差を表示します。",
+      "本番モードでは、反応時間・正解率・ミス回数・最大連続正解数などを記録します。保存済みデータから学習した重回帰モデルが反射神経年齢を予測します。",
 
       "説明はここまで。次は10秒の練習プレイです。",
     ];
@@ -1038,6 +1881,10 @@
 
     let renderVersion =
       0;
+
+    /* =========================================================
+       通常ゲームの状態
+    ========================================================= */
 
     const G = {
       mode:
@@ -1083,6 +1930,10 @@
         0,
     };
 
+    /* =========================================================
+       AI計測データ
+    ========================================================= */
+
     const AI = {
       age:
         null,
@@ -1105,9 +1956,19 @@
       responses:
         0,
 
+      currentStreak:
+        0,
+
+      maxStreak:
+        0,
+
       finished:
         false,
     };
+
+    /* =========================================================
+       ミニゲーム状態
+    ========================================================= */
 
     const M = {
       active:
@@ -1122,9 +1983,6 @@
       stacked:
         0,
 
-      /*
-        青い帯と中心線の共通座標。
-      */
       center:
         500,
 
@@ -1146,9 +2004,6 @@
       y:
         145,
 
-      /*
-        落とすボタンを押した瞬間の位置。
-      */
       lockedX:
         500,
 
@@ -1173,7 +2028,9 @@
         Number.isFinite(
           value,
         )
+
         && value >= 5
+
         && value <= 99
       )
         ? value
@@ -1224,6 +2081,12 @@
           responses:
             0,
 
+          currentStreak:
+            0,
+
+          maxStreak:
+            0,
+
           finished:
             false,
         },
@@ -1244,7 +2107,9 @@
     ) {
       if (
         AI.finished
+
         || !item
+
         || AI.recorded
       ) {
         return;
@@ -1278,13 +2143,44 @@
       ) {
         AI.correct +=
           1;
+
+        AI.currentStreak +=
+          1;
+
+        AI.maxStreak =
+          Math.max(
+            AI.maxStreak,
+            AI.currentStreak,
+          );
       }
 
       else {
         AI.mistakes +=
           1;
+
+        AI.currentStreak =
+          0;
       }
     }
+
+    /* =========================================================
+       重回帰モデル
+       
+       手動で決めた係数は使用しない。
+       保存済みの本番プレイ記録から自動学習する。
+
+       特徴量：
+       ・平均反応時間
+       ・反応時間中央値
+       ・正解率
+       ・ミス回数
+       ・獲得杯数
+       ・回答回数
+       ・最大連続正解数
+
+       目的変数：
+       ・入力された実年齢
+    ========================================================= */
 
     const clamp =
       (
@@ -1320,9 +2216,7 @@
               a,
               b,
             ) => {
-              return (
-                a - b
-              );
+              return a - b;
             },
           );
 
@@ -1341,6 +2235,7 @@
             sorted[
               middle - 1
             ]
+
             + sorted[
               middle
             ]
@@ -1348,225 +2243,345 @@
           / 2;
     }
 
-    /*
-      現在は動作確認用の仮AIモデル。
-    */
-    function predict(
-      metrics,
+    function average(
+      values,
     ) {
-      let result =
-        28;
+      return values.length
+        ? values.reduce(
+            (
+              sum,
+              value,
+            ) => {
+              return sum + value;
+            },
+            0,
+          )
+          / values.length
+        : 0;
+    }
 
-      result +=
-        (
-          metrics.avg
-          - 600
-        )
-        * 0.015;
+    function featureVector(
+      record,
+    ) {
+      return [
+        Number(
+          record.avg,
+        ),
 
-      result +=
-        (
-          metrics.med
-          - 560
-        )
-        * 0.008;
+        Number(
+          record.med,
+        ),
 
-      result +=
-        (
-          metrics.acc
-          - 0.85
-        )
-        * -16;
+        Number(
+          record.acc,
+        ),
 
-      result +=
-        (
-          metrics.mistakes
-          - 1
-        )
-        * 1.25;
+        Number(
+          record.mistakes,
+        ),
 
-      result +=
-        (
-          metrics.bowls
-          - 12
-        )
-        * -0.18;
+        Number(
+          record.bowls,
+        ),
 
-      result +=
-        (
-          metrics.responses
-          - 18
-        )
-        * -0.05;
+        Number(
+          record.responses,
+        ),
 
-      return Number(
-        clamp(
-          result,
-          5,
-          90,
-        )
-          .toFixed(
-            1,
+        Number(
+          record.maxStreak
+          ?? 0,
+        ),
+      ];
+    }
+
+    function usableTrainingRecord(
+      record,
+    ) {
+      return (
+        record
+
+        && [
+          Number(
+            record.age,
           ),
+
+          ...featureVector(
+            record,
+          ),
+        ]
+          .every(
+            Number.isFinite,
+          )
       );
     }
 
-    function finishAI() {
-      if (
-        AI.finished
-      ) {
-        return null;
-      }
-
-      AI.finished =
-        true;
-
-      const average =
-        AI.times.length
-          ? AI.times.reduce(
+    function transpose(
+      matrix,
+    ) {
+      return matrix[
+        0
+      ]
+        .map(
+          (
+            _,
+            column,
+          ) => {
+            return matrix.map(
               (
-                sum,
-                value,
+                row,
               ) => {
-                return (
-                  sum
-                  + value
-                );
+                return row[
+                  column
+                ];
               },
-              0,
-            )
-            / AI.times.length
-          : 1500;
-
-      const middle =
-        AI.times.length
-          ? median(
-              AI.times,
-            )
-          : 1500;
-
-      const accuracy =
-        AI.responses
-          ? AI.correct
-            / AI.responses
-          : 0;
-
-      const metrics = {
-        avg:
-          Number(
-            average.toFixed(
-              1,
-            ),
-          ),
-
-        med:
-          Number(
-            middle.toFixed(
-              1,
-            ),
-          ),
-
-        acc:
-          Number(
-            accuracy.toFixed(
-              4,
-            ),
-          ),
-
-        mistakes:
-          AI.mistakes,
-
-        bowls:
-          G.bowls,
-
-        responses:
-          AI.responses,
-      };
-
-      const predicted =
-        predict(
-          metrics,
+            );
+          },
         );
-
-      return {
-        at:
-          new Date()
-            .toISOString(),
-
-        age:
-          AI.age,
-
-        predicted,
-
-        diff:
-          Number(
-            (
-              predicted
-              - AI.age
-            )
-              .toFixed(
-                1,
-              ),
-          ),
-
-        ...metrics,
-      };
     }
 
-    function aiText(
-      result,
+    function multiply(
+      matrixA,
+      matrixB,
     ) {
-      if (
-        !result
-      ) {
-        return "";
-      }
+      const result =
+        Array.from(
+          {
+            length:
+              matrixA.length,
+          },
 
-      let comparison =
-        "実年齢と同じくらい";
-
-      if (
-        result.diff
-        < 0
-      ) {
-        comparison =
-          (
-            `実年齢より `
-            + `${Math.abs(
-              result.diff,
-            )}`
-            + `歳 若い`
-          );
-      }
-
-      if (
-        result.diff
-        > 0
-      ) {
-        comparison =
-          (
-            `実年齢より `
-            + `${result.diff}`
-            + `歳 高い`
-          );
-      }
-
-      return [
-        "",
-        "【AI反射神経年齢】",
-        `実年齢: ${result.age}歳`,
-        `予測年齢: ${result.predicted}歳`,
-        `判定: ${comparison}`,
-        `平均反応時間: ${Math.round(result.avg)}ms`,
-        `反応時間中央値: ${Math.round(result.med)}ms`,
-        `正解率: ${(result.acc * 100).toFixed(1)}%`,
-        `ミス回数: ${result.mistakes}回`,
-        `回答回数: ${result.responses}回`,
-        "使用モデル: 仮モデル",
-      ]
-        .join(
-          "\n",
+          () => {
+            return Array(
+              matrixB[
+                0
+              ]
+                .length,
+            )
+              .fill(
+                0,
+              );
+          },
         );
+
+      for (
+        let rowIndex = 0;
+        rowIndex < matrixA.length;
+        rowIndex += 1
+      ) {
+        for (
+          let columnIndex = 0;
+          columnIndex < matrixB[
+            0
+          ]
+            .length;
+          columnIndex += 1
+        ) {
+          for (
+            let innerIndex = 0;
+            innerIndex < matrixB.length;
+            innerIndex += 1
+          ) {
+            result[
+              rowIndex
+            ][
+              columnIndex
+            ] +=
+              matrixA[
+                rowIndex
+              ][
+                innerIndex
+              ]
+              *
+              matrixB[
+                innerIndex
+              ][
+                columnIndex
+              ];
+          }
+        }
+      }
+
+      return result;
+    }
+
+    function invert(
+      matrix,
+    ) {
+      const size =
+        matrix.length;
+
+      const augmented =
+        matrix.map(
+          (
+            row,
+            rowIndex,
+          ) => {
+            return [
+              ...row,
+
+              ...Array.from(
+                {
+                  length:
+                    size,
+                },
+
+                (
+                  _,
+                  columnIndex,
+                ) => {
+                  return rowIndex
+                  === columnIndex
+                    ? 1
+                    : 0;
+                },
+              ),
+            ];
+          },
+        );
+
+      for (
+        let column = 0;
+        column < size;
+        column += 1
+      ) {
+        let pivot =
+          column;
+
+        for (
+          let row = column + 1;
+          row < size;
+          row += 1
+        ) {
+          if (
+            Math.abs(
+              augmented[
+                row
+              ][
+                column
+              ],
+            )
+
+            > Math.abs(
+              augmented[
+                pivot
+              ][
+                column
+              ],
+            )
+          ) {
+            pivot =
+              row;
+          }
+        }
+
+        if (
+          Math.abs(
+            augmented[
+              pivot
+            ][
+              column
+            ],
+          )
+
+          < 1e-10
+        ) {
+          return null;
+        }
+
+        if (
+          pivot
+          !== column
+        ) {
+          [
+            augmented[
+              column
+            ],
+
+            augmented[
+              pivot
+            ],
+          ] =
+            [
+              augmented[
+                pivot
+              ],
+
+              augmented[
+                column
+              ],
+            ];
+        }
+
+        const divisor =
+          augmented[
+            column
+          ][
+            column
+          ];
+
+        for (
+          let innerColumn = 0;
+          innerColumn < size * 2;
+          innerColumn += 1
+        ) {
+          augmented[
+            column
+          ][
+            innerColumn
+          ] /=
+            divisor;
+        }
+
+        for (
+          let row = 0;
+          row < size;
+          row += 1
+        ) {
+          if (
+            row
+            === column
+          ) {
+            continue;
+          }
+
+          const factor =
+            augmented[
+              row
+            ][
+              column
+            ];
+
+          for (
+            let innerColumn = 0;
+            innerColumn < size * 2;
+            innerColumn += 1
+          ) {
+            augmented[
+              row
+            ][
+              innerColumn
+            ] -=
+              factor
+              *
+              augmented[
+                column
+              ][
+                innerColumn
+              ];
+          }
+        }
+      }
+
+      return augmented.map(
+        (
+          row,
+        ) => {
+          return row.slice(
+            size,
+          );
+        },
+      );
     }
 
     function loadAI() {
@@ -1589,6 +2604,550 @@
       catch {
         return [];
       }
+    }
+
+    function trainRegression() {
+      const records =
+        loadAI()
+          .filter(
+            usableTrainingRecord,
+          );
+
+      const sampleCount =
+        records.length;
+
+      if (
+        sampleCount
+        < S.minTrainingSamples
+      ) {
+        return {
+          ready:
+            false,
+
+          sampleCount,
+
+          requiredSamples:
+            S.minTrainingSamples,
+        };
+      }
+
+      const rows =
+        records.map(
+          featureVector,
+        );
+
+      const featureCount =
+        rows[
+          0
+        ]
+          .length;
+
+      const means =
+        Array.from(
+          {
+            length:
+              featureCount,
+          },
+
+          (
+            _,
+            index,
+          ) => {
+            return average(
+              rows.map(
+                (
+                  row,
+                ) => {
+                  return row[
+                    index
+                  ];
+                },
+              ),
+            );
+          },
+        );
+
+      const standardDeviations =
+        Array.from(
+          {
+            length:
+              featureCount,
+          },
+
+          (
+            _,
+            index,
+          ) => {
+            const variance =
+              average(
+                rows.map(
+                  (
+                    row,
+                  ) => {
+                    return (
+                      row[
+                        index
+                      ]
+
+                      - means[
+                        index
+                      ]
+                    )
+                    **
+                    2;
+                  },
+                ),
+              );
+
+            const standardDeviation =
+              Math.sqrt(
+                variance,
+              );
+
+            return standardDeviation
+            > 1e-10
+              ? standardDeviation
+              : 1;
+          },
+        );
+
+      const designMatrix =
+        rows.map(
+          (
+            row,
+          ) => {
+            return [
+              1,
+
+              ...row.map(
+                (
+                  value,
+                  index,
+                ) => {
+                  return (
+                    value
+
+                    - means[
+                      index
+                    ]
+                  )
+                  /
+                  standardDeviations[
+                    index
+                  ];
+                },
+              ),
+            ];
+          },
+        );
+
+      const targetMatrix =
+        records.map(
+          (
+            record,
+          ) => {
+            return [
+              Number(
+                record.age,
+              ),
+            ];
+          },
+        );
+
+      const transposedDesignMatrix =
+        transpose(
+          designMatrix,
+        );
+
+      const normalMatrix =
+        multiply(
+          transposedDesignMatrix,
+          designMatrix,
+        );
+
+      /*
+        リッジ回帰。
+        切片以外の対角成分に調整値を加える。
+      */
+
+      for (
+        let index = 1;
+        index < normalMatrix.length;
+        index += 1
+      ) {
+        normalMatrix[
+          index
+        ][
+          index
+        ] +=
+          S.ridgeLambda;
+      }
+
+      const inverseMatrix =
+        invert(
+          normalMatrix,
+        );
+
+      if (
+        !inverseMatrix
+      ) {
+        return {
+          ready:
+            false,
+
+          sampleCount,
+
+          requiredSamples:
+            S.minTrainingSamples,
+        };
+      }
+
+      const coefficients =
+        multiply(
+          multiply(
+            inverseMatrix,
+            transposedDesignMatrix,
+          ),
+
+          targetMatrix,
+        )
+          .map(
+            (
+              row,
+            ) => {
+              return row[
+                0
+              ];
+            },
+          );
+
+      return {
+        ready:
+          true,
+
+        sampleCount,
+
+        requiredSamples:
+          S.minTrainingSamples,
+
+        means,
+
+        standardDeviations,
+
+        coefficients,
+      };
+    }
+
+    function predict(
+      metrics,
+    ) {
+      const model =
+        trainRegression();
+
+      if (
+        !model.ready
+      ) {
+        return {
+          ready:
+            false,
+
+          predicted:
+            null,
+
+          sampleCount:
+            model.sampleCount,
+
+          requiredSamples:
+            model.requiredSamples,
+        };
+      }
+
+      const standardisedFeatures =
+        featureVector(
+          metrics,
+        )
+          .map(
+            (
+              value,
+              index,
+            ) => {
+              return (
+                value
+
+                - model.means[
+                  index
+                ]
+              )
+              /
+              model.standardDeviations[
+                index
+              ];
+            },
+          );
+
+      const inputVector = [
+        1,
+
+        ...standardisedFeatures,
+      ];
+
+      const rawPrediction =
+        model.coefficients.reduce(
+          (
+            total,
+            coefficient,
+            index,
+          ) => {
+            return (
+              total
+
+              + coefficient
+                * inputVector[
+                  index
+                ]
+            );
+          },
+          0,
+        );
+
+      return {
+        ready:
+          true,
+
+        predicted:
+          Number(
+            clamp(
+              rawPrediction,
+              5,
+              90,
+            )
+              .toFixed(
+                1,
+              ),
+          ),
+
+        sampleCount:
+          model.sampleCount,
+
+        requiredSamples:
+          model.requiredSamples,
+      };
+    }
+
+    function finishAI() {
+      if (
+        AI.finished
+      ) {
+        return null;
+      }
+
+      AI.finished =
+        true;
+
+      const avg =
+        AI.times.length
+          ? average(
+              AI.times,
+            )
+          : 1500;
+
+      const med =
+        AI.times.length
+          ? median(
+              AI.times,
+            )
+          : 1500;
+
+      const acc =
+        AI.responses
+          ? AI.correct
+            / AI.responses
+          : 0;
+
+      const metrics = {
+        avg:
+          Number(
+            avg
+              .toFixed(
+                1,
+              ),
+          ),
+
+        med:
+          Number(
+            med
+              .toFixed(
+                1,
+              ),
+          ),
+
+        acc:
+          Number(
+            acc
+              .toFixed(
+                4,
+              ),
+          ),
+
+        mistakes:
+          AI.mistakes,
+
+        bowls:
+          G.bowls,
+
+        responses:
+          AI.responses,
+
+        maxStreak:
+          AI.maxStreak,
+      };
+
+      /*
+        今回のデータを保存する前に予測する。
+        今回入力された年齢が、今回の予測へ混ざらないようにする。
+      */
+
+      const regression =
+        predict(
+          metrics,
+        );
+
+      const predicted =
+        regression.ready
+          ? regression.predicted
+          : null;
+
+      return {
+        at:
+          new Date()
+            .toISOString(),
+
+        age:
+          AI.age,
+
+        predicted,
+
+        diff:
+          regression.ready
+            ? Number(
+                (
+                  predicted
+
+                  - AI.age
+                )
+                  .toFixed(
+                    1,
+                  ),
+              )
+            : null,
+
+        regressionReady:
+          regression.ready,
+
+        trainingSamples:
+          regression.sampleCount,
+
+        requiredTrainingSamples:
+          regression.requiredSamples,
+
+        model:
+          "multiple-linear-ridge-regression-v1",
+
+        ...metrics,
+      };
+    }
+
+    function aiText(
+      result,
+    ) {
+      if (
+        !result
+      ) {
+        return "";
+      }
+
+      if (
+        !result.regressionReady
+      ) {
+        const remaining =
+          Math.max(
+            0,
+
+            result.requiredTrainingSamples
+
+            - result.trainingSamples,
+          );
+
+        return [
+          "",
+          "【AI反射神経年齢】",
+          "回帰モデル学習中",
+          `現在の学習データ: ${result.trainingSamples}件`,
+          `予測開始まで残り: ${remaining}件`,
+          `平均反応時間: ${Math.round(result.avg)}ms`,
+          `反応時間中央値: ${Math.round(result.med)}ms`,
+          `正解率: ${(result.acc * 100).toFixed(1)}%`,
+          `ミス回数: ${result.mistakes}回`,
+          `最大連続正解数: ${result.maxStreak}回`,
+          `回答回数: ${result.responses}回`,
+          "使用モデル: 重回帰モデル（リッジ回帰）",
+        ]
+          .join(
+            "\n",
+          );
+      }
+
+      let comparison =
+        "実年齢と同じくらい";
+
+      if (
+        result.diff
+        < 0
+      ) {
+        comparison =
+          (
+            `実年齢より `
+
+            + `${Math.abs(
+              result.diff,
+            )}`
+
+            + `歳 若い`
+          );
+      }
+
+      if (
+        result.diff
+        > 0
+      ) {
+        comparison =
+          (
+            `実年齢より `
+
+            + `${result.diff}`
+
+            + `歳 高い`
+          );
+      }
+
+      return [
+        "",
+        "【AI反射神経年齢】",
+        `実年齢: ${result.age}歳`,
+        `予測年齢: ${result.predicted}歳`,
+        `判定: ${comparison}`,
+        `平均反応時間: ${Math.round(result.avg)}ms`,
+        `反応時間中央値: ${Math.round(result.med)}ms`,
+        `正解率: ${(result.acc * 100).toFixed(1)}%`,
+        `ミス回数: ${result.mistakes}回`,
+        `最大連続正解数: ${result.maxStreak}回`,
+        `回答回数: ${result.responses}回`,
+        `学習に使用した記録: ${result.trainingSamples}件`,
+        "使用モデル: 重回帰モデル（リッジ回帰）",
+      ]
+        .join(
+          "\n",
+        );
     }
 
     function saveAI(
@@ -1633,8 +3192,12 @@
           "mistakes",
           "bowls",
           "responses",
+          "max_streak",
           "predicted_age",
           "difference",
+          "regression_ready",
+          "training_samples",
+          "model",
           "recorded_at",
         ]
           .join(
@@ -1655,8 +3218,18 @@
             record.mistakes,
             record.bowls,
             record.responses,
-            record.predicted,
-            record.diff,
+            record.maxStreak
+            ?? 0,
+            record.predicted
+            ?? "",
+            record.diff
+            ?? "",
+            record.regressionReady
+            ?? false,
+            record.trainingSamples
+            ?? 0,
+            record.model
+            ?? "",
             record.at,
           ]
             .join(
@@ -1669,6 +3242,7 @@
         new Blob(
           [
             "\uFEFF"
+
             + rows.join(
               "\n",
             ),
@@ -1725,6 +3299,10 @@
       }
     }
 
+    /* =========================================================
+       練習画面
+    ========================================================= */
+
     function openPractice() {
       if (
         !requireAge()
@@ -1733,6 +3311,7 @@
       }
 
       stopGame();
+
       stopMini();
 
       tutorialIndex =
@@ -1753,15 +3332,17 @@
 
       el.practiceNext.textContent =
         tutorialIndex
-        === TUTORIAL.length - 1
-          ? "練習プレイへ"
-          : "次へ";
+        === TUTORIAL.length
+          - 1
+            ? "練習プレイへ"
+            : "次へ";
     }
 
     function nextTutorial() {
       if (
         tutorialIndex
-        === TUTORIAL.length - 1
+        === TUTORIAL.length
+          - 1
       ) {
         startGame(
           "practice",
@@ -1776,10 +3357,15 @@
       updateTutorial();
     }
 
+    /* =========================================================
+       通常ゲーム
+    ========================================================= */
+
     function resetGame(
       mode,
     ) {
       stopGame();
+
       stopMini();
 
       Object.assign(
@@ -1915,6 +3501,7 @@
 
       G.end =
         performance.now()
+
         + G.time
           * 1000;
 
@@ -1926,7 +3513,9 @@
     function tick() {
       if (
         !G.running
+
         || G.paused
+
         || G.over
       ) {
         return;
@@ -1938,6 +3527,7 @@
 
           (
             G.end
+
             - performance.now()
           )
           / 1000,
@@ -1964,6 +3554,7 @@
       el.mode.textContent =
         (
           `モード: `
+
           + (
             G.mode
             === "practice"
@@ -1980,28 +3571,34 @@
 
       el.bar.style.width =
         (
-          `${G.maxTime
-            ? Math.min(
-                1,
+          `${
+            G.maxTime
+              ? Math.min(
+                  1,
 
-                Math.max(
-                  0,
+                  Math.max(
+                    0,
 
-                  G.time
-                  / G.maxTime,
-                ),
-              )
-              * 100
-            : 0}%`
+                    G.time
+                    / G.maxTime,
+                  ),
+                )
+                * 100
+              : 0
+          }%`
         );
 
       el.effect.textContent =
         G.effect
           ? (
               `効果: `
+
               + `${G.effect.label}`
+
               + ` / 残り`
+
               + `${G.effectLeft}`
+
               + `皿`
             )
           : "効果: なし";
@@ -2016,6 +3613,7 @@
           ) => {
             return (
               sum
+
               + item.w
             );
           },
@@ -2024,6 +3622,7 @@
 
       let random =
         Math.random()
+
         * total;
 
       for (
@@ -2068,6 +3667,7 @@
       ) {
         return (
           item.clicks
+
           * G.effect.value
         );
       }
@@ -2085,6 +3685,7 @@
     function nextItem() {
       if (
         !G.running
+
         || G.over
       ) {
         return;
@@ -2122,6 +3723,7 @@
       el.speech.textContent =
         (
           `次は ${item.name}！\n`
+
           + (
             item.type
             === "noodle"
@@ -2156,9 +3758,10 @@
 
       if (
         version
-          !== renderVersion
+        !== renderVersion
+
         || item
-          !== G.item
+        !== G.item
       ) {
         return;
       }
@@ -2186,7 +3789,9 @@
     function eat() {
       if (
         !G.running
+
         || G.over
+
         || !G.item
       ) {
         return;
@@ -2242,7 +3847,9 @@
     function skip() {
       if (
         !G.running
+
         || G.over
+
         || !G.item
       ) {
         return;
@@ -2312,19 +3919,19 @@
       if (
         image
       ) {
-        const bowlImage =
+        const bowl =
           document.createElement(
             "img",
           );
 
-        bowlImage.src =
+        bowl.src =
           image.src;
 
-        bowlImage.alt =
+        bowl.alt =
           "お椀";
 
         slot.append(
-          bowlImage,
+          bowl,
         );
       }
 
@@ -2337,7 +3944,9 @@
         el.stack.children.length
         > 45
       ) {
-        el.stack.firstElementChild.remove();
+        el.stack
+          .firstElementChild
+          .remove();
       }
     }
 
@@ -2394,6 +4003,7 @@
       const lost =
         Math.min(
           3,
+
           G.bowls,
         );
 
@@ -2478,10 +4088,14 @@
         );
     }
 
-    /*
-      ミニゲーム開始。
-      青い帯・中心線・成功判定で同じ座標を使う。
-    */
+    /* =========================================================
+       ミニゲーム
+
+       ・青い範囲とお椀が重なれば成功
+       ・お椀ごとに速度を再抽選
+       ・落とすボタンを押した位置で真下へ落下
+    ========================================================= */
+
     async function startMini() {
       G.paused =
         true;
@@ -2499,6 +4113,7 @@
 
           (
             G.end
+
             - performance.now()
           )
           / 1000,
@@ -2532,22 +4147,18 @@
         },
       );
 
-      /*
-        canvasの正確な中心。
-      */
       M.center =
         el.canvas.width
         / 2;
 
-      /*
-        青い範囲は中心から左右54px。
-      */
       M.left =
         M.center
+
         - S.halfRange;
 
       M.right =
         M.center
+
         + S.halfRange;
 
       M.moveLeft =
@@ -2555,6 +4166,7 @@
 
       M.moveRight =
         el.canvas.width
+
         - 210;
 
       el.drop.textContent =
@@ -2589,20 +4201,18 @@
       M.y =
         145;
 
-      /*
-        お椀を1個出すたびに、
-        毎回速度をランダム抽選する。
-      */
       const speed =
         S.speeds[
           Math.floor(
             Math.random()
+
             * S.speeds.length,
           )
         ];
 
       const fromLeft =
         Math.random()
+
         < 0.5;
 
       M.x =
@@ -2673,9 +4283,6 @@
         M.phase
         === "dropping"
       ) {
-        /*
-          押した瞬間の横位置へ固定。
-        */
         M.x =
           M.lockedX;
 
@@ -2684,6 +4291,7 @@
 
         const landing =
           595
+
           - M.stacked
             * 34;
 
@@ -2711,15 +4319,13 @@
     function dropMini() {
       if (
         !M.active
+
         || M.phase
           !== "moving"
       ) {
         return;
       }
 
-      /*
-        「落とす」を押した瞬間のX位置を保存。
-      */
       M.lockedX =
         M.x;
 
@@ -2732,13 +4338,31 @@
         "waiting";
 
       /*
-        見えている青い帯の内側なら成功。
+        お椀の横幅は175px。
+        お椀の見えている部分と青い範囲が重なれば成功。
       */
-      const success =
+
+      const bowlHalfWidth =
+        87.5;
+
+      const bowlLeft =
         M.lockedX
+
+        - bowlHalfWidth;
+
+      const bowlRight =
+        M.lockedX
+
+        + bowlHalfWidth;
+
+      const success =
+        (
+          bowlRight
           >= M.left
-        && M.lockedX
-          <= M.right;
+
+          && bowlLeft
+          <= M.right
+        );
 
       if (
         success
@@ -2816,7 +4440,7 @@
         "bold 22px sans-serif";
 
       context.fillText(
-        "青い範囲内にお椀が来た瞬間に「落とす」を押す",
+        "お椀が青い範囲に重なった瞬間に「落とす」を押す",
         center,
         104,
       );
@@ -2842,12 +4466,8 @@
         190,
       );
 
-      /*
-        青い成功範囲。
-        判定と同じleft・rightを使う。
-      */
       context.fillStyle =
-        "rgba(76,124,255,.18)";
+        "rgba(76, 124, 255, 0.18)";
 
       context.fillRect(
         left,
@@ -2856,11 +4476,8 @@
         485,
       );
 
-      /*
-        青い範囲の左右端。
-      */
       context.strokeStyle =
-        "rgba(76,124,255,.60)";
+        "rgba(76, 124, 255, 0.60)";
 
       context.lineWidth =
         2;
@@ -2892,10 +4509,6 @@
         context.stroke();
       }
 
-      /*
-        中心線。
-        青い範囲の正確な中央。
-      */
       context.strokeStyle =
         "#4b7cff";
 
@@ -2923,9 +4536,6 @@
 
       context.setLineDash([]);
 
-      /*
-        台。
-      */
       context.fillStyle =
         "#7b4a24";
 
@@ -2936,9 +4546,6 @@
         22,
       );
 
-      /*
-        積み上がったお椀。
-      */
       for (
         let index = 0;
         index < M.stacked;
@@ -2948,17 +4555,16 @@
           context,
           center,
           590
-            - index
-              * 34,
+
+          - index
+            * 34,
         );
       }
 
-      /*
-        操作中のお椀。
-      */
       if (
         M.phase
-          === "moving"
+        === "moving"
+
         || M.phase
           === "dropping"
       ) {
@@ -2999,8 +4605,13 @@
       ) {
         context.drawImage(
           M.image,
-          x - 87.5,
-          y - 52,
+
+          x
+          - 87.5,
+
+          y
+          - 52,
+
           175,
           104,
         );
@@ -3026,7 +4637,8 @@
         20,
         0,
         0,
-        Math.PI * 2,
+        Math.PI
+        * 2,
       );
 
       context.fill();
@@ -3163,6 +4775,7 @@
 
       G.end =
         performance.now()
+
         + G.time
           * 1000;
 
@@ -3203,6 +4816,10 @@
         miniSpawnId,
       );
     }
+
+    /* =========================================================
+       結果画面
+    ========================================================= */
 
     function finishGame(
       message = "",
@@ -3261,9 +4878,14 @@
           result,
         );
 
+      /*
+        本番モードの記録だけを、次回以降の学習に使う。
+      */
+
       if (
         G.mode
-          === "real"
+        === "real"
+
         && result
       ) {
         saveAI(
@@ -3292,6 +4914,10 @@
         false;
     }
 
+    /* =========================================================
+       ランキング
+    ========================================================= */
+
     function loadRanks() {
       try {
         const ranking =
@@ -3299,6 +4925,7 @@
             localStorage.getItem(
               S.rankKey,
             )
+
             || "[]",
           );
 
@@ -3338,9 +4965,12 @@
             .crypto
             ?.randomUUID
             ?.()
+
           || (
             `${Date.now()}`
+
             + `-`
+
             + `${Math.random()}`
           ),
 
@@ -3362,10 +4992,8 @@
           a,
           b,
         ) => {
-          return (
-            b.score
-            - a.score
-          );
+          return b.score
+          - a.score;
         },
       );
 
@@ -3379,10 +5007,8 @@
             (
               item,
             ) => {
-              return (
-                item.id
-                === record.id
-              );
+              return item.id
+              === record.id;
             },
           )
           + 1,
@@ -3400,10 +5026,8 @@
               a,
               b,
             ) => {
-              return (
-                b.score
-                - a.score
-              );
+              return b.score
+              - a.score;
             },
           )
           .slice(
@@ -3463,6 +5087,10 @@
         "title",
       );
     }
+
+    /* =========================================================
+       ボタン
+    ========================================================= */
 
     $("#practice-start")
       .onclick =
@@ -3529,8 +5157,9 @@
         clearAI;
 
     /*
-      PCではスペースキーでもお椀を落とせる。
+      PCではスペースキーでも落とせる。
     */
+
     addEventListener(
       "keydown",
 
@@ -3539,7 +5168,8 @@
       ) => {
         if (
           event.code
-            === "Space"
+          === "Space"
+
           && screens
             .mini
             .classList
@@ -3553,6 +5183,10 @@
         }
       },
     );
+
+    /* =========================================================
+       起動
+    ========================================================= */
 
     initImages();
 
